@@ -8,7 +8,7 @@ import Notification from './components/Notification/Notification';
 import Profile from './components/Profile/Profile';
 import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Projects from './components/Projects/Projects';
-import Login from './components/Controls/Login/Login';
+import Login from './components/Login/Login';
 import Register from './components/Controls/Register/Register';
 
 export default function App() {
@@ -18,8 +18,8 @@ export default function App() {
   const router = createBrowserRouter([
     {path: "", element: <Layout/>, children: [
       {path: 'dashboard', element: <Dashboard/>},
+      {path: 'login', element: <Login/>},
       {path: 'controls', element: <Controls/>, children: [
-        {path: 'login', element: <Login/>},
         {path: 'Register', element: <Register/>}
       ]},
       {path: 'notifications', element: <Notification/>},
