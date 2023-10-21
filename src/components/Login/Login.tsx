@@ -1,9 +1,10 @@
-import { useFormik } from 'formik'
 import React from 'react'
+import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { logIn } from '../Redux/AdminSlice'
 import { useNavigate } from 'react-router-dom'
+import { ILogin } from '../../Interfaces/authentication.interface'
 
 export default function Login() {
 
@@ -16,17 +17,15 @@ export default function Login() {
       password: Yup.string().required("Password is required")
     })
   
-    const formik = useFormik({
+    const formik = useFormik<ILogin>({
       initialValues : {
         email: "",
         password: ""
       },
       validationSchema,
       onSubmit: (values) => {
-        console.log(values);
-        
         //Error typescript m4 fahem leeh 
-        // dispatch(logIn(values))
+        dispatch(logIn(values))
         navigate('/dashboard')
       }
     })
