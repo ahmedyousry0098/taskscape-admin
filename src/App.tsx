@@ -11,14 +11,15 @@ import Projects from './components/Projects/Projects';
 import Login from './components/Login/Login';
 import Register from './components/Controls/Register/Register';
 
+
 export default function App() {
 
 
   
   const router = createBrowserRouter([
+    {path: 'login', element: <Login/>},
     {path: "", element: <Layout/>, children: [
       {path: 'dashboard', element: <Dashboard/>},
-      {path: 'login', element: <Login/>},
       {path: 'controls', element: <Controls/>, children: [
         {path: 'Register', element: <Register/>}
       ]},

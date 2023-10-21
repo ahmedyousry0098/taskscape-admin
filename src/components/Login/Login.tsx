@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { logIn } from '../Redux/AdminSlice'
 import { useNavigate } from 'react-router-dom'
 import { ILogin } from '../../Interfaces/authentication.interface'
+import { toast } from 'react-toastify';
 
 export default function Login() {
 
@@ -23,33 +24,33 @@ export default function Login() {
         password: ""
       },
       validationSchema,
-      onSubmit: (values) => {
-        //Error typescript m4 fahem leeh 
+      onSubmit: (values) => { 
+        console.log(values);
         dispatch(logIn(values))
-        navigate('/dashboard')
       }
     })
 
 
   return (
-    <>
-    <div className=" mt-60 mx-auto">
-    <div className='grid grid-cols-12 gap-12 '>
-      <div className="col-span-6 text-center">
-        
+    <div className='login h-screen'>
 
+    <div className="pt-40 text-center mx-auto flex justify-center">
+      <div className="w-fit text-center flex justify-center">  
+        <div className='w-3/4 shadow-lg shadow-sky-900 py-8 rounded-lg '>
+          <h1 className='text-3xl mb-4 text-sky-900'>Taskscape</h1>
+          <h1 className='text-lg mb-6 text-sky-900'>Log in to continue</h1>
         <form onSubmit={formik.handleSubmit} className=''>
         <input type="email" name="email" id="email" value={formik.values.email}
         onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder='Email address'  
-        className='border-0 h-10 w-80 outline-0 text-orange-500 ps-5 rounded-lg mb-5'/>
+        className='border border-sky-900 h-10 w-80 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
 
 
         <input type="password" name="password" id="password" value={formik.values.password}
          onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder='Password'
-         className='border-0 h-10 w-80 outline-0 text-orange-500 ps-5 rounded-lg'/>
+         className='border border-sky-900 h-10 w-80 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
 
         <div className="mt-8 mb-5">
-        <button type='submit' className='block mx-auto border bg-orange-500 w-40 rounded-lg text-white h-10
+        <button type='submit' className='block mx-auto border bg-sky-700 hover:bg-sky-900 w-40 rounded-lg text-white h-10
         font-bold'>
           {loading? <i className="fa-solid fa-spinner fa-spin-pulse"></i> : <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Login</>}
           </button>
@@ -58,35 +59,18 @@ export default function Login() {
 
         <div className="">
         { formik.errors.email && formik.touched.email ?
-        <div className='bg-red-300 w-60 py-4 mb-2 mx-auto text-red-700 border-s-8 border-red-950 ps-4'><p>{formik.errors.email}</p></div> 
+        <div className='bg-red-300 w-60 py-3 mb-2 mx-auto text-red-700 border-s-8 border-red-700 rounded-es-2xl rounded-se-2xl ps-4 font-semibold'><p>{formik.errors.email}</p></div> 
         : ""
       }
         { formik.errors.password && formik.touched.password ?
-        <div className='bg-red-300 w-60 py-4 mx-auto text-red-700 border-s-8 border-red-950 ps-4'><p>{formik.errors.password}</p></div> 
+        <div className='bg-red-300 w-60 py-3 mb-2 mx-auto text-red-700 border-s-8 border-red-700 rounded-es-2xl rounded-se-2xl ps-4 font-semibold'><p>{formik.errors.password}</p></div> 
         : ""
       }
         </div>
         </form>
-
-
-
-
-
-
-
-
-
-
-
-
+        </div>
       </div>
-      <div className="col-span-6">
-        <h2>Here will be Picture.PNG</h2>
-      </div>
-      
     </div>
-
     </div>
-    </>
   )
 }

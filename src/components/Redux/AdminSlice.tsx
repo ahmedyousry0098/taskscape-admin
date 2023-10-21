@@ -1,11 +1,15 @@
+import React from 'react'
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
-import React from 'react'
 import { ILogin } from '../../Interfaces/authentication.interface'
 
+
+const baseUrl:string = 'https://taskspace-api.vercel.app';
+
 export const logIn = createAsyncThunk<void, ILogin>("Admin/logIn", async (values)=> {
-    // m4 m3aya el link bs hn7oto w hn3ml react Toast
-    await axios.post('', values).then(res => {
+    
+    await axios.post(`${baseUrl}/admin/login`, values)
+    .then(res => {
         console.log(res);
     }).catch(err => {
         console.log(err);  
