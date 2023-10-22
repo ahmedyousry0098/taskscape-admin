@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import {RouterProvider, createBrowserRouter} from 'react-router-dom'
+import { RouterProvider, createBrowserRouter} from 'react-router-dom'
 import Layout from './components/Layout/Layout';
 import Dashboard from './components/Dashboard/Dashboard';
 import Controls from './components/Controls/Controls';
@@ -10,24 +10,25 @@ import NotFoundPage from './components/NotFoundPage/NotFoundPage';
 import Projects from './components/Projects/Projects';
 import Login from './components/Login/Login';
 import Register from './components/Controls/Register/Register';
+import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
 
 
 export default function App() {
-
+  
 
   
   const router = createBrowserRouter([
     {path: 'login', element: <Login/>},
-    {path: "", element: <Layout/>, children: [
-      {path: 'dashboard', element: <Dashboard/>},
+    {path: "", element: <ProtectedRoutes><Layout/></ProtectedRoutes>  , children: [
+      {path:'dashboard', element: <Dashboard/> },
       {path: 'controls', element: <Controls/>, children: [
-        {path: 'Register', element: <Register/>}
+        {path: 'register', element: <Register/>}
       ]},
       {path: 'notifications', element: <Notification/>},
       {path: 'profile', element: <Profile/>},
       {path: 'projects', element: <Projects/>},
-      {path: '*', element: <NotFoundPage/>}
-    ]}
+    ]},
+    {path: '*', element: <NotFoundPage/>}
   ])
 
 

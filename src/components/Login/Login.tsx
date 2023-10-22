@@ -3,15 +3,14 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { useDispatch, useSelector } from 'react-redux'
 import { logIn } from '../Redux/AdminSlice'
-import { useNavigate } from 'react-router-dom'
 import { ILogin } from '../../Interfaces/authentication.interface'
-import { toast } from 'react-toastify';
+// import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
 
     let {loading} = useSelector((state:any) => state.admin)
     let dispatch = useDispatch<any>()
-    let navigate = useNavigate()
+    // let navigate = useNavigate()
 
     const validationSchema = Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
@@ -25,29 +24,30 @@ export default function Login() {
       },
       validationSchema,
       onSubmit: (values) => { 
-        console.log(values);
-        dispatch(logIn(values))
+          dispatch(logIn(values))
+          // navigate('/dashboard')
       }
     })
 
 
   return (
-    <div className='login h-screen'>
+    <section className='login h-screen'>
 
     <div className="pt-40 text-center mx-auto flex justify-center">
       <div className="w-fit text-center flex justify-center">  
-        <div className='w-3/4 shadow-lg shadow-sky-900 py-8 rounded-lg '>
+        <div className='w-full shadow-lg shadow-sky-900 py-8 rounded-lg '>
           <h1 className='text-3xl mb-4 text-sky-900'>Taskscape</h1>
           <h1 className='text-lg mb-6 text-sky-900'>Log in to continue</h1>
         <form onSubmit={formik.handleSubmit} className=''>
+
+
         <input type="email" name="email" id="email" value={formik.values.email}
-        onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder='Email address'  
-        className='border border-sky-900 h-10 w-80 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
+        onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder='Email address'  autoComplete='email'
+        className='border border-sky-600 h-10 w-9/12 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
 
-
-        <input type="password" name="password" id="password" value={formik.values.password}
+        <input type="password" name="password" id="password" value={formik.values.password} autoComplete='password'
          onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder='Password'
-         className='border border-sky-900 h-10 w-80 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
+         className='border border-sky-600 h-10 w-9/12 outline-0 text-sky-900 ps-5 rounded-lg mb-5'/>
 
         <div className="mt-8 mb-5">
         <button type='submit' className='block mx-auto border bg-sky-700 hover:bg-sky-900 w-40 rounded-lg text-white h-10
@@ -71,6 +71,6 @@ export default function Login() {
         </div>
       </div>
     </div>
-    </div>
+    </section>
   )
 }
