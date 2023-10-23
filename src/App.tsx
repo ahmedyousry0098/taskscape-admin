@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
 import { RouterProvider, createBrowserRouter} from 'react-router-dom'
-import Layout from './components/Layout/Layout';
+import Layout from './shared/Layout/Layout';
 import Dashboard from './components/Dashboard/Dashboard';
 import Controls from './components/Controls/Controls';
 import Notification from './components/Notification/Notification';
 import Profile from './components/Profile/Profile';
-import NotFoundPage from './components/NotFoundPage/NotFoundPage';
+import NotFoundPage from './shared/NotFoundPage/NotFoundPage';
 import Projects from './components/Projects/Projects';
 import Login from './components/Login/Login';
 import Register from './components/Controls/Register/Register';
-import ProtectedRoutes from './components/ProtectedRoutes/ProtectedRoutes';
+import ProtectedRoutes from './shared/ProtectedRoutes/ProtectedRoutes';
 
 
 export default function App() {
