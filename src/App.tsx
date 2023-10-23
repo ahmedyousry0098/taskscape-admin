@@ -22,7 +22,7 @@ export default function App() {
     {path: "", element: <ProtectedRoutes><Layout/></ProtectedRoutes>  , children: [
       {path:'dashboard', element: <Dashboard/> },
       {path: 'controls', element: <Controls/>, children: [
-        {path: 'register', element: <Register/>}
+        {index: true, element: <Register/>}
       ]},
       {path: 'notifications', element: <Notification/>},
       {path: 'profile', element: <Profile/>},

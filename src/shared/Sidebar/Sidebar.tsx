@@ -2,7 +2,7 @@ import React from 'react'
 import '../../App.css'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { logout } from '../Redux/AdminSlice'
+import { logout } from '../../Redux/LoginSlice'
 import Logo from '../../assets/logo.png'
 
 export default function Sidebar() {

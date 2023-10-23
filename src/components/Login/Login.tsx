@@ -1,17 +1,18 @@
 import React, { useEffect } from 'react'
+import Logo from '../../assets/logo.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { useDispatch, useSelector } from 'react-redux'
-import { logIn } from '../../shared/Redux/AdminSlice'
+// import { useDispatch, useSelector } from 'react-redux'
+import { logIn } from '../../Redux/LoginSlice'
 import { ILogin } from '../../shared/Interfaces/authentication.interface'
 import { useNavigate } from 'react-router-dom'
-import Logo from '../../assets/logo.png'
+import { useAppDispatch, useAppSelector } from '../../App/hooks'
 
 
 export default function Login() {
 
-    let {loading, isLoggedIn} = useSelector((state:any) => state.admin)
-    let dispatch = useDispatch<any>()
+    let {loading, isLoggedIn} = useAppSelector((state) => state.login)
+    let dispatch = useAppDispatch()
     let navigate = useNavigate()
 
     const validationSchema = Yup.object({
@@ -45,11 +46,11 @@ export default function Login() {
 
       <div className="pt-40 text-center mx-auto flex justify-center">
         <div className="w-fit text-center flex justify-center">  
-          <div className='w-full shadow-lg bg-sky-100 bg-opacity-20 shadow-sky-900 py-8 rounded-lg '>
+          <div className='w-full shadow-lg bg-sky-500 bg-opacity-5 shadow-sky-900 py-8 rounded-lg '>
   
             <img src={Logo} className='w-24 mx-auto' alt="" />
             <h1 className='text-3xl mb-2 text-amber-500 font-serif'>Taskscape</h1>
-            <h1 className='text-lg mb-6 text-amber-500'>Log in to continue</h1>
+            <h1 className='text-lg mb-6 text-sky-700'>Log in to continue</h1>
           <form onSubmit={formik.handleSubmit} className=''>
 
 
