@@ -6,7 +6,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css'
+import 'react-toastify/dist/ReactToastify.css';
+// import "tw-elements-react/dist/css/tw-elements-react.min.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement

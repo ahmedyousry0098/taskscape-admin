@@ -1,13 +1,13 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/AxiosInstance";
-import { ILogin } from "../shared/Interfaces/authentication.interface";
+import { IProject } from "../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 
-export const addEmployee = createAsyncThunk<void, ILogin>(
-  "Add_Employee/addEmployee",
+export const createProject = createAsyncThunk<void, IProject>(
+  "CreateProjectSlice/createProject",
   async (values) => {
     await axiosInstance
-      .post(`/employee/createmployee`, values)
+      .post(`/project/create`, values)
       .then((res) => {
         console.log(res);
         toast.success(res.data.message);
@@ -15,33 +15,36 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
       .catch((err) => {
         console.log(err);
         toast.error(err.response.data.details[0]);
+        toast.error(err.response.data);
       });
   }
 );
 
-export const AddEmpSlice = createSlice({
-  name: "Add_Employee",
+export const CreateProjectSlice = createSlice({
+  name: "Create_Project",
   initialState: {
     loading: false,
     done: false,
+    // projects: [],
   },
   reducers: {},
 
   extraReducers: (builder) => {
     builder
-      .addCase(addEmployee.pending, (state) => {
+      .addCase(createProject.pending, (state) => {
         state.loading = true;
         state.done = false;
       })
-      .addCase(addEmployee.fulfilled, (state) => {
+      .addCase(createProject.fulfilled, (state, action) => {
         state.loading = false;
         state.done = true;
+        // state.projects = action.payload
       })
-      .addCase(addEmployee.rejected, (state) => {
+      .addCase(createProject.rejected, (state, action) => {
         state.loading = false;
         state.done = false;
       });
   },
 });
 
-export let addEmployeeReducer = AddEmpSlice.reducer;
+export let createProjectReducer = CreateProjectSlice.reducer;

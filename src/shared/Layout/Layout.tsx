@@ -8,11 +8,11 @@ import Sidebar from '../Sidebar/Sidebar'
 export default function Layout() {
   return (
     <>
-  <div className="grid grid-cols-12 gap-10">
-    <div className="col-span-2 lg:w-full md:w-24">
+  <div className="">
+    <div className="">
     <Sidebar/>
     </div>
-    <div className="col-span-10">
+    <div className=" ">
       
     <Outlet/>
     </div>

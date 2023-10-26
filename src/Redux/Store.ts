@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { loginReducer } from "./LoginSlice";
 import { addEmployeeReducer } from "./AddEmpSlice";
+import { createProjectReducer } from "./CreateProject";
 
 let store = configureStore({
   reducer: {
     login: loginReducer,
     addEmployee: addEmployeeReducer,
+    createProject: createProjectReducer,
   },
 });
 

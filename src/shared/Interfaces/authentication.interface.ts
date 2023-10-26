@@ -9,3 +9,12 @@ export interface IRegister {
   password: string;
   role: string;
 }
+
+export interface IProject {
+  projectName: string;
+  startDate: string;
+  deadline: string;
+  description: string;
+  scrumMaster: string;
+  employees: string[];
+}
