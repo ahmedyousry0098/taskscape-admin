@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react'
+import React  from 'react'
 import Logo from '../../assets/logo.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-// import { useDispatch, useSelector } from 'react-redux'
 import { logIn } from '../../Redux/LoginSlice'
 import { ILogin } from '../../shared/Interfaces/authentication.interface'
 import { useNavigate } from 'react-router-dom'
@@ -11,7 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../App/hooks'
 
 export default function Login() {
 
-    let {loading, isLoggedIn} = useAppSelector((state) => state.login)
+    let {loading} = useAppSelector((state) => state.login)
     let dispatch = useAppDispatch()
     let navigate = useNavigate()
 
@@ -27,15 +26,14 @@ export default function Login() {
       },
       validationSchema,
       onSubmit: (values) => { 
-        dispatch(logIn(values))
-      }
+        dispatch(logIn(values)).then((result)=> {
+            if (result.payload) {
+              navigate("/")
+            }
+          })
+        }
       })
-      
-      useEffect(()=> {
-        if (isLoggedIn === true) {
-          navigate('/')
-        } 
-    },[isLoggedIn, navigate])
+  
 
 
     
