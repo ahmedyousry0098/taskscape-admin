@@ -6,16 +6,19 @@ import { toast } from "react-toastify";
 export const addEmployee = createAsyncThunk<void, ILogin>(
   "Add_Employee/addEmployee",
   async (values) => {
-    await axiosInstance
-      .post(`/employee/createmployee`, values)
-      .then((res) => {
-        console.log(res);
-        toast.success(res.data.message);
-      })
-      .catch((err) => {
-        console.log(err);
-        toast.error(err.response.data.details[0]);
-      });
+    try {
+      const response = await axiosInstance.post(
+        `/employee/createmployee`,
+        values
+      );
+      if (response.status === 200) {
+        toast.success(response.data.message);
+      }
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(error);
+    }
   }
 );
 
@@ -24,22 +27,30 @@ export const AddEmpSlice = createSlice({
   initialState: {
     loading: false,
     done: false,
+    error: "",
   },
   reducers: {},
-
   extraReducers: (builder) => {
     builder
       .addCase(addEmployee.pending, (state) => {
         state.loading = true;
         state.done = false;
+
+        state.error = "";
       })
       .addCase(addEmployee.fulfilled, (state) => {
         state.loading = false;
-        state.done = true;
+        state.error = "";
       })
-      .addCase(addEmployee.rejected, (state) => {
+      .addCase(addEmployee.rejected, (state, action) => {
         state.loading = false;
         state.done = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message!;
+          toast.error("User already in ornization");
+        } else {
+          toast.error("Something went wrong");
+        }
       });
   },
 });

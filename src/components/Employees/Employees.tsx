@@ -1,14 +1,16 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { IRegister } from '../../shared/Interfaces/authentication.interface'
 import { addEmployee } from '../../Redux/AddEmpSlice';
 import { useAppDispatch, useAppSelector } from '../../App/hooks';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import { Slide } from '@mui/material';
 import { TransitionProps } from '@mui/material/transitions';
+import { allEmployees } from '../../Redux/AllEmpSlice';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -19,22 +21,24 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-
 export default function Employees() {
-   const [open, setOpen] = useState(false);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(false);
+  const handleClickOpen = () => {setOpen(true);};
+  const handleClose = () => {setOpen(false)};
 
 
-  const employees:string[] = []
-    const dispatch = useAppDispatch()
-  const {loading, done} = useAppSelector((state) => state.addEmployee)
+  const dispatch = useAppDispatch()
+  const {getAll, isLoading} = useAppSelector(state => state.allEmployees)
+  const {loading} = useAppSelector((state) => state.addEmployee)
+
+  // const getAllEmployees = function(){
+  // }  
+  
+  useEffect(()=> {
+    dispatch(allEmployees())
+  }, [])
+
 
   const validationSchema = Yup.object({
     employeeName: Yup.string().required('Employee Name is required').min(3, 'Min 3 characters').max(20, 'Max 20 characters'),
@@ -42,8 +46,6 @@ export default function Employees() {
     password: Yup.string().required('Password is required'),
     role: Yup.string().required('You must choose a role')
   })
-
-  
 
   let formik = useFormik<IRegister>({
     initialValues: {
@@ -54,7 +56,6 @@ export default function Employees() {
     },
     validationSchema,
     onSubmit: (values)=> {
-      console.log(values);
       dispatch(addEmployee(values))
     }
   })
@@ -63,8 +64,9 @@ export default function Employees() {
   return (
     <div className='mt-10 xl:ms-64 sm:ms-16'>
       
+      
     
-    {employees.length === 0 ? 
+    {getAll?.employee?.length === 0 ? 
         <div className="text-center mx-auto my-56 w-5/6">
           <h1 className='xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400'><i className="fa-solid fa-users-slash"></i></h1>
           <h2 className='xl:text-4xl md:text-2xl sm:text-xl mb-12 text-gray-400'>No Employees in your orgnaization</h2>
@@ -72,16 +74,43 @@ export default function Employees() {
             rounded-lg text-white h-10 font-bold'onClick={handleClickOpen}>
             <i className="fa-solid fa-user-plus me-3" ></i>Add employees</button>
         </div>
-        : <div className=''>
-          <button type='submit' className='block mx-auto px-4 border bg-sky-700 hover:bg-sky-900 
+        : 
+        <>
+        <div className='mb-5'>
+          <button type='submit' className='block ms-5 px-4 border bg-sky-700 hover:bg-sky-900 
             rounded-lg text-white h-10 font-bold'onClick={handleClickOpen}> {loading ? <i className="fa-solid fa-spinner fa-spin-pulse"></i> 
             : <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Add Employee</>}</button>
-          </div>}
+          </div>
+          
+          <div className='flex flex-wrap justify-center '>
+            {isLoading ? <div className='mt-80 text-9xl text-gray-400'><i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i></div> : getAll?.employee?.map((employee:any)=> 
+            <div key={employee._id} className='m-3 w-96 px-10 py-6 bg-sky-500 bg-opacity-5 shadow-md
+             text-sky-900 shadow-sky-900 rounded-lg'>  
+              <p className='font-bold py-1'>Name: <span className='font-medium'>{employee.employeeName}</span></p>
+              <p className='font-bold py-1'>Email: <span className='font-medium'>{employee.email}</span></p>
+              <p className='font-bold py-1'>Role: <span className='font-medium'>{employee.role}</span></p> 
+              <p className='font-bold py-1'>Joining date: <span className='font-medium'>{employee.createdAt.split("T").slice(0,1).join("")}</span></p> 
+              <p className='font-bold py-1'>Last updated: <span className='font-medium'>{employee.updatedAt.split("T").slice(0,1).join("")}</span></p>
+              <div className='flex justify-center mt-8'>
+              <button type='button' className='bg-red-700 hover:bg-red-900 px-4
+            rounded-lg text-white py-1 font-semibold me-7'>
+              <i className="fa-solid fa-user-xmark me-2 fa-sm text-white"></i>Remove</button>
+              
+              <button type='button' className='bg-sky-700 hover:bg-sky-900 px-4
+            rounded-lg text-white py-1 font-semibold'>
+              <i className="fa-regular fa-pen-to-square me-2 fa-sm text-white"></i>Edit</button>
+
+              </div>
+
+            </div>)}
+          </div>
+        </>
+          }
   
         <div>
         <Dialog open={open}  TransitionComponent={Transition}
             keepMounted onClose={handleClose} fullWidth>
-          <DialogContent >
+          <DialogContent>
             <h1 className='text-center text-3xl text-sky-900 mb-3 mt-4'>Add An Employee</h1>
             <h1 className='text-lg mb-6 text-sky-900 text-center'>More emplyees more success</h1>
         <form onSubmit={formik.handleSubmit} className='w-5/6 mx-auto'>
@@ -121,9 +150,9 @@ export default function Employees() {
           <DialogActions>
             <button type='submit' className='block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
             rounded-lg text-white h-10 font-bold'>{loading ? <i className="fa-solid fa-spinner fa-spin-pulse"></i> 
-            : done ? <i className="fa-solid fa-check-double text-lime-300"></i> : <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Add Employee</>}</button>
+            : <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Add Employee</>}</button>
 
-            <button className='block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+            <button type='button' className='block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
             rounded-lg text-white h-10 font-bold' onClick={handleClose}>Cancel</button>
           </DialogActions>
           </form>

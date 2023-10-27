@@ -7,7 +7,7 @@ export const logIn = createAsyncThunk<void, ILogin>(
   "Login/logIn",
   async (values) => {
     const response = await axiosInstance.post(`/admin/login`, values);
-    console.log(response.data);
+    console.log(response);
     localStorage.setItem("token", response.data.token);
     return response.data;
   }
