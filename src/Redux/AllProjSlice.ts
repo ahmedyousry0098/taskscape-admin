@@ -1,12 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/AxiosInstance";
 import { toast } from "react-toastify";
+import { loggedIn } from "./LoginSlice";
 import jwtDecode from "jwt-decode";
 import { IJwtPayload } from "../shared/Interfaces/authentication.interface";
-import { loggedIn } from "./LoginSlice";
 
-export const allEmployees = createAsyncThunk<void>(
-  "All_Employee/allEmployees",
+export const allProjects = createAsyncThunk<void>(
+  "All_projects/allProjects",
   async () => {
     try {
       loggedIn();
@@ -14,8 +14,9 @@ export const allEmployees = createAsyncThunk<void>(
       if (!token) return;
       const decoded = jwtDecode<IJwtPayload>(token);
       const response = await axiosInstance.get(
-        `/employee/getAllEmployee/${decoded.orgId}`
+        `/project/org-projects/${decoded.orgId}`
       );
+      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -26,32 +27,32 @@ export const allEmployees = createAsyncThunk<void>(
 
 type initialStateType = {
   isLoading: boolean;
-  getAll: any;
+  getAllProjects: any;
   error: string;
 };
 
 const initialState: initialStateType = {
   isLoading: false,
-  getAll: [],
+  getAllProjects: [],
   error: "",
 };
 
-export const AllEmpSlice = createSlice({
-  name: "All_Employee",
+export const AllProjectSlice = createSlice({
+  name: "All_projects",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(allEmployees.pending, (state) => {
+      .addCase(allProjects.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(allEmployees.fulfilled, (state, action: any) => {
+      .addCase(allProjects.fulfilled, (state, action) => {
         if (action.payload !== undefined) {
-          state.getAll = action.payload;
+          state.getAllProjects = action.payload;
         }
         state.isLoading = false;
       })
-      .addCase(allEmployees.rejected, (state, action) => {
+      .addCase(allProjects.rejected, (state, action) => {
         state.isLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
@@ -61,4 +62,4 @@ export const AllEmpSlice = createSlice({
   },
 });
 
-export let allEmployeesReducer = AllEmpSlice.reducer;
+export let allProjectsReducer = AllProjectSlice.reducer;

@@ -1,8 +1,9 @@
-import React  from 'react'
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect }  from 'react'
 import Logo from '../../assets/logo.png'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
-import { logIn } from '../../Redux/LoginSlice'
+import { logIn, loggedIn } from '../../Redux/LoginSlice'
 import { ILogin } from '../../shared/Interfaces/authentication.interface'
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../App/hooks'
@@ -10,9 +11,16 @@ import { useAppDispatch, useAppSelector } from '../../App/hooks'
 
 export default function Login() {
 
-    let {loading} = useAppSelector((state) => state.login)
+    let {loading, isLoggedIn} = useAppSelector((state) => state.login)
     let dispatch = useAppDispatch()
     let navigate = useNavigate()
+
+    useEffect(() => {
+      if (isLoggedIn === true) {
+        navigate("/")
+      }
+    }, [isLoggedIn])
+    
 
     const validationSchema = Yup.object({
       email: Yup.string().email("Invalid email").required("Email is required"),
@@ -26,10 +34,8 @@ export default function Login() {
       },
       validationSchema,
       onSubmit: (values) => { 
-        dispatch(logIn(values)).then((result)=> {
-            if (result.payload) {
-              navigate("/")
-            }
+        dispatch(logIn(values)).then(()=> {
+          dispatch(loggedIn())
           })
         }
       })

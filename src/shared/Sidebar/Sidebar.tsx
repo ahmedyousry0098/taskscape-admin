@@ -12,7 +12,6 @@ export default function Sidebar() {
   
     function loggedOut (){
       dispatch(logout())
-      localStorage.removeItem('token')
       navigate('/login')
     }
   

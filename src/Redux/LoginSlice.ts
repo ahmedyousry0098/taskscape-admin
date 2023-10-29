@@ -1,58 +1,109 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ILogin } from "../shared/Interfaces/authentication.interface";
+import {
+  IJwtPayload,
+  ILogin,
+} from "../shared/Interfaces/authentication.interface";
 import { axiosInstance } from "../App/AxiosInstance";
 import { toast } from "react-toastify";
+import jwtDecode from "jwt-decode";
 
 export const logIn = createAsyncThunk<void, ILogin>(
   "Login/logIn",
   async (values) => {
-    const response = await axiosInstance.post(`/admin/login`, values);
-    console.log(response);
-    localStorage.setItem("token", response.data.token);
-    return response.data;
+    try {
+      const response = await axiosInstance.post(`/admin/login`, values);
+      return response.data;
+    } catch (error: any) {
+      toast.error(error.response.data.error);
+    }
   }
 );
 
+function decodeToken(token: string) {
+  try {
+    const decoded = jwtDecode<IJwtPayload>(token);
+    return decoded;
+  } catch (err: any) {
+    return err.message;
+  }
+}
+type initialStateType = {
+  error: string;
+  loading: boolean;
+  isLoggedIn: boolean;
+  token: string;
+  decoded: {
+    _id: string;
+    email: string;
+    orgId: string;
+  };
+};
+const initialState: initialStateType = {
+  error: "",
+  loading: false,
+  isLoggedIn: false,
+  token: "",
+  decoded: {
+    _id: "",
+    email: "",
+    orgId: "",
+  },
+};
+
 export const LoginSlice = createSlice({
   name: "Login",
-  initialState: {
-    admin: "",
-    error: "",
-    loading: false,
-    isLoggedIn: false,
-  },
+  initialState,
   reducers: {
+    loggedIn: (state) => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        state.isLoggedIn = false;
+        state.decoded = initialState.decoded;
+        return;
+      }
+
+      const decode = decodeToken(token);
+      console.log(decode);
+
+      if (typeof decode == "string") {
+        state.decoded = initialState.decoded;
+        state.isLoggedIn = false;
+        return;
+      }
+      state.decoded = decode;
+      state.isLoggedIn = true;
+    },
     logout: (state) => {
       state.isLoggedIn = false;
+      state.decoded = {
+        _id: "",
+        email: "",
+        orgId: "",
+      };
+      localStorage.removeItem("token");
     },
   },
-
   extraReducers: (builder) => {
     builder
-      .addCase(logIn.pending, (state, action) => {
+      .addCase(logIn.pending, (state) => {
         state.loading = true;
         state.isLoggedIn = false;
-        state.admin = "";
-        state.error = "";
       })
-      .addCase(logIn.fulfilled, (state: any, action: any) => {
-        state.admin = action.payload;
-        state.error = "";
+      .addCase(logIn.fulfilled, (state, action: any) => {
+        if (action.payload !== undefined) {
+          localStorage.setItem("token", action.payload.token);
+        }
         state.loading = false;
-        state.isLoggedIn = true;
       })
       .addCase(logIn.rejected, (state, action) => {
-        state.admin = "";
         state.loading = false;
         state.isLoggedIn = false;
         if (action.error.message === "Request failed with status code 400") {
-          toast.error("ُWrong Email or Password");
-        } else {
-          toast.error("something went wrong please try again");
+          toast.error("ُSomething went wrong please try again later");
         }
       });
   },
 });
 
 export let loginReducer = LoginSlice.reducer;
-export let { logout, decoding }: any = LoginSlice.actions;
+export let { logout, loggedIn } = LoginSlice.actions;

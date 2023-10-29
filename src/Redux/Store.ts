@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { loginReducer } from "./LoginSlice";
 import { addEmployeeReducer } from "./AddEmpSlice";
-import { createProjectReducer } from "./CreateProject";
+import { createProjectReducer } from "./CreateProjSlice";
 import { allEmployeesReducer } from "./AllEmpSlice";
+import { allProjectsReducer } from "./AllProjSlice";
 
 let store = configureStore({
   reducer: {
@@ -10,6 +11,7 @@ let store = configureStore({
     addEmployee: addEmployeeReducer,
     createProject: createProjectReducer,
     allEmployees: allEmployeesReducer,
+    allProjects: allProjectsReducer,
   },
 });
 

@@ -1,3 +1,5 @@
+import { JwtPayload } from "jwt-decode";
+
 export interface ILogin {
   email: string;
   password: string;
@@ -17,4 +19,11 @@ export interface IProject {
   description: string;
   scrumMaster: string;
   employees: string[];
+  organization: string;
+}
+
+export interface IJwtPayload extends JwtPayload {
+  _id: string;
+  email: string;
+  orgId: string;
 }

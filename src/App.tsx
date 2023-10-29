@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useEffect } from 'react';
 import './App.css';
 import { RouterProvider, createBrowserRouter} from 'react-router-dom'
 import Layout from './shared/Layout/Layout';
@@ -11,11 +12,18 @@ import Login from './components/Login/Login';
 import Register from './components/Controls/Register/Register';
 import ProtectedRoutes from './shared/ProtectedRoutes/ProtectedRoutes';
 import Employees from './components/Employees/Employees';
+import { useAppDispatch } from './App/hooks';
+import { loggedIn } from './Redux/LoginSlice';
 
 
 export default function App() {
   
-
+  let dispatch = useAppDispatch()
+  
+  useEffect(() => {
+    dispatch(loggedIn())
+  }, [])
+  
   
   const router = createBrowserRouter([
     {path: 'login', element: <Login/>},
