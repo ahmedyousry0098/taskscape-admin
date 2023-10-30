@@ -38,14 +38,10 @@ export const CreateProjectSlice = createSlice({
       .addCase(createProject.fulfilled, (state, action) => {
         state.loading = false;
         state.done = true;
-        console.log("fullfilled", action);
-
-        // state.projects = action.payload
       })
       .addCase(createProject.rejected, (state, action) => {
         state.loading = false;
         state.done = false;
-        console.log("rejected", action);
       });
   },
 });

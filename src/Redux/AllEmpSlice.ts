@@ -1,20 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/AxiosInstance";
 import { toast } from "react-toastify";
-import jwtDecode from "jwt-decode";
-import { IJwtPayload } from "../shared/Interfaces/authentication.interface";
-import { loggedIn } from "./LoginSlice";
 
 export const allEmployees = createAsyncThunk<void>(
   "All_Employee/allEmployees",
-  async () => {
+  async (_, decodeing) => {
     try {
-      loggedIn();
-      const token = localStorage.getItem("token");
-      if (!token) return;
-      const decoded = jwtDecode<IJwtPayload>(token);
+      const getDecode: any = decodeing.getState();
+      const orgnizationId = getDecode.login.decoded.orgId;
       const response = await axiosInstance.get(
-        `/employee/getAllEmployee/${decoded.orgId}`
+        `/employee/getAllEmployee/${orgnizationId}`
       );
       return response.data;
     } catch (error: any) {

@@ -63,7 +63,6 @@ export const LoginSlice = createSlice({
       }
 
       const decode = decodeToken(token);
-      console.log(decode);
 
       if (typeof decode == "string") {
         state.decoded = initialState.decoded;

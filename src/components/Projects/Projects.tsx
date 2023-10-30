@@ -1,20 +1,27 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
-import AddProject from "./AddProject/AddProject";
-import { allProjects } from "../../Redux/AllProjSlice";
+import AddProject from "./ControlProject/AddProject";
+import { allProjects, delEmployeeFromProject } from "../../Redux/AllProjSlice";
+import { Button, Collapse, Tooltip } from 'antd';
+import { Popconfirm } from 'antd';
+import { DeleteEmpOfProj } from "../../shared/Interfaces/authentication.interface";
+import AddEmpToProj from "./ControlProject/AddEmpToProj";
+
 
 export default function Projects() {
   const [open, setOpen] = useState(false);
+  const [openAddEmp, setOpenAddEmp] = useState(false);
   const dispatch = useAppDispatch();
-  const { isLoading, getAllProjects } = useAppSelector(
-    (state) => state.allProjects
-  );
+  const { isLoading, getAllProjects, delLoading } = useAppSelector((state) => state.allProjects);
   const { loading } = useAppSelector((state) => state.createProject);
+
+  function handleDeleteEmployee(body: DeleteEmpOfProj) {
+    dispatch(delEmployeeFromProject(body))
+  }
 
   useEffect(() => {
     dispatch(allProjects());
-    console.log(getAllProjects);
   }, []);
 
 
@@ -34,24 +41,27 @@ export default function Projects() {
             rounded-lg text-white h-10 font-bold"
             onClick={() => setOpen(true)}
           >
-            <i className="fa-solid fa-user-plus me-3"></i>Create Project
+            <i className="fa-solid fa-circle-plus me-3"></i>Create Project
           </button>
         </div>
-        :
-        <>
-          <div className="">
-            <button
-              type="button"
-              className="block mx-auto px-4 border bg-sky-700 hover:bg-sky-900 
-            rounded-lg text-white h-10 font-bold" onClick={() => setOpen(true)}>
-              {loading ?
-                <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-                :
-                <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Create Project</>}
-            </button>
+        : <>
+          <div className="fixed right-8 bottom-8 text-center">
+            <Tooltip title="Create Project" placement="left" color={"#082F49"} key={"#082F49"}>
+              <button
+                type="button"
+                className="p-3 rounded-full hover:scale-110 duration-300 bg-opacity-100 bg-sky-700 hover:bg-sky-900 
+             text-white" onClick={() => setOpen(true)}>
+                {loading ?
+                  <i className="fa-solid fa-spinner fa-spin-pulse"></i>
+                  :
+                  <><i className="fa-solid fa-plus fa-xl"></i></>}
+              </button>
+            </Tooltip>
           </div>
 
-          <div className="flex flex-wrap justify-center mt-6 mx-20">
+
+
+          <div className="flex flex-wrap justify-center items-start mt-6 mx-5">
             {isLoading ?
               <div className="mt-80 text-9xl text-gray-400">
                 <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
@@ -60,57 +70,94 @@ export default function Projects() {
               getAllProjects?.projects?.map((project: any) =>
                 <div
                   key={project._id}
-                  className="m-3 w-full px-10 py-6 bg-sky-500 bg-opacity-5 shadow-md
-                 text-sky-900 shadow-sky-900 rounded-lg">
-                  <h1 className="font-black py-1 text-center text-2xl">
-                    <span className="font-medium">{project.projectName}</span></h1>
+                  className="m-3 w-[500px] border-2 rounded-3xl border-sky-950 relative">
 
-                  <p className="font-bold py-1">Description:
-                    <span className="font-medium">{project.description}</span></p>
+                  <div className="py-2 mb-4 bg-sky-950 text-white w-1/2 mx-auto rounded-es-3xl rounded-ee-3xl">
+                    <h1 className="font-black text-center text-2xl">
+                      <span className="font-medium">{project.projectName}</span></h1>
+                  </div>
 
-                  <div className="flex justify-center">
+                  <div className="flex flex-wrap justify-between px-10 mb-2">
                     <p className="font-bold py-1">Start date:
-                      <span className="font-medium">{project.startDate.split("T").slice(0, 1).join("")}</span></p>
+                      <span className="font-medium ps-2">{project.startDate.split("T").slice(0, 1).join("")}</span></p>
                     <p className="font-bold py-1">Deadline:
-                      <span className="font-medium">{project.deadline.split("T").slice(0, 1).join("")}</span></p>
+                      <span className="font-medium ps-2">{project.deadline.split("T").slice(0, 1).join("")}</span></p>
                   </div>
 
-                  <div>
-                    <h4 className="font-bold py-1 text">Scrum Master:</h4>
-                    <p>Name: <span className="font-medium">{project.scrumMaster.employeeName}</span></p>
-                    <p>Email: <span className="font-medium">{project.scrumMaster.email}</span></p>
+                  <div className="px-10 mb-2">
+                    <h4 className="font-bold">Scrum Master:</h4>
+                    <p className="font-semibold">Name: <span className="font-normal">{project.scrumMaster?.employeeName}</span></p>
+                    <p className="font-semibold">Email: <span className="font-normal">{project.scrumMaster?.email}</span></p>
                   </div>
 
-                  <div>
-                    <h4 className="font-bold py-1 text">Collaborators:</h4>
-                    {project?.employees?.map((member: any) => <>
-                      <div className="flex justify-between">
-                        <div>
-                          <p>Name: <span className="font-medium">{member.employeeName}</span></p>
-                          <p>Email: <span className="font-medium">{member.email}</span></p>
-                        </div>
-                        <div>
-                          <button>edit</button>
-                          <button>delete</button>
-                        </div>
-                      </div>
-                    </>)}
+                  <div className="mb-2 px-6">
+                    <Collapse
+                      expandIconPosition={"end"}
+                      items={[
+                        {
+                          label: 'Description :',
+                          children: <>
+                            <span className="font-medium ps-2">{project.description}</span>
+                          </>
+                        },
+                      ]} />
                   </div>
 
 
+                  <div className="px-6 mb-20">
+                    <Collapse
+                      expandIconPosition={"end"}
+                      items={[
+                        {
+                          label: 'Collaborators :',
+                          children: <div>
+                            {project?.employee?.length === 0 ? "No collaborators in this project" : project?.employees?.map((member: any) => <>
+                              <div key={member?._id + project?._id}
+                                className="flex justify-between items-center w-full mb-1 py-2 border-b-2 border-sky-700">
+                                <div>
+                                  <p className="font-semibold">Name: <span className="font-normal">{member?.employeeName}</span></p>
+                                  <p className="font-semibold">Email: <span className="font-normal">{member?.email}</span></p>
+                                </div>
+                                <div>
+                                  <Popconfirm
+                                    title="Remove Collaborator"
+                                    description="Are you sure to remove this collaborator ?"
+                                    okText="Yes"
+                                    okType="danger"
+                                    onConfirm={() => handleDeleteEmployee({
+                                      organization: project?.organization?._id,
+                                      employee: member?._id,
+                                      project: project?._id
+                                    })}
+                                    cancelText="Cancel"
+                                    showCancel
+                                  >
+                                    <Button className="text-sky-700"> {delLoading ? <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+                                      : <i className="fa-solid fa-user-minus fa-xs"></i>}</Button>
+                                  </Popconfirm>
+
+                                </div>
+                              </div>
+                            </>)}
+                            <div className="flex justify-end pt-2">
+                              <Tooltip title="Add Collaborator" placement="left" color={"#082F49"} key={"#082F49"}>
+                                <Button className="text-sky-700" onClick={() => setOpenAddEmp(true)}>
+                                  <i className="fa-solid fa-plus"></i>
+                                </Button></Tooltip>
+                            </div>
+                          </div>
+                        },
+                      ]} />
+                  </div>
+
+                  <AddEmpToProj projectId={project._id} openAddEmp={openAddEmp}
+                    setAddDialog={() => setOpenAddEmp(false)} />
 
 
-
-
-
-
-
-
-
-                  <div className="flex justify-center mt-8">
+                  <div className="flex justify-center mb-3 absolute -translate-x-1/2 left-1/2 bottom-0">
                     <button type="button" className="bg-red-700 hover:bg-red-900 px-4
                     rounded-lg text-white py-1 font-semibold me-7">
-                      <i className="fa-solid fa-user-xmark me-2 fa-sm text-white"></i>Remove</button>
+                      <i className="fa-regular fa-trash-can me-2 fa-sm text-white"></i>Remove</button>
 
                     <button type="button" className="bg-sky-700 hover:bg-sky-900 px-4
                       rounded-lg text-white py-1 font-semibold">
@@ -119,10 +166,7 @@ export default function Projects() {
                 </div>)}
           </div>
         </>
-
-
       }
-
       <AddProject open={open} setDialog={() => setOpen(false)} />
     </div>
   );

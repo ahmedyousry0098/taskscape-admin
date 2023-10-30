@@ -11,6 +11,7 @@ import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { createProject } from "../../../Redux/CreateProjSlice";
 import { allEmployees } from "../../../Redux/AllEmpSlice";
+import { allProjects } from "../../../Redux/AllProjSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -29,6 +30,7 @@ export default function AddProject(props: any) {
 
   useEffect(() => {
     dispatch(allEmployees());
+
   }, []);
 
   const validationSchema = Yup.object({
@@ -56,11 +58,11 @@ export default function AddProject(props: any) {
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
       dispatch(createProject(values)).then((result) => {
         if (result.payload) {
           props.setDialog();
           formik.resetForm();
+          dispatch(allProjects())
         }
       });
     },
@@ -106,11 +108,7 @@ export default function AddProject(props: any) {
             </div>
 
             {/* Organization */}
-            <input
-              type="hidden"
-              name="organization"
-              value={formik.values.organization}
-            />
+            <input type="hidden" name="organization" value={formik.values.organization} />
 
             {/* Dates */}
             <div className="mb-5 w-full px-4 flex justify-between">
@@ -202,16 +200,16 @@ export default function AddProject(props: any) {
                 {getAll?.employee?.length === 0
                   ? "Orgnization have no Scrum masters"
                   : getAll?.employee
-                      ?.filter((scrum: any) => scrum.role === "scrumMaster")
-                      ?.map((scrum: any) => (
-                        <option
-                          key={scrum._id}
-                          value={scrum._id}
-                          className="py-5 ps-3 h-10 text-sky-900"
-                        >
-                          {scrum.employeeName} → {scrum.email}
-                        </option>
-                      ))}
+                    ?.filter((scrum: any) => scrum.role === "scrumMaster")
+                    ?.map((scrum: any) => (
+                      <option
+                        key={scrum._id}
+                        value={scrum._id}
+                        className="py-5 ps-3 h-10 text-sky-900"
+                      >
+                        {scrum.employeeName} → {scrum.email}
+                      </option>
+                    ))}
               </select>
             </div>
 
@@ -227,21 +225,21 @@ export default function AddProject(props: any) {
                 className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1"
               >
                 <option disabled hidden className="py-5 ps-3 h-10">
-                  Select Member
+                  Select Collaborators
                 </option>
                 {getAll?.employee?.length === 0
-                  ? "Orgnization have no Scrum masters"
+                  ? "Orgnization have no Collaborators"
                   : getAll?.employee
-                      ?.filter((member: any) => member.role === "member")
-                      ?.map((member: any) => (
-                        <option
-                          key={member._id}
-                          value={member._id}
-                          className="px-3 py-1 h-10 text-sky-900"
-                        >
-                          {member.employeeName} → {member.email}
-                        </option>
-                      ))}
+                    ?.filter((member: any) => member.role === "member")
+                    ?.map((member: any) => (
+                      <option
+                        key={member._id}
+                        value={member._id}
+                        className="px-3 py-1 h-10 text-sky-900"
+                      >
+                        {member.employeeName} → {member.email}
+                      </option>
+                    ))}
               </select>
             </div>
 
@@ -255,7 +253,7 @@ export default function AddProject(props: any) {
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>
-                    <i className="fa-solid fa-arrow-right-to-bracket me-3"></i>
+                    <i className="fa-solid fa-plus me-3"></i>
                     Create Project
                   </>
                 )}

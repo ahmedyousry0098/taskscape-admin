@@ -27,3 +27,14 @@ export interface IJwtPayload extends JwtPayload {
   email: string;
   orgId: string;
 }
+
+export interface DeleteEmpOfProj {
+  organization: string;
+  project: string;
+  employee: string;
+}
+export interface AddEmpOfProj {
+  organization: string;
+  project: string;
+  employees: string[];
+}

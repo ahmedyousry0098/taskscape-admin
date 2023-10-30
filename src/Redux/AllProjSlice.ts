@@ -1,26 +1,58 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/AxiosInstance";
 import { toast } from "react-toastify";
-import { loggedIn } from "./LoginSlice";
-import jwtDecode from "jwt-decode";
-import { IJwtPayload } from "../shared/Interfaces/authentication.interface";
+import {
+  AddEmpOfProj,
+  DeleteEmpOfProj,
+} from "../shared/Interfaces/authentication.interface";
 
 export const allProjects = createAsyncThunk<void>(
   "All_projects/allProjects",
-  async () => {
+  async (_, decodeing) => {
     try {
-      loggedIn();
-      const token = localStorage.getItem("token");
-      if (!token) return;
-      const decoded = jwtDecode<IJwtPayload>(token);
+      const getDecode: any = decodeing.getState();
+      const orgnizationId = getDecode.login.decoded.orgId;
       const response = await axiosInstance.get(
-        `/project/org-projects/${decoded.orgId}`
+        `/project/org-projects/${orgnizationId}`
       );
+      return response.data;
+    } catch (error: any) {
+      toast.error(error.response.data.error);
+    }
+  }
+);
+
+export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
+  "All_Employee/delEmployeeFromProject",
+  async (body) => {
+    try {
+      const response = await axiosInstance.patch(`/project/del-employee`, body);
+      toast.success(response.data.message);
       console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data.error);
+      toast.error(error.response.data.details);
+    }
+  }
+);
+
+export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
+  "All_Employee/addEmployeeToProject",
+  async (values) => {
+    try {
+      const response = await axiosInstance.patch(
+        `/project/add-employee`,
+        values
+      );
+      toast.success(response.data.message);
+      console.log(response);
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.error);
+      toast.error(error.response.data.details);
     }
   }
 );
@@ -29,12 +61,16 @@ type initialStateType = {
   isLoading: boolean;
   getAllProjects: any;
   error: string;
+  delLoading: boolean;
+  addLoading: boolean;
 };
 
 const initialState: initialStateType = {
   isLoading: false,
   getAllProjects: [],
   error: "",
+  delLoading: false,
+  addLoading: false,
 };
 
 export const AllProjectSlice = createSlice({
@@ -54,6 +90,36 @@ export const AllProjectSlice = createSlice({
       })
       .addCase(allProjects.rejected, (state, action) => {
         state.isLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error("Something went wrong");
+        }
+      });
+
+    builder
+      .addCase(delEmployeeFromProject.pending, (state) => {
+        state.delLoading = true;
+      })
+      .addCase(delEmployeeFromProject.fulfilled, (state) => {
+        state.delLoading = false;
+      })
+      .addCase(delEmployeeFromProject.rejected, (state, action) => {
+        state.delLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error("Something went wrong");
+        }
+      });
+
+    builder
+      .addCase(addEmployeeToProject.pending, (state) => {
+        state.addLoading = true;
+      })
+      .addCase(addEmployeeToProject.fulfilled, (state) => {
+        state.addLoading = false;
+      })
+      .addCase(addEmployeeToProject.rejected, (state, action) => {
+        state.addLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error("Something went wrong");

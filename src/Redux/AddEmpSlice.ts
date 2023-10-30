@@ -14,10 +14,9 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
       if (response.status === 200) {
         toast.success(response.data.message);
       }
-      console.log(response.data);
       return response.data;
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      toast.error(error.response.data.error);
     }
   }
 );
