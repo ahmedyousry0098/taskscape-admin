@@ -30,7 +30,6 @@ export default function AddEmpToProj(props: any) {
         dispatch(allEmployees());
     }, []);
 
-
     let formik = useFormik<AddEmpOfProj>({
         initialValues: {
             project: props.projectId,
@@ -38,13 +37,12 @@ export default function AddEmpToProj(props: any) {
             organization: decoded.orgId,
         },
         onSubmit: (values) => {
-            console.log(values);
             dispatch(addEmployeeToProject(values)).then((result) => {
                 if (result.payload) {
                     props.setAddDialog();
                     formik.resetForm();
                 }
-            });
+            })
         },
     });
 
