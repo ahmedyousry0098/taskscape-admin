@@ -15,3 +15,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  visibility: hidden;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #0C4A6E;
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(8, 47, 73);
+}
+
+ul a.active {
+  font-weight: bold;
+  color: #f59e0b;
+}
+
+.controller a.active {
+  font-weight: bold;
+  color: #f59e0b !important;
+  background-color: rgb(8, 47, 73) !important;
+}
+
+.login {
+  background-image: url(./assets/wave.svg);
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: top;
+}
