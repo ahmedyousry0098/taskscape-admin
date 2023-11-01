@@ -15,8 +15,11 @@ export const allProjects = createAsyncThunk<void>(
       const response = await axiosInstance.get(
         `/project/org-projects/${orgnizationId}`
       );
+      console.log(response);
       return response.data;
     } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.details);
       toast.error(error.response.data.error);
     }
   }
@@ -32,8 +35,8 @@ export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.error);
       toast.error(error.response.data.details);
+      toast.error(error.response.data.error);
     }
   }
 );
@@ -51,8 +54,8 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.error);
       toast.error(error.response.data.details);
+      toast.error(error.response.data.error);
     }
   }
 );

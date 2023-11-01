@@ -14,6 +14,7 @@ export const logIn = createAsyncThunk<void, ILogin>(
       const response = await axiosInstance.post(`/admin/login`, values);
       return response.data;
     } catch (error: any) {
+      toast.error(error.response.data.details);
       toast.error(error.response.data.error);
     }
   }

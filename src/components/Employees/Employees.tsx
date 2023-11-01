@@ -1,23 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import React, { useEffect, useState } from "react";
-import { allEmployees } from "../../Redux/AllEmpSlice";
+import { allEmployees, allScrums } from "../../Redux/AllEmpSlice";
 import AddEmp from "./AddEmp/AddEmp";
+import { Tooltip } from "antd";
+import { NavLink, Outlet } from "react-router-dom";
 
 export default function Employees() {
   const [open, setOpen] = useState(false);
 
-  const { getAll, isLoading } = useAppSelector((state) => state.allEmployees);
+  const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
   const { loading } = useAppSelector((state) => state.addEmployee);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(allEmployees());
+    dispatch(allScrums());
   }, []);
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
-      {getAll?.employee?.length === 0 ?
+      {getAllEmployees?.employees?.length === 0 ?
         <div className="text-center mx-auto my-56 w-5/6">
           <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">
             <i className="fa-solid fa-users-slash"></i>
@@ -36,55 +39,39 @@ export default function Employees() {
         </div>
         :
         <>
-          <div className="mb-5">
-            <button
-              type="submit"
-              className="block ms-5 px-4 border bg-sky-700 hover:bg-sky-900 
-              rounded-lg text-white h-10 font-bold" onClick={() => setOpen(true)}>
-              {loading ?
-                <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-                : <><i className="fa-solid fa-arrow-right-to-bracket me-3"></i>Add Employee</>}
-            </button>
+          <div className="fixed right-8 bottom-8 text-center z-50">
+            <Tooltip title="Add Employee" placement="left" color={"#082F49"} key={"#082F49"}>
+              <button
+                type="button"
+                className="p-3 rounded-full hover:scale-110 duration-300 bg-opacity-100 bg-sky-700 hover:bg-sky-900 
+              text-white" onClick={() => setOpen(true)}>
+                {loading ?
+                  <i className="fa-solid fa-spinner fa-spin-pulse"></i>
+                  :
+                  <><i className="fa-solid fa-plus fa-xl"></i></>}
+              </button>
+            </Tooltip>
           </div>
 
-          <div className="flex flex-wrap justify-center ">
-            {isLoading ?
-              <div className="mt-80 text-9xl text-gray-400">
-                <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
-              </div>
-              :
-              getAll?.employee?.map((employee: any) =>
-                <div
-                  key={employee._id}
-                  className="m-3 w-96 px-10 py-6 bg-sky-500 bg-opacity-5 shadow-md
-                 text-sky-900 shadow-sky-900 rounded-lg">
-                  <p className="font-bold py-1">
-                    Name: <span className="font-medium">{employee.employeeName}</span></p>
-                  <p className="font-bold py-1">Email:
-                    <span className="font-medium">{employee.email}</span></p>
 
-                  <p className="font-bold py-1">Role:
-                    <span className="font-medium">{employee.role}</span></p>
+          <div className="flex flex-wrap justify-center  rounded-es-xl rounded-eep-0 text-white">
+            <div className="controller justify-center me-3 mb-3">
+              <NavLink to={'scrums'}> <button className=' bg-sky-950 hover:shadow-md 
+          hover:shadow-orange-500 hover:text-amber-500 px-4 w-44 rounded-s-full py-2
+          font-semibold hover:scale-105 duration-300'><i className=" fa-solid fa-user-tie me-3">
+                </i>Scrum Masters</button></NavLink>
+            </div>
+            <div className="controller justify-center mb-3">
+              <NavLink to={'members'}> <button className=' bg-sky-950 hover:shadow-md 
+          hover:shadow-orange-500 hover:text-amber-500 px-4 w-44 rounded-e-full py-2
+          font-semibold hover:scale-105 duration-300'><i className="fa-regular fa-user me-3">
+                </i>Members</button></NavLink>
+            </div>
 
-                  <p className="font-bold py-1">Joining date:
-                    <span className="font-medium">{employee.createdAt.split("T").slice(0, 1).join("")}</span></p>
-                  <p className="font-bold py-1">Last updated:
-                    <span className="font-medium">{employee.updatedAt.split("T").slice(0, 1).join("")}</span></p>
-
-                  <div className="flex justify-center mt-8">
-                    <button type="button" className="bg-red-700 hover:bg-red-900 px-4
-                    rounded-lg text-white py-1 font-semibold me-7">
-                      <i className="fa-solid fa-user-xmark me-2 fa-sm text-white"></i>Remove</button>
-
-                    <button type="button" className="bg-sky-700 hover:bg-sky-900 px-4
-                      rounded-lg text-white py-1 font-semibold">
-                      <i className="fa-regular fa-pen-to-square me-2 fa-sm text-white"></i>Edit</button>
-                  </div>
-                </div>)}
           </div>
+          <Outlet />
         </>
       }
-
       <AddEmp open={open} setDialog={() => setOpen(false)} />
     </div>
   );

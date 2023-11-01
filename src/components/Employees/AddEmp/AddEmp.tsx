@@ -10,6 +10,7 @@ import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 
+
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
     children: React.ReactElement<any, any>;
@@ -27,10 +28,11 @@ export default function AddEmp(props: any) {
     employeeName: Yup.string()
       .required("Employee Name is required")
       .min(3, "Min 3 characters")
-      .max(20, "Max 20 characters"),
+      .max(20, "Max 20 characters")
+      .matches(/^[A-Za-z\s]+$/, 'Must contain only letters and spaces'),
     email: Yup.string().required("Email is required").email("Email In-valid"),
     password: Yup.string().required("Password is required"),
-    role: Yup.string().required("You must choose a role"),
+    role: Yup.string().required("You must select a role"),
   });
 
   let formik = useFormik<IRegister>({
@@ -61,13 +63,14 @@ export default function AddEmp(props: any) {
         fullWidth
       >
         <DialogContent>
-          <h1 className="text-center text-3xl text-sky-900 mb-3 mt-4">
+          <h1 className="text-center md:text-3xl sm:text-xl text-sky-900 mb-3 mt-4">
             Add An Employee
           </h1>
-          <h1 className="text-lg mb-6 text-sky-900 text-center">
+          <h1 className="md:text-lg sm:text-base mb-6 text-sky-900 text-center">
             More emplyees more success
           </h1>
-          <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
+          <form onSubmit={formik.handleSubmit} className="md:w-5/6  sm:w-full mx-auto">
+            {/* Employee name */}
             <div className="mb-5 w-full px-4">
               <input
                 type="text"
@@ -89,6 +92,7 @@ export default function AddEmp(props: any) {
               )}
             </div>
 
+            {/* Email */}
             <div className="mb-5 w-full px-4">
               <input
                 type="email"
@@ -110,6 +114,7 @@ export default function AddEmp(props: any) {
               )}
             </div>
 
+            {/* Password */}
             <div className="mb-5 w-full px-4">
               <input
                 type="password"
@@ -131,6 +136,7 @@ export default function AddEmp(props: any) {
               )}
             </div>
 
+            {/* Select  role */}
             <div className="mb-5 w-full px-4">
               <select
                 id="role"
@@ -152,29 +158,17 @@ export default function AddEmp(props: any) {
             </div>
 
             <DialogActions>
-              <button
-                type="submit"
-                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
-            rounded-lg text-white h-10 font-bold"
-              >
-                {loading ? (
-                  <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-                ) : (
-                  <>
-                    <i className="fa-solid fa-arrow-right-to-bracket me-3"></i>
-                    Add Employee
-                  </>
-                )}
+              <button type="submit" className="block mx-auto border bg-sky-700
+               hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
+                {loading ? <i className="fa-solid fa-spinner fa-spin-pulse"></i> :
+                  <><i className="fa-solid fa-plus md:me-3 sm:me-0"></i>
+                    <span className="md:inline-block sm:hidden">Submit</span></>}
               </button>
 
               <button
                 type="button"
                 className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
-            rounded-lg text-white h-10 font-bold"
-                onClick={() => props.setDialog()}
-              >
-                Close
-              </button>
+                rounded-lg text-white h-10 font-bold" onClick={() => props.setDialog()} >Close</button>
             </DialogActions>
           </form>
         </DialogContent>

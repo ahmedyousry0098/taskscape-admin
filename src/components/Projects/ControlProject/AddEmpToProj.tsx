@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
 export default function AddEmpToProj(props: any) {
     const dispatch = useAppDispatch();
     const { addLoading } = useAppSelector((state) => state.allProjects);
-    const { getAll } = useAppSelector((state) => state.allEmployees);
+    const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
     const { decoded } = useAppSelector((state) => state.login);
 
     useEffect(() => {
@@ -112,19 +112,17 @@ export default function AddEmpToProj(props: any) {
                                 <option disabled hidden className="py-5 ps-3 h-10">
                                     Select Collaborators
                                 </option>
-                                {getAll?.employee?.length === 0
+                                {getAllEmployees?.employee?.length === 0
                                     ? "Orgnization have no Collaborators"
-                                    : getAll?.employee
-                                        ?.filter((member: any) => member.role === "member")
-                                        ?.map((member: any) => (
-                                            <option
-                                                key={member._id}
-                                                value={member._id}
-                                                className="px-3 py-1 h-10 text-sky-900"
-                                            >
-                                                {member.employeeName} → {member.email}
-                                            </option>
-                                        ))}
+                                    : getAllEmployees?.employees?.map((member: any) => (
+                                        <option
+                                            key={member._id}
+                                            value={member._id}
+                                            className="px-3 py-1 h-10 text-sky-900"
+                                        >
+                                            {member.employeeName} → {member.email}
+                                        </option>
+                                    ))}
                             </select>
                         </div>
 

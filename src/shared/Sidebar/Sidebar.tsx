@@ -29,47 +29,55 @@ export default function Sidebar() {
 
       <ul className="xl:ps-6 lg:ps-5 md:ps-5 sm:ps-5   text-neutral-400  text-lg">
         <div className='hover:text-amber-500 hover:scale-110 duration-300 w-fit h-fit mb-8'>
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Dashboard" placement="left" color={"#082F49"} key={"#082F49"}>
-            <NavLink to={'/dashboard'}><i className="fa-solid fa-chart-line w-10"></i>
-              <li className='xl:inline-block lg:hidden md:hidden sm:hidden'>Dashboard</li></NavLink>
+          <Tooltip title="Dashboard" placement="right" color={"#082F49"}>
+            <NavLink to={'/dashboard'}><i className="fa-solid fa-chart-line w-10"></i></NavLink>
           </Tooltip>
+          <NavLink to={'/dashboard'}>
+            <li className='xl:inline-block lg:hidden md:hidden sm:hidden'>Dashboard</li>
+          </NavLink>
         </div>
 
         <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-8'>
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Projects" placement="left" color={"#082F49"} key={"#082F49"}>
-            <NavLink to={'/projects'}><i className="fa-regular fa-folder-open w-10"></i>
-              <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Projects</li></NavLink>
+          <Tooltip title="Projects" placement="right" color={"#082F49"}>
+            <NavLink to={'/projects'}><i className="fa-regular fa-folder-open w-10"></i></NavLink>
           </Tooltip>
+          <NavLink to={'/projects'}>
+            <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Projects</li></NavLink>
         </div>
 
         <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-8'>
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Employees" placement="left" color={"#082F49"} key={"#082F49"}>
-            <NavLink to={'/employees'}><i className="fa-solid fa-people-group w-10"></i>
-              <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Employees</li></NavLink>
+          <Tooltip title="Employees" placement="right" color={"#082F49"}>
+            <NavLink to={'/employees'}><i className="fa-solid fa-people-group w-10"></i></NavLink>
           </Tooltip>
+          <NavLink to={'/employees'}>
+            <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Employees</li></NavLink>
 
         </div>
 
         <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-8'>
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Notifications" placement="left" color={"#082F49"} key={"#082F49"}>
-            <NavLink to={'/notifications'}><i className="fa-regular fa-bell  w-10"></i>
-              <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Notifications</li></NavLink>
+          <Tooltip title="Notifications" placement="right" color={"#082F49"}>
+            <NavLink to={'/notifications'}><i className="fa-regular fa-bell  w-10"></i></NavLink>
           </Tooltip>
+          <NavLink to={'/notifications'}>
+            <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Notifications</li></NavLink>
         </div>
 
         <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-8'>
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Controls" placement="left" color={"#082F49"} key={"#082F49"}>
-            <NavLink to={'/controls'}><i className="fa-solid fa-screwdriver-wrench  w-10"></i>
-              <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Controls</li></NavLink>
+          <Tooltip title="Controls" placement="right" color={"#082F49"}>
+            <NavLink to={'/controls'}><i className="fa-solid fa-screwdriver-wrench  w-10"></i></NavLink>
           </Tooltip>
+          <NavLink to={'/controls'}>
+            <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Controls</li></NavLink>
         </div>
 
-        <div >
-          <Tooltip className='xl:hidden lg:visible md:visible sm:visible' title="Logout" placement="left" color={"#082F49"} key={"#082F49"}>
-            <p className='cursor-pointer hover:text-amber-500 hover:scale-110 duration-300 w-fit h-fit'
-              onClick={loggedOut}><i className="fa-solid fa-power-off  w-10"></i>
-              <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Logout</li></p>
+        <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit'>
+          <Tooltip title="Logout" placement="right" color={"#082F49"}>
+            <span className='cursor-pointer hover:text-amber-500 hover:scale-110 duration-300 w-fit h-fit'
+              onClick={loggedOut}><i className="fa-solid fa-power-off  w-10"></i></span>
           </Tooltip>
+          <span className='cursor-pointer hover:text-amber-500 hover:scale-110 duration-300 w-fit h-fit'
+            onClick={loggedOut}>
+            <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Logout</li></span>
         </div>
       </ul>
 

@@ -3,31 +3,56 @@ import { axiosInstance } from "../App/AxiosInstance";
 import { toast } from "react-toastify";
 
 export const allEmployees = createAsyncThunk<void>(
-  "All_Employee/allEmployees",
+  "All_Employee/allEmployee",
   async (_, decodeing) => {
     try {
       const getDecode: any = decodeing.getState();
       const orgnizationId = getDecode.login.decoded.orgId;
       const response = await axiosInstance.get(
-        `/employee/getAllEmployee/${orgnizationId}`
+        `/employee/getAllEmployees/${orgnizationId}`
       );
+      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
+      toast.error(error.response.data.details);
+      toast.error(error.response.data.error);
+    }
+  }
+);
+
+export const allScrums = createAsyncThunk<void>(
+  "All_Employee/allScrums",
+  async (_, decodeing) => {
+    try {
+      const getDecode: any = decodeing.getState();
+      const orgnizationId = getDecode.login.decoded.orgId;
+      const response = await axiosInstance.get(
+        `/employee/getAllScrums/${orgnizationId}`
+      );
+      console.log(response);
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.details);
       toast.error(error.response.data.error);
     }
   }
 );
 
 type initialStateType = {
-  isLoading: boolean;
-  getAll: any;
+  EmployeeLoading: boolean;
+  ScrumLoading: boolean;
+  getAllEmployees: any;
+  getScrums: any;
   error: string;
 };
 
 const initialState: initialStateType = {
-  isLoading: false,
-  getAll: [],
+  EmployeeLoading: false,
+  ScrumLoading: false,
+  getAllEmployees: [],
+  getScrums: [],
   error: "",
 };
 
@@ -38,16 +63,34 @@ export const AllEmpSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(allEmployees.pending, (state) => {
-        state.isLoading = true;
+        state.EmployeeLoading = true;
       })
-      .addCase(allEmployees.fulfilled, (state, action: any) => {
+      .addCase(allEmployees.fulfilled, (state, action) => {
         if (action.payload !== undefined) {
-          state.getAll = action.payload;
+          state.getAllEmployees = action.payload;
         }
-        state.isLoading = false;
+        state.EmployeeLoading = false;
       })
       .addCase(allEmployees.rejected, (state, action) => {
-        state.isLoading = false;
+        state.EmployeeLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error("Something went wrong");
+        }
+      });
+
+    builder
+      .addCase(allScrums.pending, (state) => {
+        state.ScrumLoading = true;
+      })
+      .addCase(allScrums.fulfilled, (state, action) => {
+        if (action.payload !== undefined) {
+          state.getScrums = action.payload;
+        }
+        state.ScrumLoading = false;
+      })
+      .addCase(allScrums.rejected, (state, action) => {
+        state.EmployeeLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error("Something went wrong");

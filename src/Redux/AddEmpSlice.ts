@@ -16,6 +16,8 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
       }
       return response.data;
     } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.details);
       toast.error(error.response.data.error);
     }
   }
@@ -37,7 +39,9 @@ export const AddEmpSlice = createSlice({
 
         state.error = "";
       })
-      .addCase(addEmployee.fulfilled, (state) => {
+      .addCase(addEmployee.fulfilled, (state, action) => {
+        if (action.payload !== undefined) {
+        }
         state.loading = false;
         state.error = "";
       })

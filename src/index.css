@@ -42,7 +42,6 @@ ul a.active {
 .controller a.active {
   font-weight: bold;
   color: #f59e0b !important;
-  background-color: rgb(8, 47, 73) !important;
 }
 
 .login {
