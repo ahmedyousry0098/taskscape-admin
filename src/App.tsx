@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react';
 import './App.css';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { Navigate, RouterProvider, createBrowserRouter } from 'react-router-dom'
 import Layout from './shared/Layout/Layout';
 import Dashboard from './components/Dashboard/Dashboard';
 import Controls from './components/Controls/Controls';
@@ -31,6 +31,7 @@ export default function App() {
     { path: 'login', element: <Login /> },
     {
       path: "", element: <ProtectedRoutes><Layout /></ProtectedRoutes>, children: [
+        { index: true, element: <Navigate to={"/dashboard"} /> },
         { path: 'dashboard', element: <Dashboard /> },
         { path: 'projects', element: <Projects /> },
 

@@ -11,11 +11,10 @@ export const allEmployees = createAsyncThunk<void>(
       const response = await axiosInstance.get(
         `/employee/getAllEmployees/${orgnizationId}`
       );
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details);
+      toast.error(error.response.data.details[0]);
       toast.error(error.response.data.error);
     }
   }
@@ -30,11 +29,10 @@ export const allScrums = createAsyncThunk<void>(
       const response = await axiosInstance.get(
         `/employee/getAllScrums/${orgnizationId}`
       );
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details);
+      toast.error(error.response.data.details[0]);
       toast.error(error.response.data.error);
     }
   }

@@ -9,7 +9,6 @@ export const createProject = createAsyncThunk<void, IProject>(
   async (values) => {
     try {
       const response = await axiosInstance.post(`/project/create`, values);
-      console.log(response);
       toast.success(response.data.message);
       return response.data;
     } catch (error: any) {
@@ -20,29 +19,37 @@ export const createProject = createAsyncThunk<void, IProject>(
   }
 );
 
+type initialStateType = {
+  loading: boolean;
+  projects: string[];
+  error: string;
+};
+
+let initialState: initialStateType = {
+  loading: false,
+  projects: [],
+  error: "",
+};
+
 export const CreateProjectSlice = createSlice({
   name: "Create_Project",
-  initialState: {
-    loading: false,
-    done: false,
-    projects: [],
-    error: "",
-  },
+  initialState,
   reducers: {},
 
   extraReducers: (builder) => {
     builder
       .addCase(createProject.pending, (state) => {
         state.loading = true;
-        state.done = false;
       })
-      .addCase(createProject.fulfilled, (state, action) => {
+      .addCase(createProject.fulfilled, (state) => {
         state.loading = false;
-        state.done = true;
       })
       .addCase(createProject.rejected, (state, action) => {
         state.loading = false;
-        state.done = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error("Something went wrong");
+        }
       });
   },
 });

@@ -65,8 +65,6 @@ export default function Projects() {
             </Tooltip>
           </div>
 
-
-
           <div className="flex flex-wrap justify-center items-start mt-6 mx-5">
             {isLoading ?
               <div className="mt-80 text-9xl text-gray-400">
@@ -98,6 +96,7 @@ export default function Projects() {
 
                   <div className="mb-2 px-6">
                     <Collapse
+                      key={project._id}
                       expandIconPosition={"end"}
                       items={[
                         {
@@ -112,6 +111,7 @@ export default function Projects() {
 
                   <div className="px-6 mb-20">
                     <Collapse
+                      key={project._id}
                       expandIconPosition={"end"}
                       items={[
                         {
@@ -138,7 +138,7 @@ export default function Projects() {
                                     cancelText="Cancel"
                                     showCancel
                                   >
-                                    <Button className="text-sky-700"> {delLoading ? <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+                                    <Button key={member._id} className="text-sky-700"> {delLoading ? <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
                                       : <i className="fa-solid fa-user-minus fa-xs"></i>}</Button>
                                   </Popconfirm>
 
@@ -147,7 +147,7 @@ export default function Projects() {
                             </>)}
                             <div className="flex justify-end pt-2">
                               <Tooltip title="Add Collaborator" placement="left" color={"#082F49"} key={"#082F49"}>
-                                <Button className="text-sky-700" onClick={() => {
+                                <Button key={project._id} className="text-sky-700" onClick={() => {
                                   setOpenAddEmp(true)
                                   setProjectId(project._id)
                                 }}>
@@ -159,7 +159,7 @@ export default function Projects() {
                       ]} />
                   </div>
 
-                  <div className="flex justify-center mb-3 absolute -translate-x-1/2 left-1/2 bottom-0">
+                  <div key={project._id} className="flex justify-center mb-3 absolute -translate-x-1/2 left-1/2 bottom-0">
                     <button type="button" className="bg-red-700 hover:bg-red-900 px-4
                   rounded-lg text-white py-1 font-semibold me-7">
                       <i className="fa-regular fa-trash-can me-2 fa-sm text-white"></i>Remove</button>

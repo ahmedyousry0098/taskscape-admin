@@ -32,9 +32,9 @@ export default function AddEmpToProj(props: any) {
 
     let formik = useFormik<AddEmpOfProj>({
         initialValues: {
-            project: props.projectId,
+            project: "",
             employees: [""],
-            organization: decoded.orgId,
+            organization: "",
         },
         onSubmit: (values) => {
             dispatch(addEmployeeToProject(values)).then((result) => {
@@ -65,9 +65,9 @@ export default function AddEmpToProj(props: any) {
                     <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
 
                         {/* Organization */}
-                        <input type="hidden" name="organization" value={formik.values.organization} />
+                        <input type="hidden" name="organization" value={formik.values.organization = decoded.orgId} />
                         {/* Project */}
-                        <input type="hidden" name="project" value={formik.values.project} />
+                        <input type="hidden" name="project" value={formik.values.project = props.projectId} />
 
                         {/* Select scrum master */}
                         {/* <div className="mb-5 w-full px-4">
@@ -113,7 +113,7 @@ export default function AddEmpToProj(props: any) {
                                     Select Collaborators
                                 </option>
                                 {getAllEmployees?.employee?.length === 0
-                                    ? "Orgnization have no Collaborators"
+                                    ? <option>No employees</option>
                                     : getAllEmployees?.employees?.map((member: any) => (
                                         <option
                                             key={member._id}
