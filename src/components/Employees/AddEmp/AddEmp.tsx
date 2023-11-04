@@ -9,8 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees } from "../../../Redux/AllEmpSlice";
-import Scrums from "../EmpByRole/Scrums";
+import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
 
 const Transition = React.forwardRef(function Transition(
 
@@ -60,7 +59,7 @@ export default function AddEmp(props: any) {
           props.setDialog();
           formik.resetForm();
           dispatch(allEmployees())
-          dispatch(Scrums())
+          dispatch(allScrums())
         }
       });
     },

@@ -25,14 +25,19 @@ export default function Dashboard() {
     dispatch(allEmployees())
     dispatch(allProjects())
     dispatch(allScrums())
-    console.log(getAllEmployees);
-    console.log(getScrums);
 
   }, [])
 
+  if (!getAllEmployees.employees?.length || !getAllProjects.projects?.length || !getScrums.scrums?.length) {
+    console.log({ getAllEmployees }, 'dashboard');
+    console.log({ getScrums }, 'dashboard');
+    return <div>
+      <p>loading..</p>
+    </div>
+  }
+
   return (
     <div className="xl:ms-64 sm:ms-16">
-
       {/* Top Bar */}
       <div className="flex justify-between items-center mb-5 mx-5 px-10 py-4 shadow-lg bg-sky-700 bg-opacity-10 rounded-es-xl rounded-ee-xl">
         <div className="w-2/4 h-10">

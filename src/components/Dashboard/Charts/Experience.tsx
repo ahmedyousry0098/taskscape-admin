@@ -20,51 +20,61 @@ export default function Experience(props: any) {
         },
     };
 
-    const [minYears, setminYears] = useState(0)
-    const [maxYears, setmaxYears] = useState(0)
-
-    // function getMin() {
-    //     let minYearsOfExperience = [0]
-    //     props.getAllEmployees?.employees?.map((e: any) => e.experience = minYearsOfExperience)
-    //     props.getScrums?.scrums?.map((e: any) => e.experience = minYearsOfExperience)
-    //     setminYears(Math.min(...minYearsOfExperience))
-    // }
-
-    // function getMax() {
-    //     let maxYearsOfExperience = [0]
-    //     props.getAllEmployees?.employees?.map((e: any) => e.experience = maxYearsOfExperience)
-    //     props.getScrums?.scrums?.map((e: any) => e.experience = maxYearsOfExperience)
-    //     setminYears(Math.max(...maxYearsOfExperience))
-    // }
-
-
+    const [xAxis, setxAxis] = useState([0])
+    const [yAxis, setyAxis] = useState([0])
 
     useEffect(() => {
-        // getMin()
-        // getMax()
-
-        let maxYearsOfExperience: any
-        props.getAllEmployees?.employees?.map((e: any) => console.log("emp", e.experience))
-        props.getScrums?.scrums?.map((e: any) => console.log("scrum", e.experience))
-
-
-
+        getAxis()
     }, [props.getAllEmployees, props.getScrums])
 
 
-    let years: number[] = [0]
-    for (let i = 1; i <= 10; i++) {
-        years.push(i)
+    const getAxis = function getAxe() {
+        let numOfMemberHasExp = props.getAllEmployees?.employees?.map((member: any) => member.experience)
+        let numOfscrumHasExp = props.getScrums?.scrums?.map((scrum: any) => scrum.experience)
+
+        let numOfExp = numOfMemberHasExp + numOfscrumHasExp
+
+        let numOfEmpHasExpToNums = numOfExp?.split(",").map(Number)
+        console.log("Total employees", numOfEmpHasExpToNums);
+
+        let numOfEmpHasExp: number[] = Array.from(new Set(numOfEmpHasExpToNums))
+        setxAxis(numOfEmpHasExp)
+        console.log("exper", xAxis);
+
+        // let x: number[] = [1, 6, 4, 10, 4, 6]
+        // let unique: number[] = Array.from(new Set(x))
+        // console.log(unique);
+
+        // x.forEach((n:number, index:number) => {
+        //     if (x.indexOf(n) !== index) {
+        //         unique.push(n)
+        //     }
+        // })
+
+        // x.filter()
+
+        // let countArray: any[] = [];
+        // numOfEmpHasExp.forEach((exp: any) => {
+        //     let employeesPerExp = numOfEmpHasExpToNums
+        //         ?.reduce((total: any, n: any) => (n === exp ? total++ : total)
+        //             , 0)
+        //     console.log(employeesPerExp);
+
+        //     countArray.push(employeesPerExp);
+        //     setyAxis(countArray)
+        // })
+        // console.log(yAxis);
     }
 
-    const labels = [...years];
+
+    const labels = [...xAxis];
 
     const data = {
         labels,
         datasets: [
             {
                 label: 'Employees',
-                data: [10, 5, 3, 24, 15, 4, 7, 33, 60, 23, 13, 0, 0, 0, 0, 0, 23],
+                data: [...yAxis],
                 backgroundColor: 'rgb(255, 128, 10)',
             },
         ],
