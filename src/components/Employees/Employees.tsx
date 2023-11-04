@@ -7,8 +7,8 @@ import { Tooltip } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 
 export default function Employees() {
-  const [open, setOpen] = useState(false);
 
+  const [open, setOpen] = useState(false);
   const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
   const { loading } = useAppSelector((state) => state.addEmployee);
   const dispatch = useAppDispatch();

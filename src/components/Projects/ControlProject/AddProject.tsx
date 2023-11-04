@@ -11,6 +11,7 @@ import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { createProject } from "../../../Redux/CreateProjSlice";
 import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
+import { allProjects } from "../../../Redux/AllProjSlice";
 
 
 const Transition = React.forwardRef(function Transition(
@@ -24,6 +25,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function AddProject(props: any) {
+
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.createProject);
   const { getAllEmployees, getScrums } = useAppSelector((state) => state.allEmployees);
@@ -64,6 +66,7 @@ export default function AddProject(props: any) {
         if (result.payload) {
           props.setDialog();
           formik.resetForm();
+          dispatch(allProjects())
         }
       });
     },
@@ -72,20 +75,15 @@ export default function AddProject(props: any) {
 
   return (
     <div>
-      <Dialog
-        open={props.open}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={() => props.setDialog()}
-        fullWidth
-      >
+      <Dialog open={props.open} TransitionComponent={Transition}
+        keepMounted onClose={() => props.setDialog()} fullWidth>
+
         <DialogContent>
           <h1 className="text-center md:text-3xl sm:text-xl text-sky-900 mb-3 mt-4">
-            Create New Project
-          </h1>
+            Create New Project</h1>
           <h1 className="md:text-lg sm:text-base mb-6 text-sky-900 text-center">
-            Projects make orgnaization grow faster
-          </h1>
+            Projects make orgnaization grow faster</h1>
+
           <form onSubmit={formik.handleSubmit} className="md:w-5/6  sm:w-full mx-auto">
             {/* Project Name */}
             <div className="mb-2 w-full px-4">
@@ -115,20 +113,11 @@ export default function AddProject(props: any) {
             {/* Dates */}
             <div className="mb-5 w-full px-4 flex md:flex-nowrap sm:flex-wrap justify-between">
               <div className="w-full md:me-5 sm:me-0">
-                <label htmlFor="startDate" className="text-sky-900 ps-3">
-                  Start Date
-                </label>
-                <input
-                  type="date"
-                  name="startDate"
-                  id="startDate"
-                  value={formik.values.startDate}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  placeholder="Start date"
-                  autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 px-5 rounded-lg mb-1"
-                />
+                <label htmlFor="startDate" className="text-sky-900 ps-3">Start Date</label>
+                <input type="date" name="startDate" id="startDate" value={formik.values.startDate}
+                  onChange={formik.handleChange} onBlur={formik.handleBlur} placeholder="Start date"
+                  autoComplete="off" className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0
+                   outline-0 text-sky-900 px-5 rounded-lg mb-1"/>
                 {formik.errors.startDate && formik.touched.startDate ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
                     {formik.errors.startDate}

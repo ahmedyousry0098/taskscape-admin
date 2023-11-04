@@ -34,14 +34,13 @@ export default function App() {
         { index: true, element: <Navigate to={"/dashboard"} /> },
         { path: 'dashboard', element: <Dashboard /> },
         { path: 'projects', element: <Projects /> },
-
         {
           path: 'employees', element: <Employees />, children: [
+            { index: true, element: <Navigate to={"scrums"} /> },
             { path: "scrums", element: <Scrums />, },
             { path: "members", element: <Members /> }
           ]
         },
-
         {
           path: 'controls', element: <Controls />, children: [
             { index: true, element: <Register /> }
@@ -52,6 +51,7 @@ export default function App() {
     },
     { path: '*', element: <NotFoundPage /> }
   ])
+
 
 
   return (

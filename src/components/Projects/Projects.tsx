@@ -10,6 +10,7 @@ import AddEmpToProj from "./ControlProject/AddEmpToProj";
 
 
 export default function Projects() {
+
   const [open, setOpen] = useState(false);
   const [projectId, setProjectId] = useState<string>('')
   const [openAddEmp, setOpenAddEmp] = useState(false);
@@ -67,8 +68,9 @@ export default function Projects() {
 
           <div className="flex flex-wrap justify-center items-start mt-6 mx-5">
             {isLoading ?
-              <div className="mt-80 text-9xl text-gray-400">
-                <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+              <div className="loader-container pt-64">
+                <div className="loader"></div>
+                <div className="loader-text">Loading...</div>
               </div>
               :
               getAllProjects?.projects?.map((project: any) => {

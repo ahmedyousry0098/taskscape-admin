@@ -7,7 +7,6 @@ import { Provider } from 'react-redux';
 import store from './Redux/Store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-// import "tw-elements-react/dist/css/tw-elements-react.min.css";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,7 +14,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-    <ToastContainer
+      <ToastContainer
         position="bottom-right"
         autoClose={5000}
         hideProgressBar={false}
@@ -25,8 +24,8 @@ root.render(
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="dark"/>
-    <App />
+        theme="dark" />
+      <App />
     </Provider>
   </React.StrictMode>
 );

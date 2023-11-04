@@ -10,6 +10,9 @@ export interface IRegister {
   email: string;
   password: string;
   role: string;
+  experience: string;
+  employmentType: string;
+  title: string;
 }
 
 export interface IProject {
