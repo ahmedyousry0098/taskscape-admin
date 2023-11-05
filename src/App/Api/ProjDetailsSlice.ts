@@ -6,10 +6,7 @@ export const projectDetails = createAsyncThunk<void, string>(
   "Project_Details/projectDetails",
   async (projectId) => {
     try {
-      const response = await axiosInstance.get(
-        `/project/org-projects/${projectId}`
-      );
-      console.log(response);
+      const response = await axiosInstance.get(`/project/details/${projectId}`);
       return response.data;
     } catch (error: any) {
       console.log(error);

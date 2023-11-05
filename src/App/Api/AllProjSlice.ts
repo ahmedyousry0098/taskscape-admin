@@ -51,7 +51,6 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
       toast.error(error.response.data.error);
     }
   }
@@ -107,7 +106,7 @@ export const AllProjectSlice = createSlice({
         state.delLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
         }
       });
 
@@ -122,7 +121,7 @@ export const AllProjectSlice = createSlice({
         state.addLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
         }
       });
   },

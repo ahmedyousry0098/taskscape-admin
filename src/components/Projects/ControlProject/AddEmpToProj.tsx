@@ -9,71 +9,76 @@ import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
 import { allEmployees } from "../../../App/Api/AllEmpSlice";
-import { addEmployeeToProject, allProjects } from "../../../App/Api/AllProjSlice";
-
+import { addEmployeeToProject } from "../../../App/Api/AllProjSlice";
+import { projectDetails } from "../../../App/Api/ProjDetailsSlice";
 
 const Transition = React.forwardRef(function Transition(
-    props: TransitionProps & {
-        children: React.ReactElement<any, any>;
-    },
-    ref: React.Ref<unknown>
+  props: TransitionProps & {
+    children: React.ReactElement<any, any>;
+  },
+  ref: React.Ref<unknown>
 ) {
-    return <Slide direction="up" ref={ref} {...props} />;
+  return <Slide direction="up" ref={ref} {...props} />;
 });
 
 export default function AddEmpToProj(props: any) {
+  const dispatch = useAppDispatch();
+  const { addLoading } = useAppSelector((state) => state.allProjects);
+  const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
+  const { decoded } = useAppSelector((state) => state.login);
 
-    const dispatch = useAppDispatch();
-    const { addLoading } = useAppSelector((state) => state.allProjects);
-    const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
-    const { decoded } = useAppSelector((state) => state.login);
+  useEffect(() => {
+    dispatch(allEmployees());
+  }, []);
 
-    useEffect(() => {
-        dispatch(allEmployees());
-    }, []);
+  let formik = useFormik<AddEmpOfProj>({
+    initialValues: {
+      project: "",
+      employees: [""],
+      organization: "",
+    },
+    onSubmit: (values) => {
+      dispatch(addEmployeeToProject(values)).then((result) => {
+        if (result.payload) {
+          props.setAddDialog();
+          formik.resetForm();
+          dispatch(projectDetails(props.projectId));
+        }
+      });
+    },
+  });
 
-    let formik = useFormik<AddEmpOfProj>({
-        initialValues: {
-            project: "",
-            employees: [""],
-            organization: "",
-        },
-        onSubmit: (values) => {
-            dispatch(addEmployeeToProject(values)).then((result) => {
-                if (result.payload) {
-                    props.setAddDialog();
-                    formik.resetForm();
-                    dispatch(allProjects())
-                }
-            })
-        },
-    });
+  return (
+    <div>
+      <Dialog
+        open={props.openAddEmp}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => props.setAddDialog()}
+        fullWidth>
+        <DialogContent>
+          <h1 className="text-center text-3xl text-sky-900 mb-3 mt-4">
+            Add collaporator to project
+          </h1>
+          <h1 className="text-lg mb-6 text-sky-900 text-center">
+            More help more success
+          </h1>
+          <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
+            {/* Organization */}
+            <input
+              type="hidden"
+              name="organization"
+              value={(formik.values.organization = decoded.orgId)}
+            />
+            {/* Project */}
+            <input
+              type="hidden"
+              name="project"
+              value={(formik.values.project = props.projectId)}
+            />
 
-    return (
-        <div>
-            <Dialog
-                open={props.openAddEmp}
-                TransitionComponent={Transition}
-                keepMounted
-                onClose={() => props.setAddDialog()}
-                fullWidth
-            >
-                <DialogContent>
-                    <h1 className="text-center text-3xl text-sky-900 mb-3 mt-4">
-                        Add collaporator to project
-                    </h1>
-                    <h1 className="text-lg mb-6 text-sky-900 text-center">
-                        More help more success
-                    </h1>
-                    <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
-
-                        {/* Organization */}
-                        <input type="hidden" name="organization" value={formik.values.organization = decoded.orgId} />
-                        {/* Project */}
-                        <input type="hidden" name="project" value={formik.values.project = props.projectId} />
-
-                        {/* Select scrum master */}
-                        {/* <div className="mb-5 w-full px-4">
+            {/* Select scrum master */}
+            {/* <div className="mb-5 w-full px-4">
                             <select
                                 id="scrumMaster"
                                 name="scrumMaster"
@@ -101,61 +106,62 @@ export default function AddEmpToProj(props: any) {
                             </select>
                         </div> */}
 
-                        {/* Select Members */}
-                        <div className="mb-5 w-full px-4">
-                            <select
-                                multiple
-                                id="employees"
-                                name="employees"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.employees}
-                                className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1"
-                            >
-                                <option disabled hidden className="py-5 ps-3 h-10">
-                                    Select Collaborators
-                                </option>
-                                {getAllEmployees?.employee?.length === 0
-                                    ? <option>No employees</option>
-                                    : getAllEmployees?.employees?.map((member: any) => (
-                                        <option
-                                            key={member._id}
-                                            value={member._id}
-                                            className="px-3 py-1 h-10 text-sky-900"
-                                        >
-                                            {member.employeeName} → {member.email}
-                                        </option>
-                                    ))}
-                            </select>
-                        </div>
+            {/* Select Members */}
+            <div className="mb-5 w-full px-4">
+              <select
+                multiple
+                id="employees"
+                name="employees"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.employees}
+                className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1">
+                <option disabled hidden className="py-5 ps-3 h-10">
+                  Select Collaborators
+                </option>
+                {getAllEmployees?.employee?.length === 0 ? (
+                  <option>No employees</option>
+                ) : (
+                  getAllEmployees?.employees?.map((member: any) => (
+                    <option
+                      key={member._id}
+                      value={member._id}
+                      className="px-3 py-1 h-10 text-sky-900">
+                      {member.employeeName} → {member.email}
+                    </option>
+                  ))
+                )}
+              </select>
+            </div>
 
-                        <DialogActions>
-                            <button
-                                type="submit"
-                                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
-                                rounded-lg text-white h-10 font-bold"
-                            >
-                                {addLoading ? (
-                                    <i className="fa-solid fa-spinner fa-spin-pulse"></i>
-                                ) : (
-                                    <>
-                                        <i className="fa-solid fa-user-plus me-3"></i>
-                                        Add collaborator
-                                    </>
-                                )}
-                            </button>
+            <DialogActions>
+              <button
+                type="submit"
+                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                                rounded-lg text-white h-10 font-bold">
+                {addLoading ? (
+                  <i className="fa-solid fa-spinner fa-spin-pulse"></i>
+                ) : (
+                  <>
+                    <i className="fa-solid fa-user-plus me-3"></i>
+                    Add collaborator
+                  </>
+                )}
+              </button>
 
-                            <button
-                                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
-                                rounded-lg text-white h-10 font-bold"
-                                onClick={() => props.setAddDialog()}
-                            >
-                                Close
-                            </button>
-                        </DialogActions>
-                    </form>
-                </DialogContent>
-            </Dialog>
-        </div>
-    );
+              <button
+                type="button"
+                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                rounded-lg text-white h-10 font-bold"
+                onClick={() => {
+                  props.setAddDialog();
+                }}>
+                Close
+              </button>
+            </DialogActions>
+          </form>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
 }

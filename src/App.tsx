@@ -21,6 +21,7 @@ import { loggedIn } from "./App/Api/LoginSlice";
 import Scrums from "./components/Employees/EmpByRole/Scrums";
 import Members from "./components/Employees/EmpByRole/Members";
 import ProjectDetails from "./components/Projects/ControlProject/tryReactQuery";
+import ProjDetails from "./components/Projects/ControlProject/ProjDetails";
 
 export default function App() {
   let dispatch = useAppDispatch();
@@ -42,6 +43,7 @@ export default function App() {
         { index: true, element: <Navigate to={"/dashboard"} /> },
         { path: "dashboard", element: <Dashboard /> },
         { path: "projects", element: <Projects /> },
+        { path: "projects/details/:id", element: <ProjDetails /> },
         {
           path: "employees",
           element: <Employees />,
