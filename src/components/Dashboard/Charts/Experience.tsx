@@ -14,7 +14,7 @@ export default function Experience(props: any) {
                 position: 'top' as const,
             },
             title: {
-                display: true,
+                display: false,
                 text: 'Chart.js Bar Chart',
             }
         },
@@ -35,35 +35,18 @@ export default function Experience(props: any) {
         let numOfExp = numOfMemberHasExp + numOfscrumHasExp
 
         let numOfEmpHasExpToNums = numOfExp?.split(",").map(Number)
-        console.log("Total employees", numOfEmpHasExpToNums);
 
         let numOfEmpHasExp: number[] = Array.from(new Set(numOfEmpHasExpToNums))
-        setxAxis(numOfEmpHasExp)
-        console.log("exper", xAxis);
+        setxAxis(numOfEmpHasExp.sort((a, b) => a - b))
 
-        // let x: number[] = [1, 6, 4, 10, 4, 6]
-        // let unique: number[] = Array.from(new Set(x))
-        // console.log(unique);
 
-        // x.forEach((n:number, index:number) => {
-        //     if (x.indexOf(n) !== index) {
-        //         unique.push(n)
-        //     }
-        // })
 
-        // x.filter()
-
-        // let countArray: any[] = [];
-        // numOfEmpHasExp.forEach((exp: any) => {
-        //     let employeesPerExp = numOfEmpHasExpToNums
-        //         ?.reduce((total: any, n: any) => (n === exp ? total++ : total)
-        //             , 0)
-        //     console.log(employeesPerExp);
-
-        //     countArray.push(employeesPerExp);
-        //     setyAxis(countArray)
-        // })
-        // console.log(yAxis);
+        let countArray: number[] = [];
+        xAxis.forEach((exp: number) => {
+            let employeesPerExp = numOfEmpHasExpToNums?.filter((n: number) => (n === exp)).length
+            countArray.push(employeesPerExp);
+            setyAxis(countArray)
+        })
     }
 
 
@@ -75,15 +58,30 @@ export default function Experience(props: any) {
             {
                 label: 'Employees',
                 data: [...yAxis],
-                backgroundColor: 'rgb(255, 128, 10)',
+                backgroundColor: 'rgb(8,47,73)',
+                hoverBackgroundColor: "rgb(245, 159, 10)",
+                barThickness: 30,
             },
         ],
     };
 
     return (
-        <div className='mx-auto'>
-            <h1 className='px-3 text-base text-white'>Employees by Experience:</h1>
-            <Bar options={options} data={data} />;
+        <div className='py-3 mx-auto relative'>
+            <h1 className='text-center text-xl pb-4'>Employees by Experience:</h1>
+            {props.EmployeeLoading && props.ScrumLoading ?
+                <div className="loader-container">
+                    <div className="loader"></div>
+                    <div className="loader-text">Loading...</div>
+                </div>
+                :
+                <>
+                    <h1 className='text-center text-sm -rotate-90 absolute -left-[4rem] top-1/2'>Number of employees</h1>
+                    <Bar options={options} data={data} className='p-5' />
+                    <h1 className='text-sm absolute bottom-2 left-1/2'>Years of experience</h1>
+                </>
+
+            }
         </div>
+
     )
 }

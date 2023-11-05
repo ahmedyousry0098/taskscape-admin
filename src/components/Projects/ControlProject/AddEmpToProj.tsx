@@ -8,8 +8,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees } from "../../../Redux/AllEmpSlice";
-import { addEmployeeToProject } from "../../../Redux/AllProjSlice";
+import { allEmployees } from "../../../App/Api/AllEmpSlice";
+import { addEmployeeToProject, allProjects } from "../../../App/Api/AllProjSlice";
 
 
 const Transition = React.forwardRef(function Transition(
@@ -43,6 +43,7 @@ export default function AddEmpToProj(props: any) {
                 if (result.payload) {
                     props.setAddDialog();
                     formik.resetForm();
+                    dispatch(allProjects())
                 }
             })
         },

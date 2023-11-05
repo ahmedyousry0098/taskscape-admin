@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../App/hooks'
-import { allEmployees, allScrums } from '../../Redux/AllEmpSlice'
-import { allProjects } from '../../Redux/AllProjSlice'
+import { allEmployees, allScrums } from '../../App/Api/AllEmpSlice'
+import { allProjects } from '../../App/Api/AllProjSlice'
 import EmpType from './Charts/EmpType';
 import Experience from './Charts/Experience';
 import Projstatus from './Charts/Projstatus';
@@ -29,10 +29,9 @@ export default function Dashboard() {
   }, [])
 
   if (!getAllEmployees.employees?.length || !getAllProjects.projects?.length || !getScrums.scrums?.length) {
-    console.log({ getAllEmployees }, 'dashboard');
-    console.log({ getScrums }, 'dashboard');
-    return <div>
-      <p>loading..</p>
+    return <div className="loader-container pt-64">
+      <div className="loader"></div>
+      <div className="loader-text">Loading...</div>
     </div>
   }
 

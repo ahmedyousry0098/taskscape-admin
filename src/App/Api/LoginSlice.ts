@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   IJwtPayload,
   ILogin,
-} from "../shared/Interfaces/authentication.interface";
-import { axiosInstance } from "../App/AxiosInstance";
+} from "../../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../AxiosInstance";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 

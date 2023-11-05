@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../App/AxiosInstance";
-import { ILogin } from "../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../AxiosInstance";
+import { ILogin } from "../../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 
 export const addEmployee = createAsyncThunk<void, ILogin>(

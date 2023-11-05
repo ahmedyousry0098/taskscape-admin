@@ -4,6 +4,7 @@ import { addEmployeeReducer } from "./AddEmpSlice";
 import { createProjectReducer } from "./CreateProjSlice";
 import { allEmployeesReducer } from "./AllEmpSlice";
 import { allProjectsReducer } from "./AllProjSlice";
+import { projectDetailsReducer } from "./ProjDetailsSlice";
 
 let store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ let store = configureStore({
     createProject: createProjectReducer,
     allEmployees: allEmployeesReducer,
     allProjects: allProjectsReducer,
+    projectDetails: projectDetailsReducer,
   },
 });
 

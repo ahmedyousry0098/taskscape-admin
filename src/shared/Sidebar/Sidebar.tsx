@@ -1,7 +1,7 @@
 import React from 'react'
 import '../../App.css'
 import { NavLink, useNavigate } from 'react-router-dom'
-import { logout } from '../../Redux/LoginSlice'
+import { logout } from '../../App/Api/LoginSlice'
 import Logo from '../../assets/logo.png'
 import { useAppDispatch } from '../../App/hooks'
 import { Tooltip } from 'antd'
@@ -56,9 +56,9 @@ export default function Sidebar() {
 
         <div className='hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-8'>
           <Tooltip title="Notifications" placement="right" color={"#082F49"}>
-            <NavLink to={'/notifications'}><i className="fa-regular fa-bell  w-10"></i></NavLink>
+            <NavLink to={'/ay7aga'}><i className="fa-regular fa-bell  w-10"></i></NavLink>
           </Tooltip>
-          <NavLink to={'/notifications'}>
+          <NavLink to={'/ay7aga'}>
             <li className=' xl:inline-block lg:hidden md:hidden sm:hidden'>Notifications</li></NavLink>
         </div>
 

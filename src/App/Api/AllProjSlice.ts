@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../App/AxiosInstance";
+import { axiosInstance } from "../AxiosInstance";
 import { toast } from "react-toastify";
 import {
   AddEmpOfProj,
   DeleteEmpOfProj,
-} from "../shared/Interfaces/authentication.interface";
+} from "../../shared/Interfaces/authentication.interface";
 
 export const allProjects = createAsyncThunk<void>(
   "All_projects/allProjects",

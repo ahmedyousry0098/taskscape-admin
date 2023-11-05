@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import React, { useEffect } from "react";
-import { allScrums } from "../../../Redux/AllEmpSlice";
+import { allScrums } from "../../../App/Api/AllEmpSlice";
 
 export default function Scrums() {
 

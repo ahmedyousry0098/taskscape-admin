@@ -69,7 +69,10 @@ export default function EmpType(props: any) {
         <div className='py-3 w-3/4 mx-auto'>
             <h1 className='text-center text-xl pb-4'>Employment Type</h1>
             {props.EmployeeLoading && props.ScrumLoading ?
-                <p className='text-center text-2xl text-amber-500'>Loading...</p>
+                <div className="loader-container">
+                    <div className="loader"></div>
+                    <div className="loader-text">Loading...</div>
+                </div>
                 :
                 <Doughnut data={data} />
             }

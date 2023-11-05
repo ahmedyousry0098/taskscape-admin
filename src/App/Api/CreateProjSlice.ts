@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../App/AxiosInstance";
-import { IProject } from "../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../AxiosInstance";
+import { IProject } from "../../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 

@@ -9,9 +9,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { createProject } from "../../../Redux/CreateProjSlice";
-import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
-import { allProjects } from "../../../Redux/AllProjSlice";
+import { createProject } from "../../../App/Api/CreateProjSlice";
+import { allEmployees, allScrums } from "../../../App/Api/AllEmpSlice";
+import { allProjects } from "../../../App/Api/AllProjSlice";
 
 
 const Transition = React.forwardRef(function Transition(

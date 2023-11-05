@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import React, { useEffect, useState } from "react";
-import { allEmployees, allScrums } from "../../Redux/AllEmpSlice";
+import { allEmployees, allScrums } from "../../App/Api/AllEmpSlice";
 import AddEmp from "./AddEmp/AddEmp";
 import { Tooltip } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
