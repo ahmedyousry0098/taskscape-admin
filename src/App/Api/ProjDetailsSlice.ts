@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../AxiosInstance";
 import { toast } from "react-toastify";
+import { UpdateProject } from "../../shared/Interfaces/authentication.interface";
 
 export const projectDetails = createAsyncThunk<void, string>(
   "Project_Details/projectDetails",
@@ -10,26 +11,53 @@ export const projectDetails = createAsyncThunk<void, string>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
       toast.error(error.response.data.error);
     }
   }
 );
 
+export const deleteProject = createAsyncThunk<void, string>(
+  "Project_Details/deleteProject",
+  async (projectId) => {
+    try {
+      const response = await axiosInstance.delete(`/project/${projectId}`);
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.error);
+    }
+  }
+);
+
+export const updateProject = createAsyncThunk<
+  void,
+  { values: UpdateProject; projectId: string }
+>("Project_Details/updateProject", async ({ values, projectId }) => {
+  try {
+    const response = await axiosInstance.put(
+      `/project/update/${projectId}`,
+      values
+    );
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+    toast.error(error.response.data.error);
+    toast.error(error.response.data.details[0]);
+  }
+});
+
 type initialStateType = {
   isLoading: boolean;
   getprojectDetails: any;
   error: string;
-  delLoading: boolean;
-  addLoading: boolean;
+  deleteLoading: boolean;
 };
 
 const initialState: initialStateType = {
   isLoading: false,
   getprojectDetails: [],
   error: "",
-  delLoading: false,
-  addLoading: false,
+  deleteLoading: false,
 };
 
 export const ProjectDetailslice = createSlice({
@@ -51,7 +79,22 @@ export const ProjectDetailslice = createSlice({
         state.isLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
+        }
+      });
+
+    builder
+      .addCase(deleteProject.pending, (state) => {
+        state.deleteLoading = true;
+      })
+      .addCase(deleteProject.fulfilled, (state, action) => {
+        state.deleteLoading = false;
+      })
+      .addCase(deleteProject.rejected, (state, action) => {
+        state.deleteLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
         }
       });
   },

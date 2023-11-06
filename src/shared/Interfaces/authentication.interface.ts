@@ -42,6 +42,9 @@ export interface AddEmpOfProj {
   employees: string[];
 }
 
-export interface RouteParams {
-  id: string;
+export interface UpdateProject {
+  projectName: string;
+  description: string;
+  startDate: string;
+  deadline: string;
 }

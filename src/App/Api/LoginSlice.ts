@@ -90,6 +90,8 @@ export const LoginSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(logIn.fulfilled, (state, action: any) => {
+        console.log(action);
+
         if (action.payload !== undefined) {
           localStorage.setItem("token", action.payload.token);
         }
@@ -98,6 +100,8 @@ export const LoginSlice = createSlice({
       .addCase(logIn.rejected, (state, action) => {
         state.loading = false;
         state.isLoggedIn = false;
+        console.log(action);
+
         if (action.error.message === "Request failed with status code 400") {
           toast.error("ُSomething went wrong please try again later");
         }

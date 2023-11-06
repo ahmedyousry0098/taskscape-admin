@@ -2,19 +2,26 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import { delEmployeeFromProject } from "../../../App/Api/AllProjSlice";
-import { Button, Collapse, Tooltip } from "antd";
+import { Button, Collapse, Steps, Tooltip } from "antd";
 import { Popconfirm } from "antd";
 import { DeleteEmpOfProj } from "../../../shared/Interfaces/authentication.interface";
 import AddEmpToProj from "./AddEmpToProj";
-import { projectDetails } from "../../../App/Api/ProjDetailsSlice";
+import {
+  deleteProject,
+  projectDetails,
+} from "../../../App/Api/ProjDetailsSlice";
+import { useNavigate } from "react-router-dom";
+import EditProject from "./EditProject";
 
 export default function ProjDetails() {
   const dispatch = useAppDispatch();
   const [openAddEmp, setOpenAddEmp] = useState(false);
+  const [openEditProject, setopenEditProject] = useState(false);
   const [projectId, setProjectId] = useState<string>("");
-  const { isLoading, getprojectDetails, delLoading } = useAppSelector(
+  const { isLoading, getprojectDetails, deleteLoading } = useAppSelector(
     (state) => state.projectDetails
   );
+  const navigate = useNavigate();
 
   function handleDeleteEmployee(body: DeleteEmpOfProj) {
     dispatch(delEmployeeFromProject(body)).then((result) => {
@@ -24,9 +31,18 @@ export default function ProjDetails() {
     });
   }
 
+  function handleDeleteProject(projectId: string) {
+    dispatch(deleteProject(projectId)).then((result) => {
+      if (result.payload) {
+        navigate("/projects");
+      }
+    });
+  }
+
   useEffect(() => {
     setProjectId(getprojectDetails?.details?._id);
   }, [getprojectDetails]);
+  console.log(getprojectDetails);
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
@@ -185,7 +201,7 @@ export default function ProjDetails() {
                                         key={member._id}
                                         className="text-sky-700">
                                         {" "}
-                                        {delLoading ? (
+                                        {deleteLoading ? (
                                           <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
                                         ) : (
                                           <i className="fa-solid fa-user-minus fa-xs"></i>
@@ -324,7 +340,7 @@ export default function ProjDetails() {
                                             </p>
                                           </div>
 
-                                          <div className="flex justify-between">
+                                          <div className="flex justify-evenly">
                                             <div>
                                               <p className="font-semibold py-1">
                                                 Start date:
@@ -362,12 +378,31 @@ export default function ProjDetails() {
                                             </div>
                                           </div>
                                           <div className="w-full font-semibold flex justify-center mt-4">
-                                            <h4 className=" inline-block px-3 py-1 text-white bg-sky-900 rounded-xl">
+                                            <h4 className=" inline-block px-3 py-1  rounded-xl">
                                               Status:
-                                              <span className="ms-3">
-                                                {task.status}
-                                              </span>
                                             </h4>
+
+                                            <Steps
+                                              direction="horizontal"
+                                              current={
+                                                task.status === "todo"
+                                                  ? 0
+                                                  : task.status === "doing"
+                                                  ? 1
+                                                  : 3
+                                              }
+                                              items={[
+                                                {
+                                                  title: "Todo",
+                                                },
+                                                {
+                                                  title: "Doing",
+                                                },
+                                                {
+                                                  title: "Done",
+                                                },
+                                              ]}
+                                            />
                                           </div>
                                         </div>
                                       ),
@@ -392,22 +427,44 @@ export default function ProjDetails() {
             className="flex justify-center mb-3">
             <button
               type="button"
+              onClick={() => setopenEditProject(true)}
               className="bg-sky-700 hover:bg-sky-900 px-4
                         rounded-lg text-white py-1 font-semibold me-5">
               <i className="fa-regular fa-pen-to-square me-2 fa-sm text-white"></i>
               Edit
             </button>
 
-            <button
-              type="button"
-              className="bg-red-700 hover:bg-red-900 px-4
-                        rounded-lg text-white py-1 font-semibold">
-              <i className="fa-regular fa-trash-can me-2 fa-sm text-white"></i>
-              Remove
-            </button>
+            <Popconfirm
+              title="Delete Project"
+              description="Caution this project will be deleted permenently ?"
+              okText="Yes"
+              okType="danger"
+              onConfirm={() => handleDeleteProject(projectId)}
+              cancelText="Cancel"
+              showCancel>
+              <Button
+                key={projectId}
+                className="bg-red-700 hover:bg-red-900 hover:text-white hover:outline-none px-4 rounded-lg text-white py-1 font-semibold">
+                {" "}
+                {deleteLoading ? (
+                  <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+                ) : (
+                  <>
+                    <i className="fa-regular fa-trash-can me-2 text-white"></i>
+                    Delete
+                  </>
+                )}
+              </Button>
+            </Popconfirm>
           </div>
         </div>
       )}
+
+      <EditProject
+        projectId={projectId}
+        openEditProject={openEditProject}
+        setopenEditProject={() => setopenEditProject(false)}
+      />
     </div>
   );
 }

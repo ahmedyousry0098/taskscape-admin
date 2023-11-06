@@ -77,30 +77,10 @@ export default function Projects() {
                     key={project._id}
                     className="m-3 w-[500px] border-2 rounded-3xl border-sky-950 relative shadow-xl">
                     {/* Title and Details button */}
-                    <div className="relative py-2 mb-4 bg-sky-950 flex justify-center items-center text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
-                      <div>
-                        <Link to={`/projects/details/${project._id}`}>
-                          <Tooltip
-                            title="Details"
-                            placement="top"
-                            color={"rgb(245, 158, 11)"}
-                            key={"#082F49"}>
-                            <button
-                              type="button"
-                              className="rounded-full absolute top-1/4 right-2 text-white"
-                              onClick={() => {
-                                dispatch(projectDetails(project._id));
-                              }}>
-                              <i className="fa-solid fa-circle-info fa-xl"></i>
-                            </button>
-                          </Tooltip>
-                        </Link>
-                      </div>
-                      <div>
-                        <h1 className="font-medium text-xl">
-                          {project.projectName}
-                        </h1>
-                      </div>
+                    <div className=" py-2 mb-4 text-center bg-sky-950 text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
+                      <h1 className="font-medium text-xl">
+                        {project.projectName}
+                      </h1>
                     </div>
 
                     {/* Dates */}
@@ -149,21 +129,18 @@ export default function Projects() {
 
                     {/* Edit and Delete */}
                     <div key={project._id} className="flex justify-center mb-3">
-                      <button
-                        type="button"
-                        className="bg-sky-700 hover:bg-sky-900 px-4
-                      rounded-lg text-white py-1 font-semibold me-5">
-                        <i className="fa-regular fa-pen-to-square me-2 fa-sm text-white"></i>
-                        Edit
-                      </button>
-
-                      <button
-                        type="button"
-                        className="bg-red-700 hover:bg-red-900 px-4
-                      rounded-lg text-white py-1 font-semibold">
-                        <i className="fa-regular fa-trash-can me-2 fa-sm text-white"></i>
-                        Remove
-                      </button>
+                      <Link to={`/projects/details/${project._id}`}>
+                        <div className="bg-sky-950 hover:bg-sky-700 duration-300 hover:scale-105 text-white px-4 py-1 rounded-lg">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              dispatch(projectDetails(project._id));
+                            }}>
+                            <i className="fa-solid fa-circle-info me-2"></i>
+                            Details
+                          </button>
+                        </div>
+                      </Link>
                     </div>
                   </div>
                 );

@@ -43,7 +43,7 @@ export default function App() {
         { index: true, element: <Navigate to={"/dashboard"} /> },
         { path: "dashboard", element: <Dashboard /> },
         { path: "projects", element: <Projects /> },
-        { path: "projects/details/:id", element: <ProjDetails /> },
+        { path: "projects/details/:projectId", element: <ProjDetails /> },
         {
           path: "employees",
           element: <Employees />,
