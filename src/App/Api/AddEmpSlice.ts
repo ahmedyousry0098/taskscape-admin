@@ -9,7 +9,12 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
     try {
       const response = await axiosInstance.post(
         `/employee/createmployee`,
-        values
+        values,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       if (response.status === 200) {
         toast.success(response.data.message);

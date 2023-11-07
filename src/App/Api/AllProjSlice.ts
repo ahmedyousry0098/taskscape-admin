@@ -13,7 +13,12 @@ export const allProjects = createAsyncThunk<void>(
       const getDecode: any = decodeing.getState();
       const orgnizationId = getDecode.login.decoded.orgId;
       const response = await axiosInstance.get(
-        `/project/org-projects/${orgnizationId}`
+        `/project/org-projects/${orgnizationId}`,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       return response.data;
     } catch (error: any) {
@@ -28,7 +33,15 @@ export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
   "All_Employee/delEmployeeFromProject",
   async (body) => {
     try {
-      const response = await axiosInstance.patch(`/project/del-employee`, body);
+      const response = await axiosInstance.patch(
+        `/project/del-employee`,
+        body,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
       toast.success(response.data.message);
       return response.data;
     } catch (error: any) {
@@ -45,7 +58,12 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
     try {
       const response = await axiosInstance.patch(
         `/project/add-employee`,
-        values
+        values,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       toast.success(response.data.message);
       return response.data;

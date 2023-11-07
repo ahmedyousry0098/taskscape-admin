@@ -55,7 +55,7 @@ export default function EmpType(props: any) {
         backgroundColor: [
           "rgb(8, 47, 73)",
           "rgb(185 28 28)",
-          "rgb(161, 98, 7 )",
+          "rgb(15, 118, 110)",
         ],
         hoverOffset: 15,
         borderWidth: 0,
@@ -63,14 +63,14 @@ export default function EmpType(props: any) {
         hoverBackgroundColor: [
           "#0D74ED",
           "rgb(249,43,83)",
-          "rgb(253, 224, 71)",
+          "rgb(45, 212, 191)",
         ],
       },
     ],
   };
 
   return (
-    <div className="py-3 w-3/4 mx-auto">
+    <div className="py-3 w-3/4 mx-auto ">
       <h1 className="text-center text-xl pb-4">Job Type</h1>
       {props.EmployeeLoading && props.ScrumLoading ? (
         <div className="loader-container">

@@ -7,7 +7,14 @@ export const projectDetails = createAsyncThunk<void, string>(
   "Project_Details/projectDetails",
   async (projectId) => {
     try {
-      const response = await axiosInstance.get(`/project/details/${projectId}`);
+      const response = await axiosInstance.get(
+        `/project/details/${projectId}`,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -20,7 +27,11 @@ export const deleteProject = createAsyncThunk<void, string>(
   "Project_Details/deleteProject",
   async (projectId) => {
     try {
-      const response = await axiosInstance.delete(`/project/${projectId}`);
+      const response = await axiosInstance.delete(`/project/${projectId}`, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -36,7 +47,12 @@ export const updateProject = createAsyncThunk<
   try {
     const response = await axiosInstance.put(
       `/project/update/${projectId}`,
-      values
+      values,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
     );
     return response.data;
   } catch (error: any) {
