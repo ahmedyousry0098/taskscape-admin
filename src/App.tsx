@@ -17,10 +17,9 @@ import Register from "./components/Controls/Register/Register";
 import ProtectedRoutes from "./shared/ProtectedRoutes/ProtectedRoutes";
 import Employees from "./components/Employees/Employees";
 import { useAppDispatch } from "./App/hooks";
-import { loggedIn } from "./App/Api/LoginSlice";
+import { loggedIn } from "./Redux/LoginSlice";
 import Scrums from "./components/Employees/EmpByRole/Scrums";
 import Members from "./components/Employees/EmpByRole/Members";
-import ProjectDetails from "./components/Projects/ControlProject/tryReactQuery";
 import ProjDetails from "./components/Projects/ControlProject/ProjDetails";
 
 export default function App() {
@@ -59,7 +58,6 @@ export default function App() {
           children: [{ index: true, element: <Register /> }],
         },
         { path: "notifications", element: <Notification /> },
-        { path: "ay7aga", element: <ProjectDetails /> },
       ],
     },
     { path: "*", element: <NotFoundPage /> },

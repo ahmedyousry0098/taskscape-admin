@@ -4,6 +4,13 @@ export interface ILogin {
   email: string;
   password: string;
 }
+export interface IForgetPassword {
+  email: string;
+}
+export interface IResetPassword extends IForgetPassword {
+  code: string;
+  newPassword: string;
+}
 
 export interface IRegister {
   employeeName: string;

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
-import { UpdateProject } from "../../shared/Interfaces/authentication.interface";
+import { UpdateProject } from "../shared/Interfaces/authentication.interface";
 
 export const projectDetails = createAsyncThunk<void, string>(
   "Project_Details/projectDetails",

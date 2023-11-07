@@ -5,10 +5,12 @@ import { createProjectReducer } from "./CreateProjSlice";
 import { allEmployeesReducer } from "./AllEmpSlice";
 import { allProjectsReducer } from "./AllProjSlice";
 import { projectDetailsReducer } from "./ProjDetailsSlice";
+import { resetPasswordReducer } from "./ForgotPass";
 
 let store = configureStore({
   reducer: {
     login: loginReducer,
+    reset: resetPasswordReducer,
     addEmployee: addEmployeeReducer,
     createProject: createProjectReducer,
     allEmployees: allEmployeesReducer,

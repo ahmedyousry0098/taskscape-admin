@@ -9,10 +9,7 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import {
-  projectDetails,
-  updateProject,
-} from "../../../App/Api/ProjDetailsSlice";
+import { projectDetails, updateProject } from "../../../Redux/ProjDetailsSlice";
 import { useParams } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(
@@ -44,7 +41,6 @@ export default function EditProject(props: any) {
   });
 
   let { projectId } = useParams();
-  console.log(projectId);
 
   let formik = useFormik<UpdateProject>({
     initialValues: {
@@ -56,10 +52,7 @@ export default function EditProject(props: any) {
     validationSchema,
     onSubmit: (values) => {
       if (projectId) {
-        console.log(values);
-        console.log(projectId);
         dispatch(updateProject({ values, projectId })).then((result) => {
-          console.log(result);
           if (result.payload) {
             props.setopenEditProject();
             formik.resetForm();

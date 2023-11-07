@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
-import { allEmployees, allScrums } from "../../App/Api/AllEmpSlice";
-import { allProjects } from "../../App/Api/AllProjSlice";
+import { allEmployees, allScrums } from "../../Redux/AllEmpSlice";
+import { allProjects } from "../../Redux/AllProjSlice";
 import EmpType from "./Charts/EmpType";
 import Experience from "./Charts/Experience";
 import Projstatus from "./Charts/Projstatus";
@@ -32,6 +32,7 @@ export default function Dashboard() {
   const { getAllProjects, isLoading } = useAppSelector(
     (state) => state.allProjects
   );
+  // const { getprojectDetails } = useAppSelector((state) => state.projectDetails);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -132,7 +133,10 @@ export default function Dashboard() {
 
         <div className="flex flex-wrap justify-around mx-auto w-full items-center mt-4 text-white">
           <div className="bg-sky-950 w-[650px] mx-3 rounded-2xl px-3 py-1 mb-4">
-            <Projstatus />
+            <Projstatus
+            // getAllProjects={getAllProjects}
+            // getprojectDetails={getprojectDetails}
+            />
           </div>
 
           <div className="bg-sky-950 w-[450px] mx-3 rounded-2xl px-3 py-1 mb-4">

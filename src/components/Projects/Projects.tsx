@@ -2,9 +2,9 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import AddProject from "./ControlProject/AddProject";
-import { allProjects } from "../../App/Api/AllProjSlice";
+import { allProjects } from "../../Redux/AllProjSlice";
 import { Collapse, Tooltip } from "antd";
-import { projectDetails } from "../../App/Api/ProjDetailsSlice";
+import { projectDetails } from "../../Redux/ProjDetailsSlice";
 import { Link } from "react-router-dom";
 
 export default function Projects() {

@@ -2,14 +2,14 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IRegister } from "../../../shared/Interfaces/authentication.interface";
-import { addEmployee } from "../../../App/Api/AddEmpSlice";
+import { addEmployee } from "../../../Redux/AddEmpSlice";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees, allScrums } from "../../../App/Api/AllEmpSlice";
+import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

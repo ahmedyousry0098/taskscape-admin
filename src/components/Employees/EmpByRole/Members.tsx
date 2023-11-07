@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import React, { useEffect } from "react";
-import { allEmployees, deleteEmployee } from "../../../App/Api/AllEmpSlice";
+import { allEmployees, deleteEmployee } from "../../../Redux/AllEmpSlice";
 import { Popconfirm } from "antd";
 
 export default function Members() {

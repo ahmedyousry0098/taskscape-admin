@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../AxiosInstance";
-import { IProject } from "../../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../App/api/AxiosInstance";
+import { IProject } from "../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 // import { toast } from "react-toastify";
 
@@ -18,7 +18,7 @@ export const createProject = createAsyncThunk<void, IProject>(
     } catch (error: any) {
       console.log(error);
       toast.error(error.response.data.details);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -52,7 +52,7 @@ export const CreateProjectSlice = createSlice({
         state.loading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
         }
       });
   },

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../AxiosInstance";
-import { ILogin } from "../../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../App/api/AxiosInstance";
+import { ILogin } from "../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 
 export const addEmployee = createAsyncThunk<void, ILogin>(
@@ -22,8 +22,7 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );

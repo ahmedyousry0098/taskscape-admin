@@ -95,7 +95,7 @@ export default function Experience(props: any) {
             Number of employees
           </h1>
           <Bar options={options} data={data} className="p-5" />
-          <h1 className="text-sm absolute bottom-2 left-1/2">
+          <h1 className="text-sm absolute bottom-2 left-[16rem]">
             Years of experience
           </h1>
         </>

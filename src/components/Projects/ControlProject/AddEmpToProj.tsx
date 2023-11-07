@@ -8,9 +8,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees } from "../../../App/Api/AllEmpSlice";
-import { addEmployeeToProject } from "../../../App/Api/AllProjSlice";
-import { projectDetails } from "../../../App/Api/ProjDetailsSlice";
+import { allEmployees } from "../../../Redux/AllEmpSlice";
+import { addEmployeeToProject } from "../../../Redux/AllProjSlice";
+import { projectDetails } from "../../../Redux/ProjDetailsSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

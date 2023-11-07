@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
 import {
   AddEmpOfProj,
   DeleteEmpOfProj,
-} from "../../shared/Interfaces/authentication.interface";
+} from "../shared/Interfaces/authentication.interface";
 
 export const allProjects = createAsyncThunk<void>(
   "All_projects/allProjects",
@@ -23,8 +23,7 @@ export const allProjects = createAsyncThunk<void>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -46,8 +45,7 @@ export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -69,7 +67,7 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );

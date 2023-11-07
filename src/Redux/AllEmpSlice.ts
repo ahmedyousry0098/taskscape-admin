@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
 
 export const allEmployees = createAsyncThunk<void>(
@@ -19,8 +19,7 @@ export const allEmployees = createAsyncThunk<void>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -42,8 +41,7 @@ export const allScrums = createAsyncThunk<void>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -54,11 +52,8 @@ export const deleteEmployee = createAsyncThunk<void, string>(
     try {
       const response = await axiosInstance.patch(
         `/employee/delete/${projectId}`,
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        }
+        {},
+        {}
       );
       toast.success(response.data.message);
       console.log(response);
@@ -66,7 +61,7 @@ export const deleteEmployee = createAsyncThunk<void, string>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );

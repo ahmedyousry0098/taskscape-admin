@@ -1,15 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
-import { delEmployeeFromProject } from "../../../App/Api/AllProjSlice";
+import { delEmployeeFromProject } from "../../../Redux/AllProjSlice";
 import { Button, Collapse, Steps, Tooltip } from "antd";
 import { Popconfirm } from "antd";
 import { DeleteEmpOfProj } from "../../../shared/Interfaces/authentication.interface";
 import AddEmpToProj from "./AddEmpToProj";
-import {
-  deleteProject,
-  projectDetails,
-} from "../../../App/Api/ProjDetailsSlice";
+import { deleteProject, projectDetails } from "../../../Redux/ProjDetailsSlice";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 

@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   IJwtPayload,
   ILogin,
-} from "../../shared/Interfaces/authentication.interface";
-import { axiosInstance } from "../AxiosInstance";
+} from "../shared/Interfaces/authentication.interface";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 
@@ -15,7 +15,7 @@ export const logIn = createAsyncThunk<void, ILogin>(
       return response.data;
     } catch (error: any) {
       toast.error(error.response.data.details);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -104,10 +104,9 @@ export const LoginSlice = createSlice({
       .addCase(logIn.rejected, (state, action) => {
         state.loading = false;
         state.isLoggedIn = false;
-        console.log(action);
-
-        if (action.error.message === "Request failed with status code 400") {
-          toast.error("ُSomething went wrong please try again later");
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
         }
       });
   },
