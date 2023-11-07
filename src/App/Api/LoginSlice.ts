@@ -65,8 +65,13 @@ export const LoginSlice = createSlice({
 
       const decode = decodeToken(token);
 
-      if (typeof decode == "string") {
+      if (
+        !decode ||
+        typeof decode == "string" ||
+        (decode.exp as number) * 1000 < Date.now()
+      ) {
         state.decoded = initialState.decoded;
+        localStorage.removeItem("token");
         state.isLoggedIn = false;
         return;
       }
@@ -90,9 +95,8 @@ export const LoginSlice = createSlice({
         state.isLoggedIn = false;
       })
       .addCase(logIn.fulfilled, (state, action: any) => {
-        console.log(action);
-
         if (action.payload !== undefined) {
+          localStorage.removeItem("token");
           localStorage.setItem("token", action.payload.token);
         }
         state.loading = false;

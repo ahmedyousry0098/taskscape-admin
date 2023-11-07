@@ -62,7 +62,7 @@ export default function ProjDetails() {
         <div
           key={getprojectDetails?.details?._id}
           className="m-3  border-2 rounded-3xl
-                   border-sky-950 relative shadow-xl">
+                   border-sky-950 relative shadow-xl lg:w-2/3 sm:mx-4 lg:mx-auto">
           {/* Title */}
           <div className="relative py-2 mb-4 bg-sky-950 flex justify-center items-center text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
             <h1 className="font-medium text-xl">
@@ -96,8 +96,8 @@ export default function ProjDetails() {
           <div className="px-10 mb-1">
             <h4 className="font-bold me-2 inline-block">Scrum Master</h4>
           </div>
-          <div className="px-10 mb-6 flex justify-evenly">
-            <p className="font-semibold border px-4 py-1 border-sky-900 rounded-lg">
+          <div className="px-10 mb-6 flex flex-wrap justify-evenly">
+            <p className="font-semibold border px-4 mb-3 py-1 border-sky-900 rounded-lg">
               {" "}
               Name:
               <span className="font-normal ms-2">
@@ -105,7 +105,7 @@ export default function ProjDetails() {
               </span>
             </p>
 
-            <p className="font-semibold px-4 py-1 border border-sky-900 rounded-lg">
+            <p className="font-semibold px-4 py-1 mb-3 border border-sky-900 rounded-lg">
               {" "}
               Email:
               <span className="font-normal ms-2 ">
@@ -113,9 +113,9 @@ export default function ProjDetails() {
               </span>
             </p>
 
-            <p className="font-semibold px-4 py-1 border border-sky-900 rounded-lg">
+            <p className="font-semibold px-4 py-1 border mb-3 border-sky-900 rounded-lg">
               {" "}
-              Years of experience:
+              Experience:
               <span className="font-normal ms-2">
                 {getprojectDetails?.details?.scrumMaster.experience} year
               </span>
@@ -258,7 +258,7 @@ export default function ProjDetails() {
                           <div
                             key={sprint?._id}
                             className=" w-full py-2 border-b border-sky-900">
-                            <div className="flex justify-evenly mb-5">
+                            <div className="flex justify-evenly flex-wrap mb-5">
                               <div>
                                 <p className="font-semibold py-1">
                                   Start date:
@@ -316,72 +316,78 @@ export default function ProjDetails() {
                                               Assigned To:
                                             </h4>
                                           </div>
-                                          <div className="mb-6 flex justify-evenly">
-                                            <p className="font-semibold px-4 py-1 border border-sky-900 rounded-lg">
-                                              Employee:
-                                              <span className="font-normal ms-2">
+                                          <div className="mb-6 flex flex-wrap justify-evenly">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
+                                                Employee:
+                                              </p>
+                                              <span className="font-normal md:ms-2 sm:ms-0">
                                                 {task.assignTo.employeeName}
                                               </span>
-                                            </p>
+                                            </div>
 
-                                            <p className="font-semibold px-4 py-1 border border-sky-900 rounded-lg">
-                                              Email:
-                                              <span className="font-normal ms-2 ">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
+                                                Email:
+                                              </p>
+                                              <span className="font-normal md:ms-2 sm:ms-0 ">
                                                 {task.assignTo.email}
                                               </span>
-                                            </p>
+                                            </div>
 
-                                            <p className="font-semibold px-4 py-1 border border-sky-900 rounded-lg">
-                                              Experience:
-                                              <span className="font-normal ms-2">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
+                                                Experience:
+                                              </p>
+                                              <span className="font-normal md:ms-2 sm:ms-0">
                                                 {task.assignTo.experience}{" "}
                                                 year/s
                                               </span>
-                                            </p>
+                                            </div>
                                           </div>
 
-                                          <div className="flex justify-evenly">
+                                          <div className="flex md:justify-evenly md:flex-row sm:flex-col flex-wrap">
                                             <div>
-                                              <p className="font-semibold py-1">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Start date:
-                                                <span className="font-medium ps-2">
-                                                  {task.startDate
-                                                    .split("T")
-                                                    .slice(0, 1)
-                                                    .join("")}
-                                                </span>
                                               </p>
+                                              <span className="font-medium md:ps-2 sm:ps-0">
+                                                {task.startDate
+                                                  .split("T")
+                                                  .slice(0, 1)
+                                                  .join("")}
+                                              </span>
                                             </div>
 
                                             <div>
-                                              <p className="font-semibold py-1">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Deadline:
-                                                <span className="font-medium ps-2">
-                                                  {task.deadline
-                                                    .split("T")
-                                                    .slice(0, 1)
-                                                    .join("")}
-                                                </span>
                                               </p>
+                                              <span className="font-medium md:ps-2 sm:ps-0">
+                                                {task.deadline
+                                                  .split("T")
+                                                  .slice(0, 1)
+                                                  .join("")}
+                                              </span>
                                             </div>
 
                                             <div>
-                                              <p className="font-semibold py-1">
+                                              <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Last Update:
-                                                <span className="font-medium ps-2">
-                                                  {task.updatedAt
-                                                    .split("T")
-                                                    .slice(0, 1)
-                                                    .join("")}
-                                                </span>
                                               </p>
+                                              <span className="font-medium md:ps-2 sm:ps-0">
+                                                {task.updatedAt
+                                                  .split("T")
+                                                  .slice(0, 1)
+                                                  .join("")}
+                                              </span>
                                             </div>
                                           </div>
-                                          <div className="w-full font-semibold flex justify-center mt-4">
-                                            <h4 className=" inline-block px-3 py-1  rounded-xl">
-                                              Status:
-                                            </h4>
 
+                                          <h4 className=" md:inline-block sm:block px-3 py-1 mt-4  rounded-xl">
+                                            Status:
+                                          </h4>
+                                          <div className="w-full font-semibold flex justify-center ">
                                             <Steps
                                               direction="horizontal"
                                               current={

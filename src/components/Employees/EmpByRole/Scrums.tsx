@@ -11,8 +11,6 @@ export default function Scrums() {
   const dispatch = useAppDispatch();
 
   function handleDeleteEmployee(employeeId: string) {
-    console.log(employeeId);
-
     dispatch(deleteEmployee(employeeId)).then((result) => {
       if (result.payload) {
         dispatch(allScrums());
@@ -22,7 +20,6 @@ export default function Scrums() {
 
   useEffect(() => {
     dispatch(allScrums());
-    console.log(getScrums);
   }, []);
 
   return (
