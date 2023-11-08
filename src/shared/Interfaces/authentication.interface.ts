@@ -4,12 +4,22 @@ export interface ILogin {
   email: string;
   password: string;
 }
+export interface IForgetPassword {
+  email: string;
+}
+export interface IResetPassword extends IForgetPassword {
+  code: string;
+  newPassword: string;
+}
 
 export interface IRegister {
   employeeName: string;
   email: string;
   password: string;
   role: string;
+  experience: string;
+  employmentType: string;
+  title: string;
 }
 
 export interface IProject {
@@ -37,4 +47,11 @@ export interface AddEmpOfProj {
   organization: string;
   project: string;
   employees: string[];
+}
+
+export interface UpdateProject {
+  projectName: string;
+  description: string;
+  startDate: string;
+  deadline: string;
 }

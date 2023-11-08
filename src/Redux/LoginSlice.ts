@@ -3,7 +3,7 @@ import {
   IJwtPayload,
   ILogin,
 } from "../shared/Interfaces/authentication.interface";
-import { axiosInstance } from "../App/AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 
@@ -15,7 +15,7 @@ export const logIn = createAsyncThunk<void, ILogin>(
       return response.data;
     } catch (error: any) {
       toast.error(error.response.data.details);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -65,8 +65,13 @@ export const LoginSlice = createSlice({
 
       const decode = decodeToken(token);
 
-      if (typeof decode == "string") {
+      if (
+        !decode ||
+        typeof decode == "string" ||
+        (decode.exp as number) * 1000 < Date.now()
+      ) {
         state.decoded = initialState.decoded;
+        localStorage.removeItem("token");
         state.isLoggedIn = false;
         return;
       }
@@ -91,6 +96,7 @@ export const LoginSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action: any) => {
         if (action.payload !== undefined) {
+          localStorage.removeItem("token");
           localStorage.setItem("token", action.payload.token);
         }
         state.loading = false;
@@ -98,8 +104,9 @@ export const LoginSlice = createSlice({
       .addCase(logIn.rejected, (state, action) => {
         state.loading = false;
         state.isLoggedIn = false;
-        if (action.error.message === "Request failed with status code 400") {
-          toast.error("ُSomething went wrong please try again later");
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
         }
       });
   },

@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../App/AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
 import {
   AddEmpOfProj,
@@ -13,13 +13,17 @@ export const allProjects = createAsyncThunk<void>(
       const getDecode: any = decodeing.getState();
       const orgnizationId = getDecode.login.decoded.orgId;
       const response = await axiosInstance.get(
-        `/project/org-projects/${orgnizationId}`
+        `/project/org-projects/${orgnizationId}`,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -28,13 +32,20 @@ export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
   "All_Employee/delEmployeeFromProject",
   async (body) => {
     try {
-      const response = await axiosInstance.patch(`/project/del-employee`, body);
+      const response = await axiosInstance.patch(
+        `/project/del-employee`,
+        body,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
       toast.success(response.data.message);
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -45,14 +56,18 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
     try {
       const response = await axiosInstance.patch(
         `/project/add-employee`,
-        values
+        values,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       toast.success(response.data.message);
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );
@@ -107,7 +122,7 @@ export const AllProjectSlice = createSlice({
         state.delLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
         }
       });
 
@@ -122,7 +137,7 @@ export const AllProjectSlice = createSlice({
         state.addLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
-          toast.error("Something went wrong");
+          toast.error(state.error);
         }
       });
   },

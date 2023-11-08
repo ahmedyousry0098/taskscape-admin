@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { axiosInstance } from "../App/AxiosInstance";
+import { axiosInstance } from "../App/api/AxiosInstance";
 import { ILogin } from "../shared/Interfaces/authentication.interface";
 import { toast } from "react-toastify";
 
@@ -9,7 +9,12 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
     try {
       const response = await axiosInstance.post(
         `/employee/createmployee`,
-        values
+        values,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       if (response.status === 200) {
         toast.success(response.data.message);
@@ -17,8 +22,7 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.details[0]);
-      toast.error(error.response.data.error);
+      toast.error(error.response.data.message);
     }
   }
 );

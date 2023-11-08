@@ -1,17 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import * as Yup from "yup";
 import { useFormik } from "formik";
-import { IProject } from "../../../shared/Interfaces/authentication.interface";
+import { UpdateProject } from "../../../shared/Interfaces/authentication.interface";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { createProject } from "../../../Redux/CreateProjSlice";
-import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
-import { allProjects } from "../../../Redux/AllProjSlice";
+import { projectDetails, updateProject } from "../../../Redux/ProjDetailsSlice";
+import { useParams } from "react-router-dom";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -22,18 +21,9 @@ const Transition = React.forwardRef(function Transition(
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function AddProject(props: any) {
+export default function EditProject(props: any) {
   const dispatch = useAppDispatch();
   const { loading } = useAppSelector((state) => state.createProject);
-  const { getAllEmployees, getScrums } = useAppSelector(
-    (state) => state.allEmployees
-  );
-  const { decoded } = useAppSelector((state) => state.login);
-
-  useEffect(() => {
-    dispatch(allEmployees());
-    dispatch(allScrums());
-  }, []);
 
   const validationSchema = Yup.object({
     projectName: Yup.string()
@@ -48,38 +38,38 @@ export default function AddProject(props: any) {
       .required("Deadline is required")
       .min(Yup.ref("startDate"), "Can`t be before start date"),
     description: Yup.string().required("Description is required"),
-    scrumMaster: Yup.string().required("Select a scrum master"),
   });
 
-  let formik = useFormik<IProject>({
+  let { projectId } = useParams();
+
+  let formik = useFormik<UpdateProject>({
     initialValues: {
       projectName: "",
       startDate: "",
       deadline: "",
       description: "",
-      scrumMaster: "",
-      employees: [],
-      organization: decoded.orgId,
     },
     validationSchema,
     onSubmit: (values) => {
-      dispatch(createProject(values)).then((result) => {
-        if (result.payload) {
-          props.setDialog();
-          formik.resetForm();
-          dispatch(allProjects());
-        }
-      });
+      if (projectId) {
+        dispatch(updateProject({ values, projectId })).then((result) => {
+          if (result.payload) {
+            props.setopenEditProject();
+            formik.resetForm();
+            dispatch(projectDetails(props.projectId));
+          }
+        });
+      }
     },
   });
 
   return (
     <div>
       <Dialog
-        open={props.open}
-        TransitionComponent={Transition}
+        open={props.openEditProject}
         keepMounted
-        onClose={() => props.setDialog()}
+        TransitionComponent={Transition}
+        onClose={() => props.setopenEditProject()}
         fullWidth>
         <DialogContent>
           <h1 className="text-center md:text-3xl sm:text-xl text-sky-900 mb-3 mt-4">
@@ -113,13 +103,6 @@ export default function AddProject(props: any) {
                 ""
               )}
             </div>
-
-            {/* Organization */}
-            <input
-              type="hidden"
-              name="organization"
-              value={formik.values.organization}
-            />
 
             {/* Dates */}
             <div className="mb-5 w-full px-4 flex md:flex-nowrap sm:flex-wrap justify-between">
@@ -196,57 +179,6 @@ export default function AddProject(props: any) {
               )}
             </div>
 
-            {/* Select scrum master */}
-            <div className="mb-5 w-full px-4">
-              <select
-                id="scrumMaster"
-                name="scrumMaster"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.scrumMaster}
-                className="border border-sky-600 h-10 w-full outline-0 text-sky-900 ps-5 rounded-lg mb-1">
-                <option value="" disabled hidden className="py-5 ps-3 h-10">
-                  Select Scrum Master
-                </option>
-                {getScrums?.employee?.length === 0
-                  ? "Orgnization have no Scrum masters"
-                  : getScrums?.scrums?.map((scrum: any) => (
-                      <option
-                        key={scrum._id}
-                        value={scrum._id}
-                        className="py-5 ps-3 h-10 text-sky-900">
-                        {scrum.employeeName} → {scrum.email}
-                      </option>
-                    ))}
-              </select>
-            </div>
-
-            {/* Select Members */}
-            <div className="mb-5 w-full px-4">
-              <select
-                multiple
-                id="employees"
-                name="employees"
-                onChange={formik.handleChange}
-                onBlur={formik.handleBlur}
-                value={formik.values.employees}
-                className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1">
-                <option disabled hidden className="py-5 ps-3 h-10">
-                  Select Collaborators
-                </option>
-                {getAllEmployees?.employee?.length === 0
-                  ? "Orgnization have no Collaborators"
-                  : getAllEmployees?.employees?.map((member: any) => (
-                      <option
-                        key={member._id}
-                        value={member._id}
-                        className="px-3 py-1 h-10 text-sky-900">
-                        {member.employeeName} → {member.email}
-                      </option>
-                    ))}
-              </select>
-            </div>
-
             <DialogActions>
               <button
                 type="submit"
@@ -266,7 +198,7 @@ export default function AddProject(props: any) {
                 type="button"
                 className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
                 rounded-lg text-white h-10 font-bold"
-                onClick={() => props.setDialog()}>
+                onClick={() => props.setopenEditProject()}>
                 Close
               </button>
             </DialogActions>
