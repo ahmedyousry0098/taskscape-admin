@@ -6,6 +6,7 @@ import { allEmployeesReducer } from "./AllEmpSlice";
 import { allProjectsReducer } from "./AllProjSlice";
 import { projectDetailsReducer } from "./ProjDetailsSlice";
 import { resetPasswordReducer } from "./ForgotPass";
+import { organizationReducer } from "./OrgnaizationSlice";
 
 let store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ let store = configureStore({
     allEmployees: allEmployeesReducer,
     allProjects: allProjectsReducer,
     projectDetails: projectDetailsReducer,
+    orgnaization: organizationReducer,
   },
 });
 

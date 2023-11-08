@@ -8,8 +8,10 @@ import { NavLink, Outlet } from "react-router-dom";
 
 export default function Employees() {
   const [open, setOpen] = useState(false);
-  const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
-  const { loading } = useAppSelector((state) => state.addEmployee);
+  const { getAllEmployees, loading } = useAppSelector(
+    (state) => state.allEmployees
+  );
+  // const { loading } = useAppSelector((state) => state.addEmployee);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

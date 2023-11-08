@@ -38,36 +38,36 @@ export default function Members() {
              py-4 text-sky-900 shadow-md shadow-sky-700  rounded-xl">
               <p className="font-bold py-1">
                 Name:
-                <span className="font-medium ps-1">{member.employeeName}</span>
+                <span className="font-medium ps-1">{member?.employeeName}</span>
               </p>
               <p className="font-bold py-1">
-                Email:<span className="font-medium ps-1">{member.email}</span>
+                Email:<span className="font-medium ps-1">{member?.email}</span>
               </p>
               <p className="font-bold py-1">
                 Job title:
-                <span className="font-medium ps-1">{member.title}</span>
+                <span className="font-medium ps-1">{member?.title}</span>
               </p>
               <p className="font-bold py-1">
                 Joining date:
                 <span className="font-medium ps-1">
-                  {member.createdAt.split("T").slice(0, 1).join("")}
+                  {member?.createdAt?.split("T").slice(0, 1).join("")}
                 </span>
               </p>
               <p className="font-bold py-1">
                 Last updated:
                 <span className="font-medium ps-1">
-                  {member.updatedAt.split("T").slice(0, 1).join("")}
+                  {member?.updatedAt?.split("T").slice(0, 1).join("")}
                 </span>
               </p>
               <p className="font-bold py-1">
                 Employment type:
                 <span className="font-medium ps-1">
-                  {member.employmentType}
+                  {member?.employmentType}
                 </span>
               </p>
               <p className="font-bold py-1">
                 Experience:
-                <span className="font-medium ps-1">{member.experience}</span>
+                <span className="font-medium ps-1">{member?.experience}</span>
               </p>
 
               <div className=" absolute top-0 right-0 ">
