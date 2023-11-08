@@ -44,7 +44,7 @@ export default function Login() {
 
   return (
     <section className="login flex justify-center items-start h-screen">
-      <div className="pt-40 text-center lg:me-40 md:me-20 lg:block md:hidden sm:hidden">
+      <div className="pt-40 text-center lg:me-20 md:me-20 lg:block md:hidden sm:hidden">
         <div className="">
           <h1 className="text-3xl mb-3 text-sky-900 font-serif">
             Welcome To Admin Panel
@@ -56,7 +56,7 @@ export default function Login() {
         </div>
       </div>
 
-      <div className="pt-40 lg:me-40 md:me-20 lg:block md:hidden sm:hidden">
+      <div className="pt-40 lg:me-36 md:me-20 lg:block md:hidden sm:hidden">
         <span className="border-e-2 pb-[30rem] border-sky-700"></span>
       </div>
 

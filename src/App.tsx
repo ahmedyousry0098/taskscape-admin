@@ -15,7 +15,7 @@ import Projects from "./components/Projects/Projects";
 import Login from "./components/Login/Login";
 import ProtectedRoutes from "./shared/ProtectedRoutes/ProtectedRoutes";
 import Employees from "./components/Employees/Employees";
-import { useAppDispatch } from "./App/hooks";
+import { useAppDispatch, useAppSelector } from "./App/hooks";
 import { loggedIn } from "./Redux/LoginSlice";
 import Scrums from "./components/Employees/EmpByRole/Scrums";
 import Members from "./components/Employees/EmpByRole/Members";
@@ -23,10 +23,11 @@ import ProjDetails from "./components/Projects/ControlProject/ProjDetails";
 
 export default function App() {
   let dispatch = useAppDispatch();
+  let { isLoggedIn } = useAppSelector((state) => state.login);
 
   useEffect(() => {
     dispatch(loggedIn());
-  }, []);
+  }, [isLoggedIn]);
 
   const router = createBrowserRouter([
     { path: "login", element: <Login /> },
