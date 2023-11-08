@@ -13,7 +13,6 @@ import Notification from "./components/Notification/Notification";
 import NotFoundPage from "./shared/NotFoundPage/NotFoundPage";
 import Projects from "./components/Projects/Projects";
 import Login from "./components/Login/Login";
-import Register from "./components/Controls/Register/Register";
 import ProtectedRoutes from "./shared/ProtectedRoutes/ProtectedRoutes";
 import Employees from "./components/Employees/Employees";
 import { useAppDispatch } from "./App/hooks";
@@ -52,11 +51,7 @@ export default function App() {
             { path: "members", element: <Members /> },
           ],
         },
-        {
-          path: "controls",
-          element: <Controls />,
-          children: [{ index: true, element: <Register /> }],
-        },
+        { path: "controls", element: <Controls /> },
         { path: "notifications", element: <Notification /> },
       ],
     },
