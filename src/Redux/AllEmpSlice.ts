@@ -53,7 +53,11 @@ export const deleteEmployee = createAsyncThunk<void, string>(
       const response = await axiosInstance.patch(
         `/employee/delete/${projectId}`,
         {},
-        {}
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
       );
       toast.success(response.data.message);
       console.log(response);

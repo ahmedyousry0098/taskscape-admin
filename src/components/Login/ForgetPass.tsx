@@ -202,7 +202,7 @@ export default function ForgetPass(props: any) {
               {/* New Password */}
               <div className="mb-6 w-full px-4">
                 <input
-                  type="newPassword"
+                  type="password"
                   name="newPassword"
                   id="newPassword"
                   value={formik2.values.newPassword}
