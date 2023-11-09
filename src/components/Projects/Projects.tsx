@@ -16,7 +16,7 @@ export default function Projects() {
 
   useEffect(() => {
     dispatch(allProjects());
-  }, [getAllProjects]);
+  }, [dispatch]);
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
