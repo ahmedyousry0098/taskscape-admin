@@ -187,9 +187,12 @@ export const AllEmpSlice = createSlice({
       .addCase(deleteEmployee.fulfilled, (state, action: any) => {
         state.isDeleting = false;
         if (action.payload !== undefined) {
-          // state.getAllEmployees.employees.filter(
-          //   (emp: any) => emp._id !== action.meta.arg
-          // );
+          const empID = action.meta.arg;
+
+          const getAllEmployees = state.getAllEmployees.employees.filter(
+            (emp: any) => emp._id !== empID
+          );
+          state.getAllEmployees.employees = getAllEmployees;
         }
       })
       .addCase(deleteEmployee.rejected, (state, action) => {

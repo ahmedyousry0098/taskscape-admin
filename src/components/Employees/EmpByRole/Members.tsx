@@ -16,6 +16,7 @@ export default function Members() {
 
   useEffect(() => {
     dispatch(allEmployees());
+    console.log(getAllEmployees);
   }, []);
 
   return (
