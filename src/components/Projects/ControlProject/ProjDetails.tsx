@@ -11,6 +11,7 @@ import {
 } from "../../../Redux/ProjDetailsSlice";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
+import { allProjects } from "../../../Redux/ProjectsSlice";
 
 export default function ProjDetails() {
   const dispatch = useAppDispatch();
@@ -31,13 +32,14 @@ export default function ProjDetails() {
   }
 
   function handleDeleteProject(projectId: string) {
-    dispatch(deleteProject(projectId));
-    navigate("/projects");
+    dispatch(deleteProject(projectId)).then((result) => {
+      navigate("/projects");
+      dispatch(allProjects());
+    });
   }
 
   useEffect(() => {
     setProjectId(getprojectDetails?.details?._id);
-    console.log(getprojectDetails);
   }, [getprojectDetails]);
 
   return (

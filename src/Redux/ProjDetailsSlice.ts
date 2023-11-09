@@ -178,7 +178,7 @@ export const ProjectDetailslice = createSlice({
       .addCase(deleteProject.pending, (state) => {
         state.deleteLoading = true;
       })
-      .addCase(deleteProject.fulfilled, (state) => {
+      .addCase(deleteProject.fulfilled, (state, action: any) => {
         state.deleteLoading = false;
       })
       .addCase(deleteProject.rejected, (state, action) => {
