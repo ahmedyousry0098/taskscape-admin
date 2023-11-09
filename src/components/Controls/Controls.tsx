@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import { getOrgnaization } from "../../Redux/OrgnaizationSlice";
@@ -10,8 +11,7 @@ export default function Controls() {
 
   useEffect(() => {
     dispatch(getOrgnaization());
-    console.log(getOrgData);
-  }, [getOrgData, dispatch]);
+  }, []);
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
