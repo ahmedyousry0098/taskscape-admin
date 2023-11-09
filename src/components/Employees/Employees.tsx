@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import React, { useEffect, useState } from "react";
-import { allEmployees, allScrums } from "../../Redux/AllEmpSlice";
+import { allEmployees, allScrums } from "../../Redux/EmployeesSlice";
 import AddEmp from "./AddEmp/AddEmp";
 import { Tooltip } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
@@ -11,7 +11,6 @@ export default function Employees() {
   const { getAllEmployees, loading } = useAppSelector(
     (state) => state.allEmployees
   );
-  // const { loading } = useAppSelector((state) => state.addEmployee);
   const dispatch = useAppDispatch();
 
   useEffect(() => {

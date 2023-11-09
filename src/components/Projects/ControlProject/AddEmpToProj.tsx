@@ -8,9 +8,9 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees } from "../../../Redux/AllEmpSlice";
-import { addEmployeeToProject } from "../../../Redux/AllProjSlice";
-import { projectDetails } from "../../../Redux/ProjDetailsSlice";
+import { allEmployees } from "../../../Redux/EmployeesSlice";
+import {} from "../../../Redux/ProjectsSlice";
+import { addEmployeeToProject } from "../../../Redux/ProjDetailsSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function AddEmpToProj(props: any) {
   const dispatch = useAppDispatch();
-  const { addLoading } = useAppSelector((state) => state.allProjects);
+  const { addLoading } = useAppSelector((state) => state.projectDetails);
   const { getAllEmployees } = useAppSelector((state) => state.allEmployees);
   const { decoded } = useAppSelector((state) => state.login);
 
@@ -42,7 +42,6 @@ export default function AddEmpToProj(props: any) {
         if (result.payload) {
           props.setAddDialog();
           formik.resetForm();
-          dispatch(projectDetails(props.projectId));
         }
       });
     },
@@ -61,7 +60,7 @@ export default function AddEmpToProj(props: any) {
             Add collaporator to project
           </h1>
           <h1 className="text-lg mb-6 text-sky-900 text-center">
-            More help more success
+            More employees more success
           </h1>
           <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
             {/* Organization */}
@@ -76,35 +75,6 @@ export default function AddEmpToProj(props: any) {
               name="project"
               value={(formik.values.project = props.projectId)}
             />
-
-            {/* Select scrum master */}
-            {/* <div className="mb-5 w-full px-4">
-                            <select
-                                id="scrumMaster"
-                                name="scrumMaster"
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                value={formik.values.scrumMaster}
-                                className="border border-sky-600 h-10 w-full outline-0 text-sky-900 ps-5 rounded-lg mb-1"
-                            >
-                                <option value="" disabled hidden className="py-5 ps-3 h-10">
-                                    Select Scrum Master
-                                </option>
-                                {getAll?.employee?.length === 0
-                                    ? "Orgnization have no Scrum masters"
-                                    : getAll?.employee
-                                        ?.filter((scrum: any) => scrum.role === "scrumMaster")
-                                        ?.map((scrum: any) => (
-                                            <option
-                                                key={scrum._id}
-                                                value={scrum._id}
-                                                className="py-5 ps-3 h-10 text-sky-900"
-                                            >
-                                                {scrum.employeeName} → {scrum.email}
-                                            </option>
-                                        ))}
-                            </select>
-                        </div> */}
 
             {/* Select Members */}
             <div className="mb-5 w-full px-4">
@@ -133,6 +103,35 @@ export default function AddEmpToProj(props: any) {
                 )}
               </select>
             </div>
+
+            {/* Select scrum master */}
+            {/* <div className="mb-5 w-full px-4">
+                            <select
+                                id="scrumMaster"
+                                name="scrumMaster"
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.scrumMaster}
+                                className="border border-sky-600 h-10 w-full outline-0 text-sky-900 ps-5 rounded-lg mb-1"
+                            >
+                                <option value="" disabled hidden className="py-5 ps-3 h-10">
+                                    Select Scrum Master
+                                </option>
+                                {getAll?.employee?.length === 0
+                                    ? "Orgnization have no Scrum masters"
+                                    : getAll?.employee
+                                        ?.filter((scrum: any) => scrum.role === "scrumMaster")
+                                        ?.map((scrum: any) => (
+                                            <option
+                                                key={scrum._id}
+                                                value={scrum._id}
+                                                className="py-5 ps-3 h-10 text-sky-900"
+                                            >
+                                                {scrum.employeeName} → {scrum.email}
+                                            </option>
+                                        ))}
+                            </select>
+            </div> */}
 
             <DialogActions>
               <button

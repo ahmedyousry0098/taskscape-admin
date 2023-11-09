@@ -9,9 +9,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { createProject } from "../../../Redux/CreateProjSlice";
-import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
-import { allProjects } from "../../../Redux/AllProjSlice";
+import { createProject } from "../../../Redux/ProjectsSlice";
+import { allEmployees, allScrums } from "../../../Redux/EmployeesSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -24,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function AddProject(props: any) {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.createProject);
+  const { createLoading } = useAppSelector((state) => state.allProjects);
   const { getAllEmployees, getScrums } = useAppSelector(
     (state) => state.allEmployees
   );
@@ -67,7 +66,6 @@ export default function AddProject(props: any) {
         if (result.payload) {
           props.setDialog();
           formik.resetForm();
-          dispatch(allProjects());
         }
       });
     },
@@ -252,7 +250,7 @@ export default function AddProject(props: any) {
                 type="submit"
                 className="block mx-auto border bg-sky-700
                hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
-                {loading ? (
+                {createLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>

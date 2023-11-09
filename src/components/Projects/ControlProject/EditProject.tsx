@@ -9,8 +9,8 @@ import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { projectDetails, updateProject } from "../../../Redux/ProjDetailsSlice";
 import { useParams } from "react-router-dom";
+import { updateProject } from "../../../Redux/ProjDetailsSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(
 
 export default function EditProject(props: any) {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.createProject);
+  const { editLoading } = useAppSelector((state) => state.projectDetails);
 
   const validationSchema = Yup.object({
     projectName: Yup.string()
@@ -56,7 +56,6 @@ export default function EditProject(props: any) {
           if (result.payload) {
             props.setopenEditProject();
             formik.resetForm();
-            dispatch(projectDetails(props.projectId));
           }
         });
       }
@@ -184,7 +183,7 @@ export default function EditProject(props: any) {
                 type="submit"
                 className="block mx-auto border bg-sky-700
                hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
-                {loading ? (
+                {editLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>

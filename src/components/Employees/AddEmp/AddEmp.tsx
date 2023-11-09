@@ -2,14 +2,13 @@ import React from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { IRegister } from "../../../shared/Interfaces/authentication.interface";
-import { addEmployee } from "../../../Redux/AllEmpSlice";
+import { addEmployee } from "../../../Redux/EmployeesSlice";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import { Slide } from "@mui/material";
 import { TransitionProps } from "@mui/material/transitions";
-import { allEmployees, allScrums } from "../../../Redux/AllEmpSlice";
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -21,7 +20,7 @@ const Transition = React.forwardRef(function Transition(
 });
 
 export default function AddEmp(props: any) {
-  const { loading } = useAppSelector((state) => state.addEmployee);
+  const { loading } = useAppSelector((state) => state.allEmployees);
   const dispatch = useAppDispatch();
 
   const validationSchema = Yup.object({
@@ -58,8 +57,6 @@ export default function AddEmp(props: any) {
         if (result.payload) {
           props.setDialog();
           formik.resetForm();
-          // dispatch(allEmployees());
-          // dispatch(allScrums());
         }
       });
     },

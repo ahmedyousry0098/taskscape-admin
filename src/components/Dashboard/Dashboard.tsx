@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
-import { allEmployees, allScrums } from "../../Redux/AllEmpSlice";
-import { allProjects } from "../../Redux/AllProjSlice";
+import { allEmployees, allScrums } from "../../Redux/EmployeesSlice";
+import { allProjects } from "../../Redux/ProjectsSlice";
 import EmpType from "./Charts/EmpType";
 import Experience from "./Charts/Experience";
 import Projstatus from "./Charts/Projstatus";

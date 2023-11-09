@@ -1,3 +1,4 @@
+//@ts-ignore
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
@@ -129,7 +130,6 @@ export const AllEmpSlice = createSlice({
       .addCase(allEmployees.fulfilled, (state, action) => {
         if (action.payload !== undefined) {
           state.getAllEmployees = action.payload;
-          console.log(action.payload);
         }
         state.EmployeeLoading = false;
       })
@@ -139,16 +139,16 @@ export const AllEmpSlice = createSlice({
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);
         }
-      })
+      });
 
+    builder
       .addCase(addEmployee.pending, (state) => {
         state.loading = true;
       })
-      .addCase(addEmployee.fulfilled, (state, action) => {
+      .addCase(addEmployee.fulfilled, (state, action: any) => {
         if (action.payload !== undefined) {
-          console.log(action);
-
-          state.getAllEmployees.employees.push(action.payload);
+          state.getAllEmployees.employees.push(action.payload.employee);
+          state.getScrums.scrums.push(action.payload.employee);
         }
         state.loading = false;
       })
@@ -184,8 +184,13 @@ export const AllEmpSlice = createSlice({
       .addCase(deleteEmployee.pending, (state) => {
         state.isDeleting = true;
       })
-      .addCase(deleteEmployee.fulfilled, (state) => {
+      .addCase(deleteEmployee.fulfilled, (state, action: any) => {
         state.isDeleting = false;
+        if (action.payload !== undefined) {
+          // state.getAllEmployees.employees.filter(
+          //   (emp: any) => emp._id !== action.meta.arg
+          // );
+        }
       })
       .addCase(deleteEmployee.rejected, (state, action) => {
         state.isDeleting = false;
