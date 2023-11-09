@@ -1,12 +1,14 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
-import { delEmployeeFromProject } from "../../../Redux/AllProjSlice";
 import { Button, Collapse, Steps, Tooltip } from "antd";
 import { Popconfirm } from "antd";
 import { DeleteEmpOfProj } from "../../../shared/Interfaces/authentication.interface";
 import AddEmpToProj from "./AddEmpToProj";
-import { deleteProject, projectDetails } from "../../../Redux/ProjDetailsSlice";
+import {
+  deleteProject,
+  delEmployeeFromProject,
+} from "../../../Redux/ProjDetailsSlice";
 import { useNavigate } from "react-router-dom";
 import EditProject from "./EditProject";
 
@@ -15,31 +17,28 @@ export default function ProjDetails() {
   const [openAddEmp, setOpenAddEmp] = useState(false);
   const [openEditProject, setopenEditProject] = useState(false);
   const [projectId, setProjectId] = useState<string>("");
-  const { isLoading, getprojectDetails, deleteLoading } = useAppSelector(
-    (state) => state.projectDetails
-  );
+  const { isLoading, getprojectDetails, deleteLoading, delLoading } =
+    useAppSelector((state) => state.projectDetails);
   const navigate = useNavigate();
 
   function handleDeleteEmployee(body: DeleteEmpOfProj) {
-    dispatch(delEmployeeFromProject(body)).then((result) => {
-      if (result.payload) {
-        dispatch(projectDetails(projectId));
-      }
-    });
+    dispatch(delEmployeeFromProject(body));
+    // .then((result) => {
+    //   if (result.payload) {
+    //     dispatch(projectDetails(projectId));
+    //   }
+    // });
   }
 
   function handleDeleteProject(projectId: string) {
-    dispatch(deleteProject(projectId)).then((result) => {
-      if (result.payload) {
-        navigate("/projects");
-      }
-    });
+    dispatch(deleteProject(projectId));
+    navigate("/projects");
   }
 
   useEffect(() => {
     setProjectId(getprojectDetails?.details?._id);
+    console.log(getprojectDetails);
   }, [getprojectDetails]);
-  console.log(getprojectDetails);
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
@@ -73,7 +72,7 @@ export default function ProjDetails() {
               Start date:
               <span className="font-medium ps-2">
                 {getprojectDetails?.details?.startDate
-                  .split("T")
+                  ?.split("T")
                   .slice(0, 1)
                   .join("")}
               </span>
@@ -82,7 +81,7 @@ export default function ProjDetails() {
               Deadline:
               <span className="font-medium ps-2">
                 {getprojectDetails?.details?.deadline
-                  .split("T")
+                  ?.split("T")
                   .slice(0, 1)
                   .join("")}
               </span>
@@ -106,7 +105,7 @@ export default function ProjDetails() {
               {" "}
               Email:
               <span className="font-normal ms-2 ">
-                {getprojectDetails?.details?.scrumMaster.email}
+                {getprojectDetails?.details?.scrumMaster?.email}
               </span>
             </p>
 
@@ -114,7 +113,7 @@ export default function ProjDetails() {
               {" "}
               Experience:
               <span className="font-normal ms-2">
-                {getprojectDetails?.details?.scrumMaster.experience} year
+                {getprojectDetails?.details?.scrumMaster?.experience} year
               </span>
             </p>
           </div>
@@ -151,7 +150,7 @@ export default function ProjDetails() {
                   label: "Collaborators :",
                   children: (
                     <div>
-                      {getprojectDetails?.details?.employee?.length === 0
+                      {getprojectDetails?.details?.employees?.length === 0
                         ? "No collaborators in this project"
                         : getprojectDetails?.details?.employees?.map(
                             (member: any) => (
@@ -195,10 +194,10 @@ export default function ProjDetails() {
                                       cancelText="Cancel"
                                       showCancel>
                                       <Button
-                                        key={member._id}
+                                        key={member?._id}
                                         className="text-sky-700">
                                         {" "}
-                                        {deleteLoading ? (
+                                        {delLoading ? (
                                           <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
                                         ) : (
                                           <i className="fa-solid fa-user-minus fa-xs"></i>
@@ -237,20 +236,20 @@ export default function ProjDetails() {
           {/* Sprints */}
           <div className="mb-6 px-10">
             <p className="text-md font-bold text-sky-900 ps-5 pb-3">Sprints</p>
-            {getprojectDetails?.details?.sprints.length === 0 ? (
+            {getprojectDetails?.details?.sprints?.length === 0 ? (
               <p className="text-center text-lg text-sky-900">
                 No sprints yet in this project
               </p>
             ) : (
-              getprojectDetails?.details?.sprints.map((sprint: any) => (
+              getprojectDetails?.details?.sprints?.map((sprint: any) => (
                 <div className="mb-6">
                   <Collapse
-                    key={sprint._id}
+                    key={sprint?._id}
                     className="bg-sky-100 mb-2 font-bold"
                     expandIconPosition={"end"}
                     items={[
                       {
-                        label: `${sprint.sprint_name}`,
+                        label: `${sprint?.sprint_name}`,
                         children: (
                           <div
                             key={sprint?._id}
@@ -260,8 +259,8 @@ export default function ProjDetails() {
                                 <p className="font-semibold py-1">
                                   Start date:
                                   <span className="font-medium ps-2">
-                                    {sprint.start_date
-                                      .split("T")
+                                    {sprint?.start_date
+                                      ?.split("T")
                                       .slice(0, 1)
                                       .join("")}
                                   </span>
@@ -272,8 +271,8 @@ export default function ProjDetails() {
                                 <p className="font-semibold py-1">
                                   Deadline:
                                   <span className="font-medium ps-2">
-                                    {sprint.deadline
-                                      .split("T")
+                                    {sprint?.deadline
+                                      ?.split("T")
                                       .slice(0, 1)
                                       .join("")}
                                   </span>
@@ -284,8 +283,8 @@ export default function ProjDetails() {
                                 <p className="font-semibold py-1">
                                   Last Update:
                                   <span className="font-medium ps-2">
-                                    {sprint.updatedAt
-                                      .split("T")
+                                    {sprint?.updatedAt
+                                      ?.split("T")
                                       .slice(0, 1)
                                       .join("")}
                                   </span>
@@ -293,19 +292,19 @@ export default function ProjDetails() {
                               </div>
                             </div>
 
+                            {/* Tasks */}
                             <p className="text-md font-bold text-sky-900 ps-5 pb-3">
                               Tasks
                             </p>
-
                             <div className="mb-4">
-                              {sprint.tasks.map((task: any) => (
+                              {sprint?.tasks?.map((task: any) => (
                                 <Collapse
-                                  key={task._id}
+                                  key={task?._id}
                                   expandIconPosition={"end"}
                                   className="bg-gray-100 mb-2 font-bold"
                                   items={[
                                     {
-                                      label: `${task.taskName}`,
+                                      label: `${task?.taskName}`,
                                       children: (
                                         <div className="py-2">
                                           <div className="mb-4 flex justify-between">
@@ -319,7 +318,7 @@ export default function ProjDetails() {
                                                 Employee:
                                               </p>
                                               <span className="font-normal md:ms-2 sm:ms-0">
-                                                {task.assignTo.employeeName}
+                                                {task?.assignTo?.employeeName}
                                               </span>
                                             </div>
 
@@ -328,7 +327,7 @@ export default function ProjDetails() {
                                                 Email:
                                               </p>
                                               <span className="font-normal md:ms-2 sm:ms-0 ">
-                                                {task.assignTo.email}
+                                                {task?.assignTo?.email}
                                               </span>
                                             </div>
 
@@ -337,7 +336,7 @@ export default function ProjDetails() {
                                                 Experience:
                                               </p>
                                               <span className="font-normal md:ms-2 sm:ms-0">
-                                                {task.assignTo.experience}{" "}
+                                                {task?.assignTo?.experience}{" "}
                                                 year/s
                                               </span>
                                             </div>
@@ -349,8 +348,8 @@ export default function ProjDetails() {
                                                 Start date:
                                               </p>
                                               <span className="font-medium md:ps-2 sm:ps-0">
-                                                {task.startDate
-                                                  .split("T")
+                                                {task?.startDate
+                                                  ?.split("T")
                                                   .slice(0, 1)
                                                   .join("")}
                                               </span>
@@ -361,8 +360,8 @@ export default function ProjDetails() {
                                                 Deadline:
                                               </p>
                                               <span className="font-medium md:ps-2 sm:ps-0">
-                                                {task.deadline
-                                                  .split("T")
+                                                {task?.deadline
+                                                  ?.split("T")
                                                   .slice(0, 1)
                                                   .join("")}
                                               </span>
@@ -373,8 +372,8 @@ export default function ProjDetails() {
                                                 Last Update:
                                               </p>
                                               <span className="font-medium md:ps-2 sm:ps-0">
-                                                {task.updatedAt
-                                                  .split("T")
+                                                {task?.updatedAt
+                                                  ?.split("T")
                                                   .slice(0, 1)
                                                   .join("")}
                                               </span>
@@ -388,9 +387,9 @@ export default function ProjDetails() {
                                             <Steps
                                               direction="horizontal"
                                               current={
-                                                task.status === "todo"
+                                                task?.status === "todo"
                                                   ? 0
-                                                  : task.status === "doing"
+                                                  : task?.status === "doing"
                                                   ? 1
                                                   : 3
                                               }

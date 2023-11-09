@@ -1,6 +1,8 @@
+//@ts-ignore
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
+import { ILogin } from "../shared/Interfaces/authentication.interface";
 
 export const allEmployees = createAsyncThunk<void>(
   "All_Employee/allEmployee",
@@ -47,7 +49,7 @@ export const allScrums = createAsyncThunk<void>(
 );
 
 export const deleteEmployee = createAsyncThunk<void, string>(
-  "Project_Details/deleteEmployee",
+  "All_Employee/deleteEmployee",
   async (projectId) => {
     try {
       const response = await axiosInstance.patch(
@@ -70,6 +72,30 @@ export const deleteEmployee = createAsyncThunk<void, string>(
   }
 );
 
+export const addEmployee = createAsyncThunk<void, ILogin>(
+  "Add_Employee/addEmployee",
+  async (values) => {
+    try {
+      const response = await axiosInstance.post(
+        `/employee/createmployee`,
+        values,
+        {
+          headers: {
+            token: localStorage.getItem("token"),
+          },
+        }
+      );
+      if (response.status === 200) {
+        toast.success(response.data.message);
+      }
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
+);
+
 type initialStateType = {
   EmployeeLoading: boolean;
   ScrumLoading: boolean;
@@ -77,6 +103,8 @@ type initialStateType = {
   getScrums: any;
   error: string;
   isDeleting: boolean;
+  message: string;
+  loading: boolean;
 };
 
 const initialState: initialStateType = {
@@ -86,6 +114,8 @@ const initialState: initialStateType = {
   getScrums: [],
   error: "",
   isDeleting: false,
+  message: "",
+  loading: false,
 };
 
 export const AllEmpSlice = createSlice({
@@ -112,6 +142,27 @@ export const AllEmpSlice = createSlice({
       });
 
     builder
+      .addCase(addEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addEmployee.fulfilled, (state, action: any) => {
+        if (action.payload !== undefined) {
+          state.getAllEmployees.employees.push(action.payload.employee);
+          state.getScrums.scrums.push(action.payload.employee);
+        }
+        state.loading = false;
+      })
+      .addCase(addEmployee.rejected, (state, action) => {
+        state.loading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message!;
+          toast.error("User already in ornization");
+        } else {
+          toast.error("Something went wrong");
+        }
+      });
+
+    builder
       .addCase(allScrums.pending, (state) => {
         state.ScrumLoading = true;
       })
@@ -133,8 +184,16 @@ export const AllEmpSlice = createSlice({
       .addCase(deleteEmployee.pending, (state) => {
         state.isDeleting = true;
       })
-      .addCase(deleteEmployee.fulfilled, (state) => {
+      .addCase(deleteEmployee.fulfilled, (state, action: any) => {
         state.isDeleting = false;
+        if (action.payload !== undefined) {
+          const empID = action.meta.arg;
+
+          const getAllEmployees = state.getAllEmployees.employees.filter(
+            (emp: any) => emp._id !== empID
+          );
+          state.getAllEmployees.employees = getAllEmployees;
+        }
       })
       .addCase(deleteEmployee.rejected, (state, action) => {
         state.isDeleting = false;

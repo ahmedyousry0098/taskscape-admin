@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import AddProject from "./ControlProject/AddProject";
-import { allProjects } from "../../Redux/AllProjSlice";
+import { allProjects } from "../../Redux/ProjectsSlice";
 import { Collapse, Tooltip } from "antd";
 import { projectDetails } from "../../Redux/ProjDetailsSlice";
 import { Link } from "react-router-dom";
@@ -10,10 +10,9 @@ import { Link } from "react-router-dom";
 export default function Projects() {
   const [open, setOpen] = useState(false);
   const dispatch = useAppDispatch();
-  const { isLoading, getAllProjects } = useAppSelector(
+  const { isLoading, getAllProjects, createLoading } = useAppSelector(
     (state) => state.allProjects
   );
-  const { loading } = useAppSelector((state) => state.createProject);
 
   useEffect(() => {
     dispatch(allProjects());
@@ -52,7 +51,7 @@ export default function Projects() {
                 className="p-3 rounded-full hover:scale-110 duration-300 bg-opacity-100 bg-sky-700 hover:bg-sky-900 
              text-white"
                 onClick={() => setOpen(true)}>
-                {loading ? (
+                {createLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>
@@ -127,7 +126,7 @@ export default function Projects() {
                       />
                     </div>
 
-                    {/* Edit and Delete */}
+                    {/* Details */}
                     <div key={project._id} className="flex justify-center mb-3">
                       <Link to={`/projects/details/${project._id}`}>
                         <div className="bg-sky-950 hover:bg-sky-700 duration-300 hover:scale-105 text-white px-4 py-1 rounded-lg">

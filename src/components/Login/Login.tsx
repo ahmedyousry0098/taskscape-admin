@@ -141,7 +141,7 @@ export default function Login() {
         <FloatButton
           tooltip="Back home"
           icon={<HomeOutlined />}
-          href="https://www.google.com"
+          href="https://taskscape.vercel.app/"
         />
       </FloatButton.Group>
     </section>

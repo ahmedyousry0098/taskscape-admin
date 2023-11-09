@@ -1,10 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
-import {
-  AddEmpOfProj,
-  DeleteEmpOfProj,
-} from "../shared/Interfaces/authentication.interface";
+import { IProject } from "../shared/Interfaces/authentication.interface";
 
 export const allProjects = createAsyncThunk<void>(
   "All_projects/allProjects",
@@ -28,45 +25,20 @@ export const allProjects = createAsyncThunk<void>(
   }
 );
 
-export const delEmployeeFromProject = createAsyncThunk<void, DeleteEmpOfProj>(
-  "All_Employee/delEmployeeFromProject",
-  async (body) => {
-    try {
-      const response = await axiosInstance.patch(
-        `/project/del-employee`,
-        body,
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        }
-      );
-      toast.success(response.data.message);
-      return response.data;
-    } catch (error: any) {
-      console.log(error);
-      toast.error(error.response.data.message);
-    }
-  }
-);
-
-export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
-  "All_Employee/addEmployeeToProject",
+export const createProject = createAsyncThunk<void, IProject>(
+  "All_projects/createProject",
   async (values) => {
     try {
-      const response = await axiosInstance.patch(
-        `/project/add-employee`,
-        values,
-        {
-          headers: {
-            token: localStorage.getItem("token"),
-          },
-        }
-      );
+      const response = await axiosInstance.post(`/project/create`, values, {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      });
       toast.success(response.data.message);
       return response.data;
     } catch (error: any) {
       console.log(error);
+      toast.error(error.response.data.details);
       toast.error(error.response.data.message);
     }
   }
@@ -74,18 +46,16 @@ export const addEmployeeToProject = createAsyncThunk<void, AddEmpOfProj>(
 
 type initialStateType = {
   isLoading: boolean;
+  createLoading: boolean;
   getAllProjects: any;
   error: string;
-  delLoading: boolean;
-  addLoading: boolean;
 };
 
 const initialState: initialStateType = {
   isLoading: false,
+  createLoading: false,
   getAllProjects: [],
   error: "",
-  delLoading: false,
-  addLoading: false,
 };
 
 export const AllProjectSlice = createSlice({
@@ -112,29 +82,17 @@ export const AllProjectSlice = createSlice({
       });
 
     builder
-      .addCase(delEmployeeFromProject.pending, (state) => {
-        state.delLoading = true;
+      .addCase(createProject.pending, (state) => {
+        state.createLoading = true;
       })
-      .addCase(delEmployeeFromProject.fulfilled, (state) => {
-        state.delLoading = false;
-      })
-      .addCase(delEmployeeFromProject.rejected, (state, action) => {
-        state.delLoading = false;
-        if (action.meta.requestStatus === "rejected") {
-          state.error = action.error.message || "Something went wrong";
-          toast.error(state.error);
+      .addCase(createProject.fulfilled, (state, action: any) => {
+        state.createLoading = false;
+        if (action.payload !== undefined) {
+          state.getAllProjects.projects.push(action.payload.project);
         }
-      });
-
-    builder
-      .addCase(addEmployeeToProject.pending, (state) => {
-        state.addLoading = true;
       })
-      .addCase(addEmployeeToProject.fulfilled, (state) => {
-        state.addLoading = false;
-      })
-      .addCase(addEmployeeToProject.rejected, (state, action) => {
-        state.addLoading = false;
+      .addCase(createProject.rejected, (state, action) => {
+        state.createLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);

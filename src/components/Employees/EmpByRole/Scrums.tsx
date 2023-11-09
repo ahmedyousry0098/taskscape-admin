@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
 import React, { useEffect } from "react";
-import { allScrums, deleteEmployee } from "../../../Redux/AllEmpSlice";
+import { allScrums, deleteEmployee } from "../../../Redux/EmployeesSlice";
 import { Popconfirm } from "antd";
 
 export default function Scrums() {
