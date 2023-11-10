@@ -76,16 +76,16 @@ export default function ForgetPass(props: any) {
         onClose={() => props.setDialog()}
         fullWidth>
         <DialogContent>
-          <h1 className="text-center md:text-3xl sm:text-xl text-sky-900 mb-3 mt-4">
+          <h1 className="text-center md:text-3xl sm:text-xl text-slate-950 mb-3 mt-4">
             Reset Password
           </h1>
-          <h1 className="md:text-lg sm:text-base mb-6 text-sky-900 text-center">
+          <h1 className="md:text-lg sm:text-base mb-6 text-slate-950 text-center">
             Never mind please follow steps to get started
           </h1>
 
           <Steps
             direction="horizontal"
-            className="px-10"
+            className="px-10 text-slate-950"
             current={!continued ? 0 : 1}
             items={[
               {
@@ -112,8 +112,8 @@ export default function ForgetPass(props: any) {
                   onBlur={formik.handleBlur}
                   placeholder="Your Email"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0
-                 text-sky-900 ps-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
+                 text-slate-950 ps-5 rounded-lg mb-1"
                 />
                 {formik.errors.email && formik.touched.email ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -127,8 +127,7 @@ export default function ForgetPass(props: any) {
               <DialogActions>
                 <button
                   type="submit"
-                  className="block mx-auto border bg-sky-700
-               hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
+                  className="block mx-auto border bg-slate-950 duration-300 hover:text-amber-500 px-4 rounded-lg text-white h-10 font-bold">
                   {sendingMale ? (
                     <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                   ) : (
@@ -142,7 +141,7 @@ export default function ForgetPass(props: any) {
 
                 <button
                   type="button"
-                  className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                  className="block mx-auto border bg-slate-950 duration-300 hover:text-amber-500 px-4
                 rounded-lg text-white h-10 font-bold"
                   onClick={() => props.setDialog()}>
                   Close
@@ -165,8 +164,8 @@ export default function ForgetPass(props: any) {
                   onBlur={formik2.handleBlur}
                   placeholder="Your Email"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0
-                 text-sky-900 ps-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
+                 text-slate-950 ps-5 rounded-lg mb-1"
                 />
                 {formik2.errors.email && formik2.touched.email ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -188,8 +187,8 @@ export default function ForgetPass(props: any) {
                   onBlur={formik2.handleBlur}
                   placeholder="Verifying Code"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0
-                 text-sky-900 ps-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
+                 text-slate-950 ps-5 rounded-lg mb-1"
                 />
                 {formik2.errors.code && formik2.touched.code ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -210,8 +209,8 @@ export default function ForgetPass(props: any) {
                   onBlur={formik2.handleBlur}
                   placeholder="New Password"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0
-                 text-sky-900 ps-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
+                 text-slate-950 ps-5 rounded-lg mb-1"
                 />
                 {formik2.errors.newPassword && formik2.touched.newPassword ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -225,13 +224,12 @@ export default function ForgetPass(props: any) {
               <DialogActions>
                 <button
                   type="submit"
-                  className="block mx-auto border bg-sky-700
-               hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
+                  className="block mx-auto border bg-slate-950 duration-300 hover:text-amber-500 px-4 rounded-lg text-white h-10 font-bold">
                   {sendingNewPass ? (
                     <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                   ) : (
                     <>
-                      <i className="text-lime-400 fa-regular fa-circle-check md:me-3 sm:me-0"></i>
+                      <i className="text-amber-500 fa-regular fa-circle-check md:me-3 sm:me-0"></i>
                       <span className="md:inline-block sm:hidden">Finish</span>
                     </>
                   )}
@@ -239,7 +237,7 @@ export default function ForgetPass(props: any) {
 
                 <button
                   type="button"
-                  className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                  className="block mx-auto border bg-slate-950 duration-300 hover:text-amber-500 px-4
                 rounded-lg text-white h-10 font-bold"
                   onClick={() => props.setDialog()}>
                   Close

@@ -27,12 +27,12 @@ code {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #0C4A6E;
+  background-color: #020617;
   border-radius: 25px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: rgb(8, 47, 73);
+  background-color: rgb(245, 159, 10);
 }
 
 ul a.active {
@@ -71,7 +71,7 @@ ul a.active {
   width: 70px;
   height: 70px;
   border-radius: 50%;
-  border: 6px solid #0C4A6E;
+  border: 6px solid rgb(2, 6, 23);
   position: absolute;
   top: 0;
   left: 0;
@@ -84,7 +84,7 @@ ul a.active {
   height: 70px;
   border-radius: 50%;
   border: 6px solid transparent;
-  border-top-color: #0C4A6E;
+  border-top-color: rgb(2, 6, 23);
   position: absolute;
   top: 0;
   left: 0;
@@ -94,7 +94,7 @@ ul a.active {
 .loader-text {
   font-size: 24px;
   margin-top: 20px;
-  color: #0C4A6E;
+  color: rgb(2, 6, 23);
   font-family: Arial, sans-serif;
   text-align: center;
   text-transform: uppercase;

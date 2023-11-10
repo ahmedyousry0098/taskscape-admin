@@ -8,6 +8,7 @@ import Experience from "./Charts/Experience";
 // import Projstatus from "./Charts/Projstatus";
 // import Tasks from "./Charts/Tasks";
 import ScrumTable from "./Charts/ScrumTable";
+import { getOrgnaization } from "../../Redux/OrgnaizationSlice";
 
 export default function Dashboard() {
   const daysOfWeek = [
@@ -33,10 +34,11 @@ export default function Dashboard() {
   const { getAllProjects, isLoading } = useAppSelector(
     (state) => state.allProjects
   );
+  const { getOrgData } = useAppSelector((state) => state.orgnaization);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    console.log(getAllProjects);
+    dispatch(getOrgnaization());
     dispatch(allEmployees());
     dispatch(allProjects());
     dispatch(allScrums());
@@ -58,21 +60,23 @@ export default function Dashboard() {
   return (
     <div className="xl:ms-64 sm:ms-16 mb-10">
       {/* Top Bar */}
-      <div className="flex justify-between items-center mb-5 mx-5 px-10 py-4  bg-slate-950 rounded-es-xl rounded-ee-xl">
-        <div className="">
+      <div className="flex justify-between flex-wrap items-center mb-5 mx-5 px-16 py-3 bg-slate-950 rounded-es-xl rounded-ee-xl">
+        <div className="mb-1">
           <p className="text-amber-500 font-bold">
-            {dayOfWeek}
-            <span className="text-amber-500 font-normal ms-3">
-              {formattedDate}
+            {new Date().getHours() < 12
+              ? "Good Morning,"
+              : new Date().getHours() > 12 && new Date().getHours() < 17
+              ? "Good Afternoon,"
+              : "Good Evening,"}
+            <span className="font-normal ms-3">
+              {getOrgData?.admin?.adminName}
             </span>
           </p>
         </div>
-        <div>
+        <div className="mb-1">
           <p className="text-amber-500 font-bold">
             {dayOfWeek}
-            <span className="text-amber-500 font-normal ms-3">
-              {formattedDate}
-            </span>
+            <span className="font-normal ms-3">{formattedDate}</span>
           </p>
         </div>
       </div>

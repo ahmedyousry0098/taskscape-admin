@@ -46,10 +46,10 @@ export default function Login() {
     <section className="login flex justify-center items-start h-screen">
       <div className="pt-40 text-center lg:me-20 md:me-20 lg:block md:hidden sm:hidden">
         <div className="">
-          <h1 className="text-3xl mb-3 text-sky-900 font-serif">
+          <h1 className="text-3xl mb-3 text-slate-950 font-serif">
             Welcome To Admin Panel
           </h1>
-          <h1 className="text-lg mb-6 text-sky-700">
+          <h1 className="text-lg mb-6 text-slate-950">
             Start managing your organization
           </h1>
           <img src={Admin} className="mx-auto w-96" alt="" />
@@ -57,18 +57,19 @@ export default function Login() {
       </div>
 
       <div className="pt-40 lg:me-36 md:me-20 lg:block md:hidden sm:hidden">
-        <span className="border-e-2 pb-[30rem] border-sky-700"></span>
+        <span className="border-e-2 pb-[30rem] border-slate-950"></span>
       </div>
 
       <div className="pt-40 lg:mx-0 md:mx-auto sm:mx-auto">
-        <div className="text-center w-96 shadow-lg bg-sky-100 bg-opacity-20 mx-auto py-8 shadow-sky-900 rounded-lg">
+        <div className="text-center w-96 shadow-lg bg-slate-200 bg-opacity-20 mx-auto py-8 shadow-slate-950 rounded-lg">
           <img src={Logo} className="w-28 mx-auto" alt="" />
           <h1 className="text-3xl mb-3 text-amber-500 font-serif">Taskscape</h1>
-          <h1 className="text-lg mb-6 text-sky-700">Log in to continue</h1>
+          <h1 className="text-lg mb-6 text-slate-950">Log in to continue</h1>
 
           <form
             onSubmit={formik.handleSubmit}
             className="md:px-10 md:mx-auto sm:px-2 sm:mx-2">
+            {/* Email */}
             <div className="mb-5 w-full px-4">
               <input
                 type="email"
@@ -79,7 +80,7 @@ export default function Login() {
                 onBlur={formik.handleBlur}
                 placeholder="Employee name"
                 autoComplete="off"
-                className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 ps-5 rounded-lg mb-1"
+                className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 ps-5 rounded-lg mb-1"
               />
               {formik.errors.email && formik.touched.email ? (
                 <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -89,7 +90,7 @@ export default function Login() {
                 ""
               )}
             </div>
-
+            {/* Password */}
             <div className="mb-3 w-full px-4">
               <input
                 type="password"
@@ -100,7 +101,7 @@ export default function Login() {
                 onBlur={formik.handleBlur}
                 placeholder="Password"
                 autoComplete="off"
-                className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 ps-5 rounded-lg mb-1"
+                className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 ps-5 rounded-lg mb-1"
               />
               {formik.errors.password && formik.touched.password ? (
                 <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -113,7 +114,7 @@ export default function Login() {
 
             <div className="mb-5 w-full lg:px-6 md:px-3 sm:px-3 text-start">
               <p
-                className="text-sky-700 underline font-semibold cursor-pointer"
+                className="text-slate-950 underline font-semibold cursor-pointer"
                 onClick={() => setOpen(true)}>
                 Forgot Password ?
               </p>
@@ -122,7 +123,7 @@ export default function Login() {
 
             <button
               type="submit"
-              className="block mx-auto border bg-sky-700 hover:bg-sky-900 w-40 rounded-lg text-white h-10
+              className="block mx-auto border duration-300 bg-slate-950 hover:text-amber-500 w-40 rounded-lg text-white h-10
           font-bold">
               {loading ? (
                 <i className="fa-solid fa-spinner fa-spin-pulse"></i>

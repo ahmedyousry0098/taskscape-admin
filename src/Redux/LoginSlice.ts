@@ -28,6 +28,7 @@ function decodeToken(token: string) {
   }
 }
 type initialStateType = {
+  admin: string;
   error: string;
   loading: boolean;
   isLoggedIn: boolean;
@@ -39,6 +40,7 @@ type initialStateType = {
   };
 };
 const initialState: initialStateType = {
+  admin: "",
   error: "",
   loading: false,
   isLoggedIn: false,
@@ -74,6 +76,7 @@ export const LoginSlice = createSlice({
         state.isLoggedIn = false;
         return;
       }
+      state.token = token;
       state.decoded = decode;
       state.isLoggedIn = true;
     },
@@ -95,6 +98,7 @@ export const LoginSlice = createSlice({
       })
       .addCase(logIn.fulfilled, (state, action: any) => {
         if (action.payload !== undefined) {
+          state.admin = action.payload.adminName;
           localStorage.removeItem("token");
           localStorage.setItem("token", action.payload.token);
         }
