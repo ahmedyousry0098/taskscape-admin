@@ -5,8 +5,9 @@ import { allEmployees, allScrums } from "../../Redux/EmployeesSlice";
 import { allProjects } from "../../Redux/ProjectsSlice";
 import EmpType from "./Charts/EmpType";
 import Experience from "./Charts/Experience";
-import Projstatus from "./Charts/Projstatus";
-import Tasks from "./Charts/Tasks";
+// import Projstatus from "./Charts/Projstatus";
+// import Tasks from "./Charts/Tasks";
+import ScrumTable from "./Charts/ScrumTable";
 
 export default function Dashboard() {
   const daysOfWeek = [
@@ -32,10 +33,10 @@ export default function Dashboard() {
   const { getAllProjects, isLoading } = useAppSelector(
     (state) => state.allProjects
   );
-  // const { getprojectDetails } = useAppSelector((state) => state.projectDetails);
   const dispatch = useAppDispatch();
 
   useEffect(() => {
+    console.log(getAllProjects);
     dispatch(allEmployees());
     dispatch(allProjects());
     dispatch(allScrums());
@@ -55,22 +56,21 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="xl:ms-64 sm:ms-16">
+    <div className="xl:ms-64 sm:ms-16 mb-10">
       {/* Top Bar */}
-      <div className="flex justify-between items-center mb-5 mx-5 px-10 py-4 shadow-lg bg-sky-700 bg-opacity-10 rounded-es-xl rounded-ee-xl">
-        <div className="w-2/4 h-10">
-          <input
-            type="search"
-            name=""
-            id=""
-            className="h-full w-full ps-5 rounded-lg placeholder:text-sky-700 text-sky-700 outline-none"
-            placeholder="Search"
-          />
+      <div className="flex justify-between items-center mb-5 mx-5 px-10 py-4  bg-slate-950 rounded-es-xl rounded-ee-xl">
+        <div className="">
+          <p className="text-amber-500 font-bold">
+            {dayOfWeek}
+            <span className="text-amber-500 font-normal ms-3">
+              {formattedDate}
+            </span>
+          </p>
         </div>
         <div>
-          <p className="text-sky-800 font-bold">
+          <p className="text-amber-500 font-bold">
             {dayOfWeek}
-            <span className="text-sky-800 font-normal ms-3">
+            <span className="text-amber-500 font-normal ms-3">
               {formattedDate}
             </span>
           </p>
@@ -79,7 +79,7 @@ export default function Dashboard() {
 
       {/* Numbers */}
       <div className="flex flex-wrap justify-center items-center mx-auto w-full mt-4 text-white">
-        <div className="flex flex-col justify-between bg-sky-950 w-56 mx-5 h-24 rounded-2xl p-3 mb-4 ">
+        <div className="flex flex-col justify-between bg-slate-950 w-56 mx-5 h-24 rounded-2xl p-3 mb-4 ">
           <h1 className="px-3 text-base">Total Employees:</h1>
           {EmployeeLoading && ScrumLoading ? (
             <p className="text-center text-2xl text-amber-500">Loading...</p>
@@ -90,7 +90,7 @@ export default function Dashboard() {
           )}
         </div>
 
-        <div className="flex flex-col justify-between bg-sky-950 w-56 mx-5 h-24 rounded-2xl p-3 mb-4 ">
+        <div className="flex flex-col justify-between bg-slate-950 w-56 mx-5 h-24 rounded-2xl p-3 mb-4 ">
           <h1 className="px-3 text-base">Total Projects:</h1>
           {isLoading ? (
             <p className="text-center text-2xl text-amber-500">Loading...</p>
@@ -100,19 +100,12 @@ export default function Dashboard() {
             </p>
           )}
         </div>
-
-        <div className="flex flex-col justify-between bg-sky-950 w-56 mx-5 h-24 rounded-2xl p-3 mb-4 ">
-          <h1 className="px-3 text-base">Performance:</h1>
-          <p key={3} className="text-center text-2xl text-amber-500">
-            {getAllProjects?.projects?.length} * 100 / 2{" "}
-          </p>
-        </div>
       </div>
 
       {/* Charts */}
       <div>
-        <div className="flex flex-wrap justify-around mx-auto w-full items-base mt-4 text-sky-950">
-          <div className="w-[450px] mx-3 shadow-lg rounded-2xl px-3 py-1 mb-4">
+        <div className="flex flex-wrap justify-around mx-auto w-full items-base mt-4 text-slate-950">
+          <div className="w-[450px] mx-3 shadow-md shadow-slate-950 rounded-2xl px-3 py-1 mb-4">
             <EmpType
               getAllEmployees={getAllEmployees}
               getScrums={getScrums}
@@ -121,7 +114,7 @@ export default function Dashboard() {
             />
           </div>
 
-          <div className="w-[650px] mx-3 shadow-lg rounded-2xl px-3 py-1 mb-4">
+          <div className="w-[650px] mx-3 shadow-md shadow-slate-950 rounded-2xl px-3 py-1 mb-4">
             <Experience
               getAllEmployees={getAllEmployees}
               getScrums={getScrums}
@@ -131,24 +124,21 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <div className="flex flex-wrap justify-around mx-auto w-full items-center mt-4 text-white">
+        {/* <div className="flex flex-wrap justify-around mx-auto w-full items-center mt-4 text-white">
           <div className="bg-sky-950 w-[650px] mx-3 rounded-2xl px-3 py-1 mb-4">
-            <Projstatus
-            // getAllProjects={getAllProjects}
-            // getprojectDetails={getprojectDetails}
-            />
+            <Projstatus/>
           </div>
 
           <div className="bg-sky-950 w-[450px] mx-3 rounded-2xl px-3 py-1 mb-4">
             <Tasks />
           </div>
-        </div>
+        </div> */}
       </div>
 
       {/* Table */}
-      <div className="flex flex-wrap justify-around mx-auto w-full items-center my-4 text-white">
-        <div className="bg-sky-950 w-full mx-4 h-24 rounded-2xl px-3 py-1 text-white">
-          Table tasks in progress
+      <div className="flex flex-wrap justify-around mx-auto w-full items-center my-4">
+        <div className=" mx-4 shadow-md shadow-slate-950">
+          <ScrumTable />
         </div>
       </div>
     </div>

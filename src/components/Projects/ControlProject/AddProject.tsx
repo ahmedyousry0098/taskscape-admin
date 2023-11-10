@@ -80,10 +80,10 @@ export default function AddProject(props: any) {
         onClose={() => props.setDialog()}
         fullWidth>
         <DialogContent>
-          <h1 className="text-center md:text-3xl sm:text-xl text-sky-900 mb-3 mt-4">
+          <h1 className="text-center md:text-3xl sm:text-xl text-slate-950 mb-3 mt-4">
             Create New Project
           </h1>
-          <h1 className="md:text-lg sm:text-base mb-6 text-sky-900 text-center">
+          <h1 className="md:text-lg sm:text-base mb-6 text-slate-950 text-center">
             Projects make orgnaization grow faster
           </h1>
 
@@ -101,7 +101,7 @@ export default function AddProject(props: any) {
                 onBlur={formik.handleBlur}
                 placeholder="Project name"
                 autoComplete="off"
-                className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 ps-5 rounded-lg mb-1"
+                className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 ps-5 rounded-lg mb-1"
               />
               {formik.errors.projectName && formik.touched.projectName ? (
                 <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -122,7 +122,7 @@ export default function AddProject(props: any) {
             {/* Dates */}
             <div className="mb-5 w-full px-4 flex md:flex-nowrap sm:flex-wrap justify-between">
               <div className="w-full md:me-5 sm:me-0">
-                <label htmlFor="startDate" className="text-sky-900 ps-3">
+                <label htmlFor="startDate" className="text-slate-950 ps-3">
                   Start Date
                 </label>
                 <input
@@ -134,8 +134,8 @@ export default function AddProject(props: any) {
                   onBlur={formik.handleBlur}
                   placeholder="Start date"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0
-                   outline-0 text-sky-900 px-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0
+                   outline-0 text-slate-950 px-5 rounded-lg mb-1"
                 />
                 {formik.errors.startDate && formik.touched.startDate ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -147,7 +147,7 @@ export default function AddProject(props: any) {
               </div>
 
               <div className="w-full">
-                <label htmlFor="deadline" className="text-sky-900 px-3">
+                <label htmlFor="deadline" className="text-slate-950 px-3">
                   Deadline
                 </label>
 
@@ -160,7 +160,7 @@ export default function AddProject(props: any) {
                   onBlur={formik.handleBlur}
                   placeholder="Deadline"
                   autoComplete="off"
-                  className="border border-sky-600 h-10 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 px-5 rounded-lg mb-1"
+                  className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 px-5 rounded-lg mb-1"
                 />
                 {formik.errors.deadline && formik.touched.deadline ? (
                   <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -183,7 +183,7 @@ export default function AddProject(props: any) {
                 onBlur={formik.handleBlur}
                 placeholder="description"
                 autoComplete="off"
-                className="border border-sky-600 w-full focus:placeholder:opacity-0 outline-0 text-sky-900 px-5 py-2 rounded-lg mb-1"
+                className="border border-slate-950 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 px-5 py-2 rounded-lg mb-1"
               />
               {formik.errors.description && formik.touched.description ? (
                 <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
@@ -202,7 +202,7 @@ export default function AddProject(props: any) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.scrumMaster}
-                className="border border-sky-600 h-10 w-full outline-0 text-sky-900 ps-5 rounded-lg mb-1">
+                className="border border-slate-950 h-10 w-full outline-0 text-slate-950 ps-5 rounded-lg mb-1">
                 <option value="" disabled hidden className="py-5 ps-3 h-10">
                   Select Scrum Master
                 </option>
@@ -212,7 +212,7 @@ export default function AddProject(props: any) {
                       <option
                         key={scrum._id}
                         value={scrum._id}
-                        className="py-5 ps-3 h-10 text-sky-900">
+                        className="py-5 ps-3 h-10 text-slate-950">
                         {scrum.employeeName} → {scrum.email}
                       </option>
                     ))}
@@ -228,7 +228,7 @@ export default function AddProject(props: any) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.employees}
-                className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1">
+                className="border border-slate-950 h-40 w-full outline-0 text-slate-950 ps-3 rounded-lg mb-1">
                 <option disabled hidden className="py-5 ps-3 h-10">
                   Select Collaborators
                 </option>
@@ -238,7 +238,7 @@ export default function AddProject(props: any) {
                       <option
                         key={member._id}
                         value={member._id}
-                        className="px-3 py-1 h-10 text-sky-900">
+                        className="px-3 py-1 h-10 text-slate-950">
                         {member.employeeName} → {member.email}
                       </option>
                     ))}
@@ -248,8 +248,7 @@ export default function AddProject(props: any) {
             <DialogActions>
               <button
                 type="submit"
-                className="block mx-auto border bg-sky-700
-               hover:bg-sky-900 px-4 rounded-lg text-white h-10 font-bold">
+                className="block mx-auto border bg-slate-950 duration-300 hover:text-amber-500 px-4 rounded-lg text-white h-10 font-bold">
                 {createLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
@@ -262,8 +261,8 @@ export default function AddProject(props: any) {
 
               <button
                 type="button"
-                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
-                rounded-lg text-white h-10 font-bold"
+                className="block mx-auto border bg-slate-950 px-4 duration-300
+                rounded-lg text-white hover:text-amber-500 h-10 font-bold"
                 onClick={() => props.setDialog()}>
                 Close
               </button>

@@ -24,11 +24,6 @@ export default function ProjDetails() {
 
   function handleDeleteEmployee(body: DeleteEmpOfProj) {
     dispatch(delEmployeeFromProject(body));
-    // .then((result) => {
-    //   if (result.payload) {
-    //     dispatch(projectDetails(projectId));
-    //   }
-    // });
   }
 
   function handleDeleteProject(projectId: string) {
@@ -60,9 +55,9 @@ export default function ProjDetails() {
         <div
           key={getprojectDetails?.details?._id}
           className="m-3  border-2 rounded-3xl
-                   border-sky-950 relative shadow-xl lg:w-2/3 sm:mx-4 lg:mx-auto">
+                   border-slate-950 relative shadow-xl lg:w-2/3 sm:mx-4 lg:mx-auto">
           {/* Title */}
-          <div className="relative py-2 mb-4 bg-sky-950 flex justify-center items-center text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
+          <div className="relative py-2 mb-4 bg-slate-950 flex justify-center items-center text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
             <h1 className="font-medium text-xl">
               {getprojectDetails?.details?.projectName}
             </h1>
@@ -95,7 +90,7 @@ export default function ProjDetails() {
             <h4 className="font-bold me-2 inline-block">Scrum Master</h4>
           </div>
           <div className="px-10 mb-6 flex flex-wrap justify-evenly">
-            <p className="font-semibold border px-4 mb-3 py-1 border-sky-900 rounded-lg">
+            <p className="font-semibold border px-4 mb-3 py-1 border-slate-950 rounded-lg">
               {" "}
               Name:
               <span className="font-normal ms-2">
@@ -103,7 +98,7 @@ export default function ProjDetails() {
               </span>
             </p>
 
-            <p className="font-semibold px-4 py-1 mb-3 border border-sky-900 rounded-lg">
+            <p className="font-semibold px-4 py-1 mb-3 border border-slate-950 rounded-lg">
               {" "}
               Email:
               <span className="font-normal ms-2 ">
@@ -111,7 +106,7 @@ export default function ProjDetails() {
               </span>
             </p>
 
-            <p className="font-semibold px-4 py-1 border mb-3 border-sky-900 rounded-lg">
+            <p className="font-semibold px-4 py-1 border mb-3 border-slate-950 rounded-lg">
               {" "}
               Experience:
               <span className="font-normal ms-2">
@@ -162,7 +157,7 @@ export default function ProjDetails() {
                                     member?._id +
                                     getprojectDetails?.details?._id
                                   }
-                                  className="flex justify-between items-center w-full mb-1 py-2 border-b-2 border-sky-700">
+                                  className="flex justify-between items-center w-full mb-1 py-2 border-b-2 border-slate-950">
                                   <div>
                                     <p className="font-semibold">
                                       Name:{" "}
@@ -197,7 +192,7 @@ export default function ProjDetails() {
                                       showCancel>
                                       <Button
                                         key={member?._id}
-                                        className="text-sky-700">
+                                        className="text-slate-950">
                                         {" "}
                                         {delLoading ? (
                                           <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
@@ -219,7 +214,7 @@ export default function ProjDetails() {
                           key={"#082F49"}>
                           <Button
                             key={getprojectDetails?.details?._id}
-                            className="text-sky-700"
+                            className="text-slate-950"
                             onClick={() => {
                               setOpenAddEmp(true);
                               setOpenAddEmp(getprojectDetails?.details?._id);
@@ -237,9 +232,11 @@ export default function ProjDetails() {
 
           {/* Sprints */}
           <div className="mb-6 px-10">
-            <p className="text-md font-bold text-sky-900 ps-5 pb-3">Sprints</p>
+            <p className="text-md font-bold text-slate-950 ps-5 pb-3">
+              Sprints
+            </p>
             {getprojectDetails?.details?.sprints?.length === 0 ? (
-              <p className="text-center text-lg text-sky-900">
+              <p className="text-center text-lg text-slate-950">
                 No sprints yet in this project
               </p>
             ) : (
@@ -247,7 +244,7 @@ export default function ProjDetails() {
                 <div className="mb-6">
                   <Collapse
                     key={sprint?._id}
-                    className="bg-sky-100 mb-2 font-bold"
+                    className="bg-slate-300 mb-2 font-bold"
                     expandIconPosition={"end"}
                     items={[
                       {
@@ -255,7 +252,7 @@ export default function ProjDetails() {
                         children: (
                           <div
                             key={sprint?._id}
-                            className=" w-full py-2 border-b border-sky-900">
+                            className=" w-full py-2 border-b border-slate-950">
                             <div className="flex justify-evenly flex-wrap mb-5">
                               <div>
                                 <p className="font-semibold py-1">
@@ -295,7 +292,7 @@ export default function ProjDetails() {
                             </div>
 
                             {/* Tasks */}
-                            <p className="text-md font-bold text-sky-900 ps-5 pb-3">
+                            <p className="text-md font-bold text-slate-950 ps-5 pb-3">
                               Tasks
                             </p>
                             <div className="mb-4">
@@ -303,7 +300,7 @@ export default function ProjDetails() {
                                 <Collapse
                                   key={task?._id}
                                   expandIconPosition={"end"}
-                                  className="bg-gray-100 mb-2 font-bold"
+                                  className="bg-slate-100 mb-2 font-bold"
                                   items={[
                                     {
                                       label: `${task?.taskName}`,
@@ -315,7 +312,7 @@ export default function ProjDetails() {
                                             </h4>
                                           </div>
                                           <div className="mb-6 flex flex-wrap justify-evenly">
-                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-slate-950 rounded-lg text-center">
                                               <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Employee:
                                               </p>
@@ -324,7 +321,7 @@ export default function ProjDetails() {
                                               </span>
                                             </div>
 
-                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-slate-950 rounded-lg text-center">
                                               <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Email:
                                               </p>
@@ -333,7 +330,7 @@ export default function ProjDetails() {
                                               </span>
                                             </div>
 
-                                            <div className="mb-2 md:px-4 sm:px-1 border border-sky-900 rounded-lg text-center">
+                                            <div className="mb-2 md:px-4 sm:px-1 border border-slate-950 rounded-lg text-center">
                                               <p className="font-semibold py-1 md:inline-block sm:block">
                                                 Experience:
                                               </p>
@@ -432,9 +429,9 @@ export default function ProjDetails() {
             <button
               type="button"
               onClick={() => setopenEditProject(true)}
-              className="bg-sky-700 hover:bg-sky-900 px-4
+              className="bg-slate-950 px-4 duration-300 hover:text-amber-500
                         rounded-lg text-white py-1 font-semibold me-5">
-              <i className="fa-regular fa-pen-to-square me-2 fa-sm text-white"></i>
+              <i className="fa-regular fa-pen-to-square me-2 fa-sm"></i>
               Edit
             </button>
 
@@ -446,19 +443,20 @@ export default function ProjDetails() {
               onConfirm={() => handleDeleteProject(projectId)}
               cancelText="Cancel"
               showCancel>
-              <Button
+              <button
                 key={projectId}
-                className="bg-red-700 hover:bg-red-900 hover:text-white hover:outline-none px-4 rounded-lg text-white py-1 font-semibold">
+                className="bg-red-700 hover:bg-red-900  px-4 duration-300 
+                        rounded-lg text-white py-1 font-semibold">
                 {" "}
                 {deleteLoading ? (
                   <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>
-                    <i className="fa-regular fa-trash-can me-2 text-white"></i>
+                    <i className="fa-regular fa-trash-can me-2 fa-sm text-white"></i>
                     Delete
                   </>
                 )}
-              </Button>
+              </button>
             </Popconfirm>
           </div>
         </div>

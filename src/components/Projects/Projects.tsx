@@ -31,8 +31,8 @@ export default function Projects() {
           </h2>
           <button
             type="submit"
-            className="block mx-auto px-4 border bg-sky-700 hover:bg-sky-900 
-            rounded-lg text-white h-10 font-bold"
+            className="block mx-auto px-4 border bg-slate-950 
+            rounded-lg text-white hover:text-amber-500 duration-300 h-10 font-bold"
             onClick={() => setOpen(true)}>
             <i className="fa-solid fa-circle-plus me-3"></i>Create Project
           </button>
@@ -44,12 +44,12 @@ export default function Projects() {
             <Tooltip
               title="Create Project"
               placement="left"
-              color={"#082F49"}
-              key={"#082F49"}>
+              color={"rgb(2, 6 ,23)"}
+              key={"rgb(2, 6 ,23)"}>
               <button
                 type="button"
-                className="p-3 rounded-full hover:scale-110 duration-300 bg-opacity-100 bg-sky-700 hover:bg-sky-900 
-             text-white"
+                className="p-3 rounded-full hover:scale-125 duration-300 bg-slate-950 
+             text-white hover:text-amber-500"
                 onClick={() => setOpen(true)}>
                 {createLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
@@ -74,9 +74,9 @@ export default function Projects() {
                 return (
                   <div
                     key={project._id}
-                    className="m-3 w-[500px] border-2 rounded-3xl border-sky-950 relative shadow-xl">
+                    className="m-3 w-[500px] border-2 rounded-3xl border-slate-950 relative shadow-xl">
                     {/* Title and Details button */}
-                    <div className=" py-2 mb-4 text-center bg-sky-950 text-white w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
+                    <div className=" py-2 mb-4 text-center bg-slate-950 text-amber-500 w-10/12 mx-auto rounded-es-3xl rounded-ee-3xl">
                       <h1 className="font-medium text-xl">
                         {project.projectName}
                       </h1>
@@ -129,7 +129,7 @@ export default function Projects() {
                     {/* Details */}
                     <div key={project._id} className="flex justify-center mb-3">
                       <Link to={`/projects/details/${project._id}`}>
-                        <div className="bg-sky-950 hover:bg-sky-700 duration-300 hover:scale-105 text-white px-4 py-1 rounded-lg">
+                        <div className="bg-slate-950 duration-300 hover:scale-110 hover:text-amber-500 text-white px-4 py-1 rounded-lg">
                           <button
                             type="button"
                             onClick={() => {

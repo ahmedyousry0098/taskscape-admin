@@ -13,8 +13,8 @@ export default function NotFoundPage() {
         extra={
           <Link to={"/"}>
             <button
-              className="block mx-auto border duration-300  bg-sky-700 hover:bg-sky-900
-              hover:scale-110 w-40 rounded-lg text-white h-10 font-bold">
+              className="block mx-auto border duration-300  bg-slate-950
+              hover:scale-110 w-40 rounded-lg hover:text-amber-500 text-white h-10 font-bold">
               {" "}
               Back Home
             </button>

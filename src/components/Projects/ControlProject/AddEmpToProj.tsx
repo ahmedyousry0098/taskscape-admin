@@ -56,10 +56,10 @@ export default function AddEmpToProj(props: any) {
         onClose={() => props.setAddDialog()}
         fullWidth>
         <DialogContent>
-          <h1 className="text-center text-3xl text-sky-900 mb-3 mt-4">
+          <h1 className="text-center text-3xl text-slate-950 mb-3 mt-4">
             Add collaporator to project
           </h1>
-          <h1 className="text-lg mb-6 text-sky-900 text-center">
+          <h1 className="text-lg mb-6 text-slate-950 text-center">
             More employees more success
           </h1>
           <form onSubmit={formik.handleSubmit} className="w-5/6 mx-auto">
@@ -85,7 +85,7 @@ export default function AddEmpToProj(props: any) {
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
                 value={formik.values.employees}
-                className="border border-sky-600 h-40 w-full outline-0 text-sky-900 ps-3 rounded-lg mb-1">
+                className="border border-slate-950 h-40 w-full outline-0 text-slate-950 ps-3 rounded-lg mb-1">
                 <option disabled hidden className="py-5 ps-3 h-10">
                   Select Collaborators
                 </option>
@@ -96,7 +96,7 @@ export default function AddEmpToProj(props: any) {
                     <option
                       key={member._id}
                       value={member._id}
-                      className="px-3 py-1 h-10 text-sky-900">
+                      className="px-3 py-1 h-10 text-slate-950">
                       {member.employeeName} → {member.email}
                     </option>
                   ))
@@ -112,7 +112,7 @@ export default function AddEmpToProj(props: any) {
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 value={formik.values.scrumMaster}
-                                className="border border-sky-600 h-10 w-full outline-0 text-sky-900 ps-5 rounded-lg mb-1"
+                                className="border border-slate-950 h-10 w-full outline-0 text-slate-950 ps-5 rounded-lg mb-1"
                             >
                                 <option value="" disabled hidden className="py-5 ps-3 h-10">
                                     Select Scrum Master
@@ -125,7 +125,7 @@ export default function AddEmpToProj(props: any) {
                                             <option
                                                 key={scrum._id}
                                                 value={scrum._id}
-                                                className="py-5 ps-3 h-10 text-sky-900"
+                                                className="py-5 ps-3 h-10 text-slate-950"
                                             >
                                                 {scrum.employeeName} → {scrum.email}
                                             </option>
@@ -136,7 +136,7 @@ export default function AddEmpToProj(props: any) {
             <DialogActions>
               <button
                 type="submit"
-                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                className="block mx-auto border bg-slate-950 px-4 duration-300 hover:text-amber-500
                                 rounded-lg text-white h-10 font-bold">
                 {addLoading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
@@ -150,7 +150,7 @@ export default function AddEmpToProj(props: any) {
 
               <button
                 type="button"
-                className="block mx-auto border bg-sky-700 hover:bg-sky-900 px-4
+                className="block mx-auto border bg-slate-950 px-4 duration-300 hover:text-amber-500
                 rounded-lg text-white h-10 font-bold"
                 onClick={() => {
                   props.setAddDialog();

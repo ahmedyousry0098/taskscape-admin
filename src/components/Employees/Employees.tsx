@@ -30,8 +30,8 @@ export default function Employees() {
           </h2>
           <button
             type="submit"
-            className="block mx-auto px-4 border bg-sky-700 hover:bg-sky-900 
-            rounded-lg text-white h-10 font-bold"
+            className="block mx-auto px-4 border bg-slate-950 
+            rounded-lg duration-300 hover:text-amber-500 text-white h-10 font-bold"
             onClick={() => setOpen(true)}>
             <i className="fa-solid fa-user-plus me-3"></i>Add employees
           </button>
@@ -42,12 +42,12 @@ export default function Employees() {
             <Tooltip
               title="Add Employee"
               placement="left"
-              color={"#082F49"}
-              key={"#082F49"}>
+              color={"rgb(2,6,23)"}
+              key={"rgb(2,6,23)"}>
               <button
                 type="button"
-                className="p-3 rounded-full hover:scale-110 duration-300 bg-opacity-100 bg-sky-700 hover:bg-sky-900 
-              text-white"
+                className="p-3 rounded-full hover:scale-125 duration-300 bg-opacity-100 bg-slate-950 
+              text-white hover:text-amber-500"
                 onClick={() => setOpen(true)}>
                 {loading ? (
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
@@ -65,8 +65,8 @@ export default function Employees() {
               <NavLink to={"scrums"}>
                 {" "}
                 <button
-                  className=" bg-sky-950 hover:shadow-md 
-          hover:shadow-orange-500 hover:text-amber-500 px-4 w-44 rounded-s-full py-2
+                  className=" bg-slate-950 hover:shadow-md 
+          hover:shadow-amber-500 hover:text-amber-500 px-4 w-44 rounded-s-full py-2
           font-semibold hover:scale-105 duration-300">
                   <i className=" fa-solid fa-user-tie me-3"></i>Scrum Masters
                 </button>
@@ -76,8 +76,8 @@ export default function Employees() {
               <NavLink to={"members"}>
                 {" "}
                 <button
-                  className=" bg-sky-950 hover:shadow-md 
-          hover:shadow-orange-500 hover:text-amber-500 px-4 w-44 rounded-e-full py-2
+                  className=" bg-slate-950 hover:shadow-md 
+          hover:shadow-amber-500 hover:text-amber-500 px-4 w-44 rounded-e-full py-2
           font-semibold hover:scale-105 duration-300">
                   <i className="fa-regular fa-user me-3"></i>Members
                 </button>

@@ -31,8 +31,8 @@ export default function Members() {
           {getAllEmployees?.employees?.map((member: any) => (
             <div
               key={member?._id}
-              className=" relative md:m-3 sm:mx-1 sm:my-3 w-80 md:px-10 sm:px-2
-             py-4 text-sky-900 shadow-md shadow-sky-700  rounded-xl">
+              className=" relative md:m-3 sm:mx-1 sm:my-3 w-80 md:px-6 sm:px-2
+             py-4 text-slate-950 shadow-md shadow-slate-950  rounded-xl">
               {/* Name */}
               <p className="font-bold py-1">
                 Name:
@@ -75,6 +75,7 @@ export default function Members() {
                 </span>
               </p>
 
+              {/* Delete button */}
               <div className=" absolute top-0 right-0 ">
                 <Popconfirm
                   title="Remove Employee"
@@ -86,8 +87,8 @@ export default function Members() {
                   showCancel>
                   <button
                     key={member._id}
-                    className="font-semibold border-none rounded-se-md rounded-es-xl bg-gray-300 px-3 py-2
-                     hover:bg-red-700 hover:text-white duration-300 text-sky-900  hover:bg-none">
+                    className="font-semibold border-none rounded-se-xl rounded-es-xl bg-slate-300 px-3 py-2
+                     hover:bg-red-700 hover:text-white duration-300 text-slate-950  hover:bg-none">
                     {""}
                     {isDeleting ? (
                       <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
@@ -96,7 +97,7 @@ export default function Members() {
                         <span className="me-3  md:opacity-100 sm:hidden">
                           Remove
                         </span>
-                        <i className="fa-solid fa-user-xmark fa-md "></i>
+                        <i className="fa-solid fa-user-xmark fa-sm "></i>
                       </>
                     )}
                   </button>
