@@ -10,6 +10,7 @@ import {
   Legend,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
+import { useAppSelector } from "../../../App/hooks";
 
 export default function Experience(props: any) {
   ChartJS.register(
@@ -34,18 +35,20 @@ export default function Experience(props: any) {
     },
   };
 
+  let { getAllEmployees, getScrums, EmployeeLoading, ScrumLoading } =
+    useAppSelector((state) => state.allEmployees);
   const [xAxis, setxAxis] = useState([0]);
   const [yAxis, setyAxis] = useState([0]);
 
   useEffect(() => {
     getAxis();
-  }, [props.getAllEmployees, props.getScrums]);
+  }, [getAllEmployees, getScrums]);
 
   const getAxis = function getAxe() {
-    let numOfMemberHasExp = props.getAllEmployees?.employees?.map(
+    let numOfMemberHasExp = getAllEmployees?.employees?.map(
       (member: any) => member.experience
     );
-    let numOfscrumHasExp = props.getScrums?.scrums?.map(
+    let numOfscrumHasExp = getScrums?.scrums?.map(
       (scrum: any) => scrum.experience
     );
 
@@ -84,7 +87,7 @@ export default function Experience(props: any) {
   return (
     <div className="py-3 mx-auto relative">
       <h1 className="text-center text-xl pb-4">Employees by Experience:</h1>
-      {props.EmployeeLoading && props.ScrumLoading ? (
+      {EmployeeLoading && ScrumLoading ? (
         <div className="loader-container">
           <div className="loader"></div>
           <div className="loader-text">Loading...</div>
