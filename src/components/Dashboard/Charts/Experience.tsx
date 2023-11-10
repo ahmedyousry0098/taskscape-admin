@@ -42,7 +42,7 @@ export default function Experience(props: any) {
 
   useEffect(() => {
     getAxis();
-  }, []);
+  }, [getAllEmployees, getScrums]);
 
   const getAxis = function getAxe() {
     let numOfMemberHasExp = getAllEmployees?.employees?.map(
