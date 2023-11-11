@@ -2,7 +2,7 @@
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import React, { useEffect, useState } from "react";
 import { allEmployees, allScrums } from "../../Redux/EmployeesSlice";
-import AddEmp from "./AddEmp/AddEmp";
+import AddEmp from "./ControlEmployees/AddEmp";
 import { Tooltip } from "antd";
 import { NavLink, Outlet } from "react-router-dom";
 

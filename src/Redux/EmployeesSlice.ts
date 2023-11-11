@@ -2,7 +2,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
-import { ILogin } from "../shared/Interfaces/authentication.interface";
+import {
+  ILogin,
+  IReplaceEmp,
+  IReplaceScrum,
+} from "../shared/Interfaces/authentication.interface";
 
 export const allEmployees = createAsyncThunk<void>(
   "All_Employee/allEmployee",
@@ -62,8 +66,6 @@ export const deleteEmployee = createAsyncThunk<void, string>(
         }
       );
       toast.success(response.data.message);
-      console.log(response);
-
       return response.data;
     } catch (error: any) {
       console.log(error);
@@ -73,7 +75,7 @@ export const deleteEmployee = createAsyncThunk<void, string>(
 );
 
 export const addEmployee = createAsyncThunk<void, ILogin>(
-  "Add_Employee/addEmployee",
+  "All_Employee/addEmployee",
   async (values) => {
     try {
       const response = await axiosInstance.post(
@@ -96,6 +98,51 @@ export const addEmployee = createAsyncThunk<void, ILogin>(
   }
 );
 
+export const deleteAndReplaceEmployee = createAsyncThunk<
+  void,
+  { values: IReplaceEmp; memberId: string }
+>("All_Employee/deleteAndReplaceEmployee", async ({ values, memberId }) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/employee/del-and-replace-emp/${memberId}`,
+      values,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+    console.log(response);
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+    toast.error(error.response.data.message);
+  }
+});
+
+export const deleteAndReplaceScrum = createAsyncThunk<
+  void,
+  { values: IReplaceScrum; scrumId: string }
+>("All_Employee/deleteAndReplaceScrum", async ({ values, scrumId }) => {
+  try {
+    const response = await axiosInstance.patch(
+      `/employee/del-and-replace-scrum/${scrumId}`,
+      values,
+      {
+        headers: {
+          token: localStorage.getItem("token"),
+        },
+      }
+    );
+    toast.success(response.data.message);
+    return response.data;
+  } catch (error: any) {
+    console.log(error);
+    toast.error(error.response.data.message);
+  }
+});
+
 type initialStateType = {
   EmployeeLoading: boolean;
   ScrumLoading: boolean;
@@ -105,6 +152,7 @@ type initialStateType = {
   isDeleting: boolean;
   message: string;
   loading: boolean;
+  assignToLoading: boolean;
 };
 
 const initialState: initialStateType = {
@@ -116,6 +164,7 @@ const initialState: initialStateType = {
   isDeleting: false,
   message: "",
   loading: false,
+  assignToLoading: false,
 };
 
 export const AllEmpSlice = createSlice({
@@ -188,7 +237,6 @@ export const AllEmpSlice = createSlice({
         state.isDeleting = false;
         if (action.payload !== undefined) {
           const empID = action.meta.arg;
-
           const getAllEmployees = state.getAllEmployees.employees.filter(
             (emp: any) => emp._id !== empID
           );
@@ -197,6 +245,54 @@ export const AllEmpSlice = createSlice({
       })
       .addCase(deleteEmployee.rejected, (state, action) => {
         state.isDeleting = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
+        }
+      });
+
+    builder
+      .addCase(deleteAndReplaceEmployee.pending, (state) => {
+        state.assignToLoading = true;
+      })
+      .addCase(deleteAndReplaceEmployee.fulfilled, (state, action: any) => {
+        state.assignToLoading = false;
+        if (action.payload !== undefined) {
+          const empID = action.meta.arg.memberId;
+          console.log(action);
+
+          const getAllEmployees = state.getAllEmployees.employees.filter(
+            (emp: any) => emp._id !== empID
+          );
+          state.getAllEmployees.employees = getAllEmployees;
+        }
+      })
+      .addCase(deleteAndReplaceEmployee.rejected, (state, action) => {
+        state.assignToLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
+        }
+      });
+
+    builder
+      .addCase(deleteAndReplaceScrum.pending, (state) => {
+        state.assignToLoading = true;
+      })
+      .addCase(deleteAndReplaceScrum.fulfilled, (state, action: any) => {
+        state.assignToLoading = false;
+        if (action.payload !== undefined) {
+          const empID = action.meta.arg.scrumId;
+          console.log(action);
+
+          const getScrums = state.getScrums.scrums.filter(
+            (emp: any) => emp._id !== empID
+          );
+          state.getScrums.scrums = getScrums;
+        }
+      })
+      .addCase(deleteAndReplaceScrum.rejected, (state, action) => {
+        state.assignToLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);

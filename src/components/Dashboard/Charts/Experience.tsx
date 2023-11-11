@@ -12,7 +12,7 @@ import {
 import { Bar } from "react-chartjs-2";
 import { useAppSelector } from "../../../App/hooks";
 
-export default function Experience(props: any) {
+export default function Experience() {
   ChartJS.register(
     CategoryScale,
     LinearScale,

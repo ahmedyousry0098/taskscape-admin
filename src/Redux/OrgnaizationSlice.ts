@@ -12,7 +12,6 @@ export const getOrgnaization = createAsyncThunk<void>(
         `/organization/${orgnizationId}`,
         { headers: { token: localStorage.getItem("token") } }
       );
-      console.log(response);
       return response.data;
     } catch (error: any) {
       console.log(error);

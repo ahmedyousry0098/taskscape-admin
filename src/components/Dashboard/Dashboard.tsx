@@ -110,21 +110,11 @@ export default function Dashboard() {
       <div>
         <div className="flex flex-wrap justify-around mx-auto w-full items-base mt-4 text-slate-950">
           <div className="w-[450px] mx-3 shadow-md shadow-slate-950 rounded-2xl px-3 py-1 mb-4">
-            <EmpType
-              getAllEmployees={getAllEmployees}
-              getScrums={getScrums}
-              EmployeeLoading={EmployeeLoading}
-              ScrumLoading={ScrumLoading}
-            />
+            <EmpType />
           </div>
 
           <div className="w-[650px] mx-3 shadow-md shadow-slate-950 rounded-2xl px-3 py-1 mb-4">
-            <Experience
-              getAllEmployees={getAllEmployees}
-              getScrums={getScrums}
-              EmployeeLoading={EmployeeLoading}
-              ScrumLoading={ScrumLoading}
-            />
+            <Experience />
           </div>
         </div>
 

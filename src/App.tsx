@@ -9,7 +9,6 @@ import {
 import Layout from "./shared/Layout/Layout";
 import Dashboard from "./components/Dashboard/Dashboard";
 import Controls from "./components/Controls/Controls";
-import Notification from "./components/Notification/Notification";
 import NotFoundPage from "./shared/NotFoundPage/NotFoundPage";
 import Projects from "./components/Projects/Projects";
 import Login from "./components/Login/Login";
@@ -53,7 +52,6 @@ export default function App() {
           ],
         },
         { path: "controls", element: <Controls /> },
-        { path: "notifications", element: <Notification /> },
       ],
     },
     { path: "*", element: <NotFoundPage /> },

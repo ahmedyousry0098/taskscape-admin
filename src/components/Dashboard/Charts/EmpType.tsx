@@ -2,10 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import { useAppSelector } from "../../../App/hooks";
 
-export default function EmpType(props: any) {
+export default function EmpType() {
   ChartJS.register(ArcElement, Tooltip, Legend);
 
+  let { getAllEmployees, getScrums, EmployeeLoading, ScrumLoading } =
+    useAppSelector((state) => state.allEmployees);
   const [numOfIntern, setintern] = useState(0);
   const [numOfFullTime, setfullTime] = useState(0);
   const [numOfPartTime, setpartTime] = useState(0);
@@ -14,34 +17,34 @@ export default function EmpType(props: any) {
     interns();
     partTime();
     fullTime();
-  }, [props.getAllEmployees, props.getScrums]);
+  }, [getAllEmployees, getScrums]);
 
   function interns() {
     let intern = 0;
-    props.getAllEmployees?.employees?.map((e: any) =>
+    getAllEmployees?.employees?.map((e: any) =>
       e.employmentType === "intern" ? intern++ : intern
     );
-    props.getScrums?.scrums?.map((e: any) =>
+    getScrums?.scrums?.map((e: any) =>
       e.employmentType === "intern" ? intern++ : intern
     );
     setintern(intern);
   }
   function partTime() {
     let part = 0;
-    props.getAllEmployees?.employees?.map((e: any) =>
+    getAllEmployees?.employees?.map((e: any) =>
       e.employmentType === "part time" ? part++ : part
     );
-    props.getScrums?.scrums?.map((e: any) =>
+    getScrums?.scrums?.map((e: any) =>
       e.employmentType === "part time" ? part++ : part
     );
     setpartTime(part);
   }
   function fullTime() {
     let full = 0;
-    props.getAllEmployees?.employees?.map((e: any) =>
+    getAllEmployees?.employees?.map((e: any) =>
       e.employmentType === "full time" ? full++ : full
     );
-    props.getScrums?.scrums?.map((e: any) =>
+    getScrums?.scrums?.map((e: any) =>
       e.employmentType === "full time" ? full++ : full
     );
     setfullTime(full);
@@ -72,7 +75,7 @@ export default function EmpType(props: any) {
   return (
     <div className="py-3 w-3/4 mx-auto ">
       <h1 className="text-center text-xl pb-4">Job Type</h1>
-      {props.EmployeeLoading && props.ScrumLoading ? (
+      {EmployeeLoading && ScrumLoading ? (
         <div className="loader-container">
           <div className="loader"></div>
           <div className="loader-text">Loading...</div>

@@ -47,7 +47,7 @@ export default function AddProject(props: any) {
       .required("Deadline is required")
       .min(Yup.ref("startDate"), "Can`t be before start date"),
     description: Yup.string().required("Description is required"),
-    scrumMaster: Yup.string().required("Select a scrum master"),
+    scrumMaster: Yup.string().required("Select a scrum master is required"),
   });
 
   let formik = useFormik<IProject>({
@@ -217,6 +217,13 @@ export default function AddProject(props: any) {
                       </option>
                     ))}
               </select>
+              {formik.errors.scrumMaster && formik.touched.scrumMaster ? (
+                <p className=" text-red-700 text-sm ps-4 font-semibold text-left">
+                  {formik.errors.scrumMaster}
+                </p>
+              ) : (
+                ""
+              )}
             </div>
 
             {/* Select Members */}

@@ -4,9 +4,11 @@ export interface ILogin {
   email: string;
   password: string;
 }
+
 export interface IForgetPassword {
   email: string;
 }
+
 export interface IResetPassword extends IForgetPassword {
   code: string;
   newPassword: string;
@@ -20,6 +22,16 @@ export interface IRegister {
   experience: string;
   employmentType: string;
   title: string;
+}
+
+export interface IReplaceEmp {
+  orgId: string;
+  altEmpId: string;
+}
+
+export interface IReplaceScrum {
+  orgId: string;
+  altScrumId: string;
 }
 
 export interface IProject {
@@ -43,6 +55,7 @@ export interface DeleteEmpOfProj {
   project: string;
   employee: string;
 }
+
 export interface AddEmpOfProj {
   organization: string;
   project: string;

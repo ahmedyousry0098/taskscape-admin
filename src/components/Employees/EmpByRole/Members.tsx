@@ -1,22 +1,26 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
-import React, { useEffect } from "react";
-import { allEmployees, deleteEmployee } from "../../../Redux/EmployeesSlice";
+import React, { useEffect, useState } from "react";
+import { allEmployees /*deleteEmployee*/ } from "../../../Redux/EmployeesSlice";
 import { Popconfirm } from "antd";
+import RepMember from "../ControlEmployees/RepMember";
 
 export default function Members() {
   const { EmployeeLoading, getAllEmployees, isDeleting } = useAppSelector(
     (state) => state.allEmployees
   );
+
   const dispatch = useAppDispatch();
 
-  function handleDeleteEmployee(employeeId: string) {
-    dispatch(deleteEmployee(employeeId));
+  const [memberDelegateId, setMemberDelegateId] = useState("");
+  const [openConfirmation, setOpenConfirmation] = useState(false);
+
+  function handleDeleteEmployee() {
+    setOpenConfirmation(true);
   }
 
   useEffect(() => {
     dispatch(allEmployees());
-    console.log(getAllEmployees);
   }, []);
 
   return (
@@ -74,7 +78,6 @@ export default function Members() {
                   {member?.employmentType}
                 </span>
               </p>
-
               {/* Delete button */}
               <div className=" absolute top-0 right-0 ">
                 <Popconfirm
@@ -82,10 +85,11 @@ export default function Members() {
                   description="Caution Employee will be removed permanently !!"
                   okText="Yes"
                   okType="danger"
-                  onConfirm={() => handleDeleteEmployee(member._id)}
+                  onConfirm={() => handleDeleteEmployee()}
                   cancelText="Cancel"
                   showCancel>
                   <button
+                    onClick={() => setMemberDelegateId(member._id)}
                     key={member._id}
                     className="font-semibold border-none rounded-se-xl rounded-es-xl bg-slate-300 px-3 py-2
                      hover:bg-red-700 hover:text-white duration-300 text-slate-950  hover:bg-none">
@@ -107,6 +111,11 @@ export default function Members() {
           ))}
         </>
       )}
+      <RepMember
+        openConfirmation={openConfirmation}
+        setDialogConfirmation={() => setOpenConfirmation(false)}
+        memberDelegateId={memberDelegateId}
+      />
     </div>
   );
 }

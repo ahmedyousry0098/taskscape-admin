@@ -1,22 +1,22 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useAppDispatch, useAppSelector } from "../../../App/hooks";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { allScrums } from "../../../Redux/EmployeesSlice";
+import { Popconfirm } from "antd";
+import RepScrum from "../ControlEmployees/RepScrum";
 // import { Popconfirm } from "antd";
 
 export default function Scrums() {
-  const { ScrumLoading, getScrums } = useAppSelector(
+  const { ScrumLoading, getScrums, isDeleting } = useAppSelector(
     (state) => state.allEmployees
   );
   const dispatch = useAppDispatch();
+  const [scrumDelegateId, setScrumDelegateId] = useState("");
+  const [openSConfirmation, setOpenSConfirmation] = useState(false);
 
-  // function handleDeleteEmployee(employeeId: string) {
-  //   dispatch(deleteEmployee(employeeId)).then((result) => {
-  //     if (result.payload) {
-  //       dispatch(allScrums());
-  //     }
-  //   });
-  // }
+  function handleDeleteEmployee() {
+    setOpenSConfirmation(true);
+  }
 
   useEffect(() => {
     dispatch(allScrums());
@@ -74,10 +74,45 @@ export default function Scrums() {
                 Employment type:
                 <span className="font-medium ps-1">{scrum.employmentType}</span>
               </p>
+
+              {/* Delete button */}
+              <div className=" absolute top-0 right-0 ">
+                <Popconfirm
+                  title="Remove Employee"
+                  description="Caution Employee will be removed permanently !!"
+                  okText="Yes"
+                  okType="danger"
+                  onConfirm={() => handleDeleteEmployee()}
+                  cancelText="Cancel"
+                  showCancel>
+                  <button
+                    onClick={() => setScrumDelegateId(scrum._id)}
+                    key={scrum._id}
+                    className="font-semibold border-none rounded-se-xl rounded-es-xl bg-slate-300 px-3 py-2
+                     hover:bg-red-700 hover:text-white duration-300 text-slate-950  hover:bg-none">
+                    {""}
+                    {isDeleting ? (
+                      <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+                    ) : (
+                      <>
+                        <span className="me-3  md:opacity-100 sm:hidden">
+                          Remove
+                        </span>
+                        <i className="fa-solid fa-user-xmark fa-sm "></i>
+                      </>
+                    )}
+                  </button>
+                </Popconfirm>
+              </div>
             </div>
           ))}
         </>
       )}
+      <RepScrum
+        openSConfirmation={openSConfirmation}
+        setDialogSConfirmation={() => setOpenSConfirmation(false)}
+        scrumDelegateId={scrumDelegateId}
+      />
     </div>
   );
 }

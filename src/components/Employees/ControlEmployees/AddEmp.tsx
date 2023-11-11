@@ -28,7 +28,10 @@ export default function AddEmp(props: any) {
       .required("Employee Name is required")
       .min(3, "Min 3 characters")
       .max(20, "Max 20 characters")
-      .matches(/^[A-Za-z\s]+$/, "Must contain only letters and spaces"),
+      .matches(
+        /^[A-Z][a-z]*(?: [A-Z][a-z]*)*$/,
+        "Only letters, first character is Capital and spaces"
+      ),
     email: Yup.string().required("Email is required").email("Email In-valid"),
     password: Yup.string().required("Password is required"),
     role: Yup.string().required("You must select a role"),
