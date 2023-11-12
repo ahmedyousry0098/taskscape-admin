@@ -71,7 +71,7 @@ export default function Scrums() {
               </p>
               {/* Job type */}
               <p className="font-bold py-1">
-                Employment type:
+                Job type:
                 <span className="font-medium ps-1">{scrum.employmentType}</span>
               </p>
 

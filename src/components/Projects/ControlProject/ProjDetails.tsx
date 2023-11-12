@@ -38,7 +38,7 @@ export default function ProjDetails() {
   }, [getprojectDetails]);
 
   return (
-    <div className="mt-10 xl:ms-64 sm:ms-16">
+    <div className="my-10 xl:ms-64 sm:ms-16">
       {/* Add Project PopOver */}
       <AddEmpToProj
         projectId={projectId}

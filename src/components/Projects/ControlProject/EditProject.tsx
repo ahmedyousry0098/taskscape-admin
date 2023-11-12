@@ -23,7 +23,9 @@ const Transition = React.forwardRef(function Transition(
 
 export default function EditProject(props: any) {
   const dispatch = useAppDispatch();
-  const { editLoading } = useAppSelector((state) => state.projectDetails);
+  const { editLoading, getprojectDetails } = useAppSelector(
+    (state) => state.projectDetails
+  );
 
   const validationSchema = Yup.object({
     projectName: Yup.string()
@@ -44,10 +46,10 @@ export default function EditProject(props: any) {
 
   let formik = useFormik<UpdateProject>({
     initialValues: {
-      projectName: "",
+      projectName: getprojectDetails?.details?.projectName,
       startDate: "",
       deadline: "",
-      description: "",
+      description: getprojectDetails?.details?.description,
     },
     validationSchema,
     onSubmit: (values) => {

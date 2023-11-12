@@ -17,13 +17,15 @@ export default function ScrumTable() {
     Performance: string;
   }
 
-  let { getAllProjects } = useAppSelector((state) => state.allProjects);
+  let { getAllProjects, isLoading } = useAppSelector(
+    (state) => state.allProjects
+  );
 
   const [table, setTable] = useState<DataType[]>([]);
 
   useEffect(() => {
     tableData();
-  }, []);
+  }, [getAllProjects]);
 
   const tableData = function () {
     let datass: any = [];
@@ -33,9 +35,15 @@ export default function ScrumTable() {
       let Scrum = data?.scrumMaster?.employeeName;
       let Collaborators = data?.employees?.length;
       let Sprint = data?.sprints?.length;
+      let Task = 0;
       let Todo = 0;
       let Doing = 0;
       let Done = 0;
+
+      data?.sprints?.map((sprint: any) =>
+        sprint?.tasks?.filter((task: any) => (task ? Task++ : Task))
+      );
+
       data?.sprints?.map((task: any) =>
         task.tasks?.filter(
           (status: any) =>
@@ -52,8 +60,8 @@ export default function ScrumTable() {
       );
 
       let Performance = 0 + " %";
-      if (Todo !== 0) {
-        Performance = (Done * 100) / Todo + " %";
+      if (Task !== 0) {
+        Performance = Math.round((Done * 100) / Task) + " %";
       }
 
       datass.push({
@@ -123,7 +131,14 @@ export default function ScrumTable() {
 
   return (
     <div className="mx-auto">
-      <Table pagination={false} columns={columns} dataSource={data} />
+      {isLoading ? (
+        <div className="loader-container py-10 px-20">
+          <div className="loader"></div>
+          <div className="loader-text">Loading...</div>
+        </div>
+      ) : (
+        <Table pagination={false} columns={columns} dataSource={data} />
+      )}
     </div>
   );
 }
