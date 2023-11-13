@@ -84,9 +84,11 @@ export default function RepScrum(props: any) {
                 className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
                  text-slate-950 ps-5 rounded-lg mb-1">
                 <option value="">Select other member</option>
-                {getScrums?.scrums?.map((scrum: any) => (
-                  <option value={scrum._id}>{scrum.employeeName}</option>
-                ))}
+                {getScrums?.scrums
+                  ?.filter((e: any) => e._id !== props.scrumDelegateId)
+                  ?.map((scrum: any) => (
+                    <option value={scrum._id}>{scrum.employeeName}</option>
+                  ))}
               </select>
 
               {formik.errors.altScrumId && formik.touched.altScrumId ? (

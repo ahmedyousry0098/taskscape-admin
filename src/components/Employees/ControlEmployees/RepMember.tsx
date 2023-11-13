@@ -84,9 +84,11 @@ export default function RepMember(props: any) {
                 className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0
                  text-slate-950 ps-5 rounded-lg mb-1">
                 <option value="">Select other member</option>
-                {getAllEmployees?.employees?.map((member: any) => (
-                  <option value={member._id}>{member.employeeName}</option>
-                ))}
+                {getAllEmployees?.employees
+                  ?.filter((e: any) => e._id !== props.memberDelegateId)
+                  ?.map((member: any) => (
+                    <option value={member._id}>{member.employeeName}</option>
+                  ))}
               </select>
 
               {formik.errors.altEmpId && formik.touched.altEmpId ? (
