@@ -85,34 +85,38 @@ export default function Scrums() {
               </p>
 
               {/* Delete button */}
-              <div className=" absolute top-0 right-0 ">
-                <Popconfirm
-                  title="Remove Employee"
-                  description="Caution Employee will be removed permanently !!"
-                  okText="Yes"
-                  okType="danger"
-                  onConfirm={() => handleDeleteEmployee()}
-                  cancelText="Cancel"
-                  showCancel>
-                  <button
-                    onClick={() => setScrumDelegateId(scrum._id)}
-                    key={scrum._id}
-                    className="font-semibold border-none rounded-se-xl rounded-es-xl bg-slate-300 px-3 py-2
+              {getScrums?.scrums?.length === 1 ? (
+                ""
+              ) : (
+                <div className=" absolute top-0 right-0 ">
+                  <Popconfirm
+                    title="Remove Employee"
+                    description="Caution Employee will be removed permanently !!"
+                    okText="Yes"
+                    okType="danger"
+                    onConfirm={() => handleDeleteEmployee()}
+                    cancelText="Cancel"
+                    showCancel>
+                    <button
+                      onClick={() => setScrumDelegateId(scrum._id)}
+                      key={scrum._id}
+                      className="font-semibold border-none rounded-se-xl rounded-es-xl bg-slate-300 px-3 py-2
                      hover:bg-red-700 hover:text-white duration-300 text-slate-950  hover:bg-none">
-                    {""}
-                    {isDeleting ? (
-                      <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
-                    ) : (
-                      <>
-                        <span className="me-3  md:opacity-100 sm:hidden">
-                          Remove
-                        </span>
-                        <i className="fa-solid fa-user-xmark fa-sm "></i>
-                      </>
-                    )}
-                  </button>
-                </Popconfirm>
-              </div>
+                      {""}
+                      {isDeleting ? (
+                        <i className="mx-auto fa-solid fa-spinner fa-spin-pulse"></i>
+                      ) : (
+                        <>
+                          <span className="me-3  md:opacity-100 sm:hidden">
+                            Remove
+                          </span>
+                          <i className="fa-solid fa-user-xmark fa-sm "></i>
+                        </>
+                      )}
+                    </button>
+                  </Popconfirm>
+                </div>
+              )}
             </div>
           ))}
         </>

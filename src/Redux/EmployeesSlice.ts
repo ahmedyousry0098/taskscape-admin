@@ -227,8 +227,9 @@ export const AllEmpSlice = createSlice({
         ) {
           state.getScrums.scrums = [];
           state.getScrums.scrums.push(action.payload.employee);
-        } else if (action.payload) {
+        } else if (action.payload.employee.role === "member") {
           state.getAllEmployees.employees.push(action.payload.employee);
+        } else if (action.payload.employee.role === "scrumMaster") {
           state.getScrums.scrums.push(action.payload.employee);
         }
         state.loading = false;

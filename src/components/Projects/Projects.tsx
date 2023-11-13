@@ -49,7 +49,7 @@ export default function Projects() {
         // No data in page
         <div className="text-center mx-auto my-44 w-5/6">
           <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">
-            <i className="fa-solid fa-users-slash"></i>
+            <i className="fa-solid fa-folder-plus"></i>
           </h1>
           <h2 className="xl:text-4xl md:text-2xl sm:text-xl mb-12 text-gray-400">
             No Projects in your orgnaization

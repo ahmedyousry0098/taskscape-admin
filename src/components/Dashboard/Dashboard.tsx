@@ -9,6 +9,8 @@ import Experience from "./Charts/Experience";
 // import Tasks from "./Charts/Tasks";
 import ScrumTable from "./Charts/ScrumTable";
 import { getOrgnaization } from "../../Redux/OrgnaizationSlice";
+import { Empty } from "antd";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
   const daysOfWeek = [
@@ -43,6 +45,30 @@ export default function Dashboard() {
     dispatch(allProjects());
     dispatch(allScrums());
   }, []);
+
+  if (
+    !getAllEmployees.employees &&
+    !getScrums.scrums &&
+    getAllProjects?.projects?.length === 0
+  ) {
+    return (
+      <div className="xl:ms-64 sm:ms-16 mb-10">
+        <div className="w-fit mx-auto flex flex-col">
+          <Empty description="No data to show" className="pt-60 scale-150">
+            <Link to={"/employees"}>
+              <button
+                type="button"
+                className="block mx-auto px-4 border bg-slate-950 scale-75
+            rounded-lg text-white hover:text-amber-500 duration-300 h-10 font-semibold">
+                <i className="fa-solid fa-people-group me-3"></i>Go to Emplyees
+                ?
+              </button>
+            </Link>
+          </Empty>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="xl:ms-64 sm:ms-16 mb-10">
