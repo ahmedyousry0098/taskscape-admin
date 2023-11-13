@@ -44,19 +44,6 @@ export default function Dashboard() {
     dispatch(allScrums());
   }, []);
 
-  if (
-    !getAllEmployees.employees?.length ||
-    !getAllProjects.projects?.length ||
-    !getScrums.scrums?.length
-  ) {
-    return (
-      <div className="loader-container pt-64">
-        <div className="loader"></div>
-        <div className="loader-text">Loading...</div>
-      </div>
-    );
-  }
-
   return (
     <div className="xl:ms-64 sm:ms-16 mb-10">
       {/* Top Bar */}
@@ -87,6 +74,18 @@ export default function Dashboard() {
           <h1 className="px-3 text-base">Total Employees:</h1>
           {EmployeeLoading && ScrumLoading ? (
             <p className="text-center text-2xl text-amber-500">Loading...</p>
+          ) : !getAllEmployees?.employees && !getScrums?.scrums ? (
+            <p key={1} className="text-center text-2xl text-amber-500">
+              No Data
+            </p>
+          ) : !getAllEmployees?.employees ? (
+            <p key={1} className="text-center text-2xl text-amber-500">
+              {getScrums?.scrums?.length}
+            </p>
+          ) : !getScrums?.scrums ? (
+            <p key={1} className="text-center text-2xl text-amber-500">
+              {getAllEmployees?.employees?.length}
+            </p>
           ) : (
             <p key={1} className="text-center text-2xl text-amber-500">
               {getAllEmployees?.employees?.length + getScrums?.scrums?.length}
@@ -98,6 +97,10 @@ export default function Dashboard() {
           <h1 className="px-3 text-base">Total Projects:</h1>
           {isLoading ? (
             <p className="text-center text-2xl text-amber-500">Loading...</p>
+          ) : getAllProjects?.projects?.length === 0 ? (
+            <p key={1} className="text-center text-2xl text-amber-500">
+              No Data
+            </p>
           ) : (
             <p key={2} className="text-center text-2xl text-amber-500">
               {getAllProjects?.projects?.length}

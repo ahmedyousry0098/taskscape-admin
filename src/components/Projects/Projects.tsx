@@ -13,14 +13,39 @@ export default function Projects() {
   const { isLoading, getAllProjects, createLoading } = useAppSelector(
     (state) => state.allProjects
   );
+  const { getScrums } = useAppSelector((state) => state.allEmployees);
 
   useEffect(() => {
     dispatch(allProjects());
   }, [dispatch]);
 
+  if (!getScrums.scrums || getScrums.scrums.length === 0) {
+    return (
+      <div className="mt-10 xl:ms-64 sm:ms-16">
+        <div className="text-center mx-auto my-56 w-5/6">
+          <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">
+            <i className="fa-solid fa-users-slash"></i>
+          </h1>
+          <h2 className="xl:text-4xl md:text-2xl sm:text-xl mb-12 text-gray-400">
+            Sorry you cant create project while you have No Scrums in your
+            orgnaization
+          </h2>
+          <Link to={"/employees"}>
+            <button
+              type="button"
+              className="block mx-auto px-4 border bg-slate-950 
+            rounded-lg text-white hover:text-amber-500 duration-300 h-10 font-semibold">
+              <i className="fa-solid fa-people-group me-3"></i>Go to Emplyees ?
+            </button>
+          </Link>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
-      {getAllProjects?.projects === undefined ? (
+      {!getAllProjects.projects || getAllProjects.projects.length === 0 ? (
         // No data in page
         <div className="text-center mx-auto my-44 w-5/6">
           <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">

@@ -8,7 +8,7 @@ import { NavLink, Outlet } from "react-router-dom";
 
 export default function Employees() {
   const [open, setOpen] = useState(false);
-  const { getAllEmployees, loading } = useAppSelector(
+  const { getAllEmployees, loading, getScrums } = useAppSelector(
     (state) => state.allEmployees
   );
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ export default function Employees() {
 
   return (
     <div className="mt-10 xl:ms-64 sm:ms-16">
-      {getAllEmployees?.employees?.length === 0 ? (
+      {!getAllEmployees.employees && !getScrums.scrums ? (
         <div className="text-center mx-auto my-56 w-5/6">
           <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">
             <i className="fa-solid fa-users-slash"></i>
@@ -31,7 +31,7 @@ export default function Employees() {
           <button
             type="submit"
             className="block mx-auto px-4 border bg-slate-950 
-            rounded-lg duration-300 hover:text-amber-500 text-white h-10 font-bold"
+            rounded-lg duration-300 hover:text-amber-500 text-white h-10 font-semibold"
             onClick={() => setOpen(true)}>
             <i className="fa-solid fa-user-plus me-3"></i>Add employees
           </button>

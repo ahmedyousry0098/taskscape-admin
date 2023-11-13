@@ -107,7 +107,7 @@ export default function RepMember(props: any) {
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>
-                    <i className="fa-solid fa-plus md:me-3 sm:me-0"></i>
+                    <i className="fa-solid fa-people-arrows md:me-3 sm:me-0"></i>
                     <span className="md:inline-block sm:hidden">Confirm</span>
                   </>
                 )}

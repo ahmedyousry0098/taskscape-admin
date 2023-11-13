@@ -65,14 +65,14 @@ export default function Sidebar() {
         </div>
 
         <div className="hover:text-amber-500 hover:scale-110  duration-300 w-fit h-fit mb-12">
-          <Tooltip title="Controls" placement="right" color={"#020617"}>
-            <NavLink to={"/controls"}>
-              <i className="fa-solid fa-screwdriver-wrench  w-10"></i>
+          <Tooltip title="Organization" placement="right" color={"#020617"}>
+            <NavLink to={"/organization"}>
+              <i className="fa-solid fa-building  w-10"></i>
             </NavLink>
           </Tooltip>
-          <NavLink to={"/controls"}>
+          <NavLink to={"/organization"}>
             <li className=" xl:inline-block lg:hidden md:hidden sm:hidden">
-              Controls
+              Organization
             </li>
           </NavLink>
         </div>

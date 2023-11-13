@@ -51,7 +51,7 @@ export default function App() {
             { path: "members", element: <Members /> },
           ],
         },
-        { path: "controls", element: <Controls /> },
+        { path: "organization", element: <Controls /> },
       ],
     },
     { path: "*", element: <NotFoundPage /> },

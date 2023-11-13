@@ -176,7 +176,7 @@ export const AllEmpSlice = createSlice({
       .addCase(allEmployees.pending, (state) => {
         state.EmployeeLoading = true;
       })
-      .addCase(allEmployees.fulfilled, (state, action) => {
+      .addCase(allEmployees.fulfilled, (state, action: any) => {
         if (action.payload !== undefined) {
           state.getAllEmployees = action.payload;
         }
@@ -187,27 +187,6 @@ export const AllEmpSlice = createSlice({
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);
-        }
-      });
-
-    builder
-      .addCase(addEmployee.pending, (state) => {
-        state.loading = true;
-      })
-      .addCase(addEmployee.fulfilled, (state, action: any) => {
-        if (action.payload !== undefined) {
-          state.getAllEmployees.employees.push(action.payload.employee);
-          state.getScrums.scrums.push(action.payload.employee);
-        }
-        state.loading = false;
-      })
-      .addCase(addEmployee.rejected, (state, action) => {
-        state.loading = false;
-        if (action.meta.requestStatus === "rejected") {
-          state.error = action.error.message!;
-          toast.error("User already in ornization");
-        } else {
-          toast.error("Something went wrong");
         }
       });
 
@@ -226,6 +205,41 @@ export const AllEmpSlice = createSlice({
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);
+        }
+      });
+
+    builder
+      .addCase(addEmployee.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addEmployee.fulfilled, (state, action: any) => {
+        if (
+          action.payload.message === "Employee added successfully!!" &&
+          !state.getAllEmployees.employees &&
+          action.payload.employee.role !== "scrumMaster"
+        ) {
+          state.getAllEmployees.employees = [];
+          state.getAllEmployees.employees.push(action.payload.employee);
+        } else if (
+          action.payload.message === "Employee added successfully!!" &&
+          !state.getScrums.scrums &&
+          action.payload.employee.role !== "member"
+        ) {
+          state.getScrums.scrums = [];
+          state.getScrums.scrums.push(action.payload.employee);
+        } else if (action.payload) {
+          state.getAllEmployees.employees.push(action.payload.employee);
+          state.getScrums.scrums.push(action.payload.employee);
+        }
+        state.loading = false;
+      })
+      .addCase(addEmployee.rejected, (state, action) => {
+        state.loading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message!;
+          toast.error("User already in ornization");
+        } else {
+          toast.error("Something went wrong");
         }
       });
 

@@ -25,7 +25,16 @@ export default function Members() {
 
   return (
     <div className="flex flex-wrap justify-center items-start my-4 mx-5">
-      {EmployeeLoading ? (
+      {!getAllEmployees.employees || getAllEmployees.employees.length === 0 ? (
+        <div className="text-center mx-auto my-56 w-5/6">
+          <h1 className="xl:text-4xl md:text-2xl sm:text-xl mb-6 text-gray-400">
+            <i className="fa-solid fa-users-slash"></i>
+          </h1>
+          <h2 className="xl:text-4xl md:text-2xl sm:text-xl mb-12 text-gray-400">
+            No Members in your orgnaization
+          </h2>
+        </div>
+      ) : EmployeeLoading ? (
         <div className="loader-container pt-48">
           <div className="loader"></div>
           <div className="loader-text">Loading...</div>

@@ -146,7 +146,7 @@ export default function AddEmp(props: any) {
                 value={formik.values.password}
                 onChange={formik.handleChange}
                 onBlur={formik.handleBlur}
-                placeholder="Paswword"
+                placeholder="Password"
                 autoComplete="off"
                 className="border border-slate-950 h-10 w-full focus:placeholder:opacity-0 outline-0 text-slate-950 ps-5 rounded-lg mb-1"
               />
@@ -261,7 +261,6 @@ export default function AddEmp(props: any) {
                   <i className="fa-solid fa-spinner fa-spin-pulse"></i>
                 ) : (
                   <>
-                    <i className="fa-solid fa-plus md:me-3 sm:me-0"></i>
                     <span className="md:inline-block sm:hidden">Submit</span>
                   </>
                 )}
