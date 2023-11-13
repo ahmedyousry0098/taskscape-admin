@@ -33,7 +33,12 @@ export default function AddEmp(props: any) {
         "Only letters, first character is Capital and spaces"
       ),
     email: Yup.string().required("Email is required").email("Email In-valid"),
-    password: Yup.string().required("Password is required"),
+    password: Yup.string()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "1 Number or more, 1 Capital letter at least, @$!%*?& Special character and Min 8 Character"
+      )
+      .required("Password is required"),
     role: Yup.string().required("You must select a role"),
     experience: Yup.number()
       .min(0)

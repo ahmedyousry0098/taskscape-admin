@@ -46,7 +46,12 @@ export default function ForgetPass(props: any) {
 
   const validationSchema2 = Yup.object({
     code: Yup.string().required("Verify Code Required"),
-    newPassword: Yup.string().required("New Password Required"),
+    newPassword: Yup.string()
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "1 Number or more, 1 Capital letter at least, @$!%*?& Special character and Min 8 Character"
+      )
+      .required("New Password Required"),
   });
 
   let formik2 = useFormik<IResetPassword>({
