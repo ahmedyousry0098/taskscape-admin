@@ -28,8 +28,10 @@ export default function ProjDetails() {
 
   function handleDeleteProject(projectId: string) {
     dispatch(deleteProject(projectId)).then((result) => {
-      navigate("/projects");
-      dispatch(allProjects());
+      if (result.payload) {
+        navigate("/projects");
+        dispatch(allProjects());
+      }
     });
   }
 

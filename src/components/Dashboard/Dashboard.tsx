@@ -160,7 +160,7 @@ export default function Dashboard() {
 
       {/* Table */}
       <div className="flex flex-wrap justify-center w-full items-center my-4">
-        <div className=" mx-4 shadow-md shadow-slate-950">
+        <div className=" mx-1 shadow-md shadow-slate-950">
           <ScrumTable />
         </div>
       </div>

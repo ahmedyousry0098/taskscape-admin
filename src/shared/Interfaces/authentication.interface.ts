@@ -62,6 +62,12 @@ export interface AddEmpOfProj {
   employees: string[];
 }
 
+export interface UpdateOrgnaization {
+  organization_name: string;
+  description: string;
+  headQuarters: string;
+}
+
 export interface UpdateProject {
   projectName: string;
   description: string;

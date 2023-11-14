@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { axiosInstance } from "../App/api/AxiosInstance";
 import { toast } from "react-toastify";
+import { UpdateOrgnaization } from "../shared/Interfaces/authentication.interface";
 
 export const getOrgnaization = createAsyncThunk<void>(
   "orgnaization/getOrgnaization",
@@ -12,10 +13,31 @@ export const getOrgnaization = createAsyncThunk<void>(
         `/organization/${orgnizationId}`,
         { headers: { token: localStorage.getItem("token") } }
       );
+      console.log(response.data);
+
       return response.data;
     } catch (error: any) {
       console.log(error);
-      toast.error(error.response.data.message);
+      toast.error(error.response.message);
+    }
+  }
+);
+
+export const updateOrgnaization = createAsyncThunk<void, UpdateOrgnaization>(
+  "orgnaization/updateOrgnaization",
+  async (values, decodeing) => {
+    try {
+      const getDecode: any = decodeing.getState();
+      const orgnizationId = getDecode.login.decoded.orgId;
+      const response = await axiosInstance.put(
+        `/organization/${orgnizationId}/update`,
+        values,
+        { headers: { token: localStorage.getItem("token") } }
+      );
+      return response.data;
+    } catch (error: any) {
+      console.log(error);
+      toast.error(error.response.message);
     }
   }
 );
@@ -23,15 +45,15 @@ export const getOrgnaization = createAsyncThunk<void>(
 type initialStateType = {
   getOrgData: any;
   orgLoading: boolean;
-  editing: boolean;
   error: string;
+  editLoading: boolean;
 };
 
 const initialState: initialStateType = {
   getOrgData: {},
   orgLoading: false,
-  editing: false,
   error: "",
+  editLoading: false,
 };
 
 export const OrgnaizationSlice = createSlice({
@@ -51,6 +73,26 @@ export const OrgnaizationSlice = createSlice({
       })
       .addCase(getOrgnaization.rejected, (state, action) => {
         state.orgLoading = false;
+        if (action.meta.requestStatus === "rejected") {
+          state.error = action.error.message || "Something went wrong";
+          toast.error(state.error);
+        }
+      });
+
+    builder
+      .addCase(updateOrgnaization.pending, (state) => {
+        state.editLoading = true;
+      })
+      .addCase(updateOrgnaization.fulfilled, (state, action: any) => {
+        state.editLoading = false;
+        if (action.payload !== undefined) {
+          console.log(action);
+
+          state.getOrgData.organization = action.payload.updatedOrganization;
+        }
+      })
+      .addCase(updateOrgnaization.rejected, (state, action) => {
+        state.editLoading = false;
         if (action.meta.requestStatus === "rejected") {
           state.error = action.error.message || "Something went wrong";
           toast.error(state.error);

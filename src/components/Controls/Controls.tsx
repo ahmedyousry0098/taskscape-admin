@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../App/hooks";
 import { getOrgnaization } from "../../Redux/OrgnaizationSlice";
 import EditOrg from "./EditOrg";
@@ -9,6 +9,7 @@ export default function Controls() {
   let { getOrgData, orgLoading } = useAppSelector(
     (state) => state.orgnaization
   );
+  const [openEditProject, setopenEditProject] = useState(false);
 
   useEffect(() => {
     dispatch(getOrgnaization());
@@ -29,25 +30,31 @@ export default function Controls() {
               <div className="w-full mb-7">
                 <img
                   src={getOrgData?.organization?.logo?.secure_url}
-                  className=" w-44 h-44 mx-auto rounded-full border-2 shadow-md shadow-slate-900 border-slate-950"
+                  className=" w-44 h-44  mx-auto rounded-full border-2 shadow-md shadow-slate-900 border-slate-950"
                   alt="Campany Logo"
                 />
               </div>
 
               {/* Company Name */}
-              <p className="font-bold py-1 mb-8 text-3xl text-center">
-                {getOrgData?.organization?.company}
-              </p>
-              <div className="flex justify-around">
+              <div>
+                <p className="font-bold py-1 text-3xl text-center">
+                  {getOrgData?.organization?.organization_name}
+                </p>
+                <p className="font-bold py-1 mb-8 text-xl text-slate-500 text-center">
+                  {getOrgData?.organization?.company}
+                </p>
+              </div>
+
+              <div className="flex flex-wrap justify-between md:px-6 sm:px-2">
                 {/* Head Quarter */}
-                <p className="font-bold py-1 mb-4">
+                <p className="font-bold py-1 mb-4 w-5/12">
                   Head Quarter:
                   <span className="font-medium ps-1">
                     {getOrgData?.organization?.headQuarters}
                   </span>
                 </p>
                 {/* Indusrty */}
-                <p className="font-bold py-1 mb-4">
+                <p className="font-bold py-1 mb-4 w-5/12">
                   industry:
                   <span className="font-medium ps-1">
                     {getOrgData?.organization?.industry}
@@ -55,9 +62,9 @@ export default function Controls() {
                 </p>
               </div>
 
-              <div className="flex justify-around">
+              <div className="flex flex-wrap justify-between md:px-6 sm:px-2">
                 {/* Create At */}
-                <p className="font-bold py-1 mb-4">
+                <p className="font-bold py-1 mb-4 w-5/12">
                   Created At:
                   <span className="font-medium ps-1">
                     {getOrgData?.organization?.createdAt
@@ -67,7 +74,7 @@ export default function Controls() {
                   </span>
                 </p>
                 {/* Last Update */}
-                <p className="font-bold py-1 mb-4">
+                <p className="font-bold py-1 mb-4 w-5/12">
                   Last updated:
                   <span className="font-medium ps-1">
                     {getOrgData?.organization?.updatedAt
@@ -79,17 +86,18 @@ export default function Controls() {
               </div>
 
               {/* Description */}
-              <p className="font-bold py-1 mb-4">
-                Description
+              <p className="font-bold py-1 mb-10 md:px-6 sm:px-2">
+                Description:
                 <span className="font-medium ps-1">
                   {getOrgData?.organization?.description}
                 </span>
               </p>
+
               {/* Edit Orgnization */}
               <div key={getOrgData?._id} className="flex justify-center mb-3">
                 <button
                   type="button"
-                  onClick={() => console.log("Hi")}
+                  onClick={() => setopenEditProject(true)}
                   className="bg-slate-950 px-4 duration-300 hover:text-amber-500
                         rounded-lg text-white py-1 font-semibold me-5">
                   <i className="fa-regular fa-pen-to-square me-2 fa-sm"></i>
@@ -97,7 +105,10 @@ export default function Controls() {
                 </button>
               </div>
             </div>
-            <EditOrg />
+            <EditOrg
+              openEditProject={openEditProject}
+              setopenEditProject={() => setopenEditProject(false)}
+            />
           </div>
         </>
       )}
